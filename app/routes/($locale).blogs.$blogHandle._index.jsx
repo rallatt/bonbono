@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from 'react-router';
 import { Image, getPaginationVariables } from '@shopify/hydrogen';
-import { PaginatedResourceSection } from './components/PaginatedResourceSection';
-import { redirectIfHandleIsLocalized } from './lib/redirect';
+import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
+import { redirectIfHandleIsLocalized } from '../lib/redirect';
 
 /**
  * @type {Route.MetaFunction}

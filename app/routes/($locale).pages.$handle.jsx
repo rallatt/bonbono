@@ -1,5 +1,5 @@
 import { useLoaderData } from 'react-router';
-import { redirectIfHandleIsLocalized } from './lib/redirect';
+import { redirectIfHandleIsLocalized } from '../lib/redirect';
 
 /**
  * @type {Route.MetaFunction}

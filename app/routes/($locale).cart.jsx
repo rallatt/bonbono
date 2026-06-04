@@ -1,6 +1,6 @@
 import { useLoaderData, data } from 'react-router';
 import { CartForm } from '@shopify/hydrogen';
-import { CartMain } from './components/CartMain';
+import { CartMain } from '../components/CartMain';
 
 /**
  * @type {Route.MetaFunction}

@@ -1,8 +1,8 @@
 import { useLoaderData } from 'react-router';
 import { getPaginationVariables, Analytics } from '@shopify/hydrogen';
-import { SearchForm } from './components/SearchForm';
-import { SearchResults } from './components/SearchResults';
-import { getEmptyPredictiveSearchResult } from './lib/search';
+import { SearchForm } from '../components/SearchForm';
+import { SearchResults } from '../components/SearchResults';
+import { getEmptyPredictiveSearchResult } from '../lib/search';
 
 /**
  * @type {Route.MetaFunction}

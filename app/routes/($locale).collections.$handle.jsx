@@ -1,8 +1,8 @@
 import { redirect, useLoaderData } from 'react-router';
 import { getPaginationVariables, Analytics } from '@shopify/hydrogen';
-import { PaginatedResourceSection } from './components/PaginatedResourceSection';
-import { redirectIfHandleIsLocalized } from './lib/redirect';
-import { ProductItem } from './components/ProductItem';
+import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
+import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { ProductItem } from '../components/ProductItem';
 
 /**
  * @type {Route.MetaFunction}

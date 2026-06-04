@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import {
   getEmptyPredictiveSearchResult,
   urlWithTrackingParams,
-} from './lib/search';
+} from '../lib/search';
 import { useAside } from './Aside';
 
 /**

@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { Image, Money } from '@shopify/hydrogen';
-import { useVariantUrl } from './lib/variants';
+import { useVariantUrl } from '../lib/variants';
 
 /**
  * @param {{

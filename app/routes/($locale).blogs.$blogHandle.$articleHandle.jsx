@@ -1,6 +1,6 @@
 import { useLoaderData } from 'react-router';
 import { Image } from '@shopify/hydrogen';
-import { redirectIfHandleIsLocalized } from './lib/redirect';
+import { redirectIfHandleIsLocalized } from '../lib/redirect';
 
 /**
  * @type {Route.MetaFunction}
