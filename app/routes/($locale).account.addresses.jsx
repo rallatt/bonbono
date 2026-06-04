@@ -9,7 +9,7 @@ import {
   UPDATE_ADDRESS_MUTATION,
   DELETE_ADDRESS_MUTATION,
   CREATE_ADDRESS_MUTATION,
-} from './graphql/customer-account/CustomerAddressMutations';
+} from '../graphql/customer-account/CustomerAddressMutations';
 
 /**
  * @type {Route.MetaFunction}

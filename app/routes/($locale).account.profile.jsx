@@ -1,4 +1,4 @@
-import { CUSTOMER_UPDATE_MUTATION } from './graphql/customer-account/CustomerUpdateMutation';
+import { CUSTOMER_UPDATE_MUTATION } from '../graphql/customer-account/CustomerUpdateMutation';
 import {
   data,
   Form,

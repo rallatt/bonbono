@@ -1,6 +1,6 @@
 import { redirect, useLoaderData } from 'react-router';
 import { Money, Image } from '@shopify/hydrogen';
-import { CUSTOMER_ORDER_QUERY } from './graphql/customer-account/CustomerOrderQuery';
+import { CUSTOMER_ORDER_QUERY } from '../graphql/customer-account/CustomerOrderQuery';
 
 /**
  * @type {Route.MetaFunction}
