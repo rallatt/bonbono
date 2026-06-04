@@ -70,7 +70,9 @@ export default function Page() {
       <header>
         <h1>{page.title}</h1>
       </header>
-      <main dangerouslySetInnerHTML={{ __html: page.body }} />
+      {page.handle !== 'contact' && (
+        <main dangerouslySetInnerHTML={{ __html: page.body }} />
+      )}
       {page.handle === 'contact' && <StoreMap />}
     </div>
   );
@@ -82,20 +84,28 @@ function StoreMap() {
       <h2 className="store-map-heading">Nous trouver</h2>
       <address className="store-map-address">
         366 rue de Castelnau Est<br />
-        Montréal, QC
+        Montréal, QC<br />
+        <a href="mailto:info@bonbono.ca" className="store-map-email">info@bonbono.ca</a>
       </address>
       <div className="store-map-frame">
         <iframe
           title="Localisation Bonbono"
-          src="https://maps.google.com/maps?q=366+rue+de+Castelnau+Est,+Montréal,+QC&output=embed&z=16&hl=fr"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-73.618%2C45.533%2C-73.598%2C45.541&layer=mapnik&marker=45.5370%2C-73.6080"
           width="100%"
           height="100%"
           style={{ border: 0 }}
           allowFullScreen
           loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
+      <a
+        className="store-map-gmaps-link"
+        href="https://www.google.com/maps?q=366+rue+de+Castelnau+Est,+Montréal,+QC"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Voir sur Google Maps →
+      </a>
     </section>
   );
 }
