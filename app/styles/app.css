@@ -5,11 +5,11 @@
   --grid-item-width: 355px;
   --header-height: 64px;
   --color-dark: #176131;
-  --color-light: #F8DAE7;
+  --color-light: #fff;
 }
 
 body {
-  background-color: #F8DAE7;
+  background-color: #fff;
   color: #176131;
   font-family: 'Fredoka', system-ui, sans-serif;
 }
