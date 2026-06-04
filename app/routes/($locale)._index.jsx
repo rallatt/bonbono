@@ -3,12 +3,13 @@ import { Suspense } from 'react';
 import { Image } from '@shopify/hydrogen';
 import { ProductItem } from '../components/ProductItem';
 import { MockShopNotice } from '../components/MockShopNotice';
+import bannerImg from '../assets/banner.jpg';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: 'Hydrogen | Home' }];
+  return [{ title: 'Bonbono — Bonbons et cadeaux' }];
 };
 
 /**
@@ -67,8 +68,23 @@ export default function Homepage() {
   return (
     <div className="home">
       {data.isShopLinked ? null : <MockShopNotice />}
+      <HeroBanner />
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
+    </div>
+  );
+}
+
+function HeroBanner() {
+  return (
+    <div className="hero-banner">
+      <img src={bannerImg} alt="Bonbons colorés" className="hero-banner-img" />
+      <div className="hero-banner-overlay">
+        <p className="hero-banner-tagline">Bonbons et cadeaux</p>
+        <Link to="/collections/all" className="hero-banner-cta">
+          Découvrir
+        </Link>
+      </div>
     </div>
   );
 }

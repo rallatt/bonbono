@@ -439,6 +439,65 @@ button.reset:hover:not(:has(> *)) {
 
 /*
 * --------------------------------------------------
+* Hero banner
+* --------------------------------------------------
+*/
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.hero-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 0;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 3rem;
+  background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, transparent 60%);
+}
+
+.hero-banner-tagline {
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 1.25rem;
+  line-height: 1.1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.hero-banner-cta {
+  background: #E55A7E;
+  color: white;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.75rem;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: background 150ms;
+}
+
+.hero-banner-cta:hover {
+  background: #176131;
+}
+
+/*
+* --------------------------------------------------
 * routes/__index
 * --------------------------------------------------
 */
