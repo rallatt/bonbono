@@ -1,6 +1,6 @@
 import * as serverBuild from 'virtual:react-router/server-build';
 import { createRequestHandler, storefrontRedirect } from '@shopify/hydrogen';
-import { createHydrogenRouterContext } from './lib/context';
+import { createHydrogenRouterContext } from './app/lib/context';
 
 /**
  * Export a fetch handler in module format.
