@@ -707,6 +707,12 @@ button.reset:hover:not(:has(> *)) {
   width: 100%;
 }
 
+.store-map-missing {
+  color: #176131;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
 .store-map-email {
   color: #E55A7E;
   font-style: normal;

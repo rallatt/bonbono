@@ -48,6 +48,7 @@ async function loadCriticalData({ context, request, params }) {
 
   return {
     page,
+    googleMapsApiKey: context.env.PUBLIC_GOOGLE_MAPS_API_KEY,
   };
 }
 
@@ -63,7 +64,7 @@ function loadDeferredData({ context }) {
 
 export default function Page() {
   /** @type {LoaderReturnData} */
-  const { page } = useLoaderData();
+  const { page, googleMapsApiKey } = useLoaderData();
 
   return (
     <div className="page">
@@ -73,12 +74,16 @@ export default function Page() {
       {page.handle !== 'contact' && (
         <main dangerouslySetInnerHTML={{ __html: page.body }} />
       )}
-      {page.handle === 'contact' && <StoreMap />}
+      {page.handle === 'contact' && <StoreMap apiKey={googleMapsApiKey} />}
     </div>
   );
 }
 
-function StoreMap() {
+function StoreMap({ apiKey }) {
+  const mapSrc = apiKey
+    ? `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=366+rue+de+Castelnau+Est,+Montréal,+QC&zoom=16&language=fr`
+    : null;
+
   return (
     <section className="store-map-section">
       <h2 className="store-map-heading">Nous trouver</h2>
@@ -87,17 +92,24 @@ function StoreMap() {
         Montréal, QC<br />
         <a href="mailto:info@bonbono.ca" className="store-map-email">info@bonbono.ca</a>
       </address>
-      <div className="store-map-frame">
-        <iframe
-          title="Localisation Bonbono"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-73.618%2C45.533%2C-73.598%2C45.541&layer=mapnik&marker=45.5370%2C-73.6080"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-        />
-      </div>
+      {mapSrc ? (
+        <div className="store-map-frame">
+          <iframe
+            title="Localisation Bonbono"
+            src={mapSrc}
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      ) : (
+        <p className="store-map-missing">
+          Carte indisponible — clé Google Maps manquante.
+        </p>
+      )}
       <a
         className="store-map-gmaps-link"
         href="https://www.google.com/maps?q=366+rue+de+Castelnau+Est,+Montréal,+QC"
