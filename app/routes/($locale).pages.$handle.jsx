@@ -71,7 +71,32 @@ export default function Page() {
         <h1>{page.title}</h1>
       </header>
       <main dangerouslySetInnerHTML={{ __html: page.body }} />
+      {page.handle === 'contact' && <StoreMap />}
     </div>
+  );
+}
+
+function StoreMap() {
+  return (
+    <section className="store-map-section">
+      <h2 className="store-map-heading">Nous trouver</h2>
+      <address className="store-map-address">
+        366 rue de Castelnau Est<br />
+        Montréal, QC
+      </address>
+      <div className="store-map-frame">
+        <iframe
+          title="Localisation Bonbono"
+          src="https://maps.google.com/maps?q=366+rue+de+Castelnau+Est,+Montréal,+QC&output=embed&z=16&hl=fr"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    </section>
   );
 }
 
