@@ -386,6 +386,40 @@ button.reset:hover:not(:has(> *)) {
 }
 /*
 * --------------------------------------------------
+* Pagination
+* --------------------------------------------------
+*/
+.pagination-link {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.pagination-btn {
+  background: #E55A7E;
+  border-radius: 100px;
+  color: white;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.65rem 2.5rem;
+  text-decoration: none;
+  transition: background 150ms;
+}
+
+.pagination-btn:hover {
+  background: #176131;
+  color: white;
+  text-decoration: none;
+}
+
+/* Hide the link entirely when there's no previous/next page */
+.pagination-link:empty {
+  display: none;
+}
+
+/*
+* --------------------------------------------------
 * components/Search
 * --------------------------------------------------
 */
