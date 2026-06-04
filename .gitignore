@@ -1,0 +1,34 @@
+# Dependencies
+node_modules
+
+# Build outputs
+/.cache
+/build
+/dist
+/public/build
+/.mf
+/.wrangler
+
+# Hydrogen / React Router generated
+.react-router
+
+# Shopify CLI
+.shopify
+
+# Environment variables — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Package tarballs
+*.tgz
