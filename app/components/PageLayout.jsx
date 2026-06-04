@@ -64,7 +64,7 @@ function CartAside({ cart }) {
 function SearchAside() {
   const queriesDatalistId = useId();
   return (
-    <Aside type="search" heading="SEARCH">
+    <Aside type="search" heading="Recherche de produits">
       <div className="predictive-search">
         <br />
         <SearchFormPredictive>
