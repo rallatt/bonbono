@@ -1,6 +1,17 @@
 /**
- * Configure Tailwind v4 in this file using CSS variables and directives:
- * https://tailwindcss.com/docs/v4-beta#css-first-configuration
+ * Tailwind v4 CSS-first config.
+ * Bonbono brand tokens — swap --font-sans to self-hosted Bouba Round Var
+ * woff2 files once available; Fredoka is the closest Google Fonts substitute.
  */
 
 @import 'tailwindcss';
+
+@theme {
+  --color-rose-bonbono: #E55A7E;
+  --color-vert-bonbono: #41A500;
+  --color-matcha-noir: #176131;
+  --color-guimauve: #F8DAE7;
+  --color-melon-miel: #C8F4AE;
+
+  --font-sans: 'Fredoka', system-ui, sans-serif;
+}

@@ -47,14 +47,14 @@ export const shouldRevalidate = ({ formMethod, currentUrl, nextUrl }) => {
  */
 export function links() {
   return [
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
     {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap',
     },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
+    { rel: 'preconnect', href: 'https://cdn.shopify.com' },
+    { rel: 'preconnect', href: 'https://shop.app' },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
   ];
 }
@@ -147,7 +147,7 @@ export function Layout({ children }) {
   const nonce = useNonce();
 
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
