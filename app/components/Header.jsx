@@ -41,29 +41,64 @@ export function HeaderMenu({
   const className = `header-menu-${viewport}`;
   const { close } = useAside();
 
+  const resolveUrl = (url) => {
+    if (!url) return null;
+    return url.includes('myshopify.com') ||
+      url.includes(publicStoreDomain) ||
+      url.includes(primaryDomainUrl)
+      ? new URL(url).pathname
+      : url;
+  };
+
   return (
     <nav className={className} role="navigation">
       {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={close}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
+        <NavLink end onClick={close} prefetch="intent" style={activeLinkStyle} to="/">
+          Accueil
         </NavLink>
       )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
+        const url = resolveUrl(item.url);
+        if (!url) return null;
+        const hasChildren = item.items?.length > 0;
 
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-            item.url.includes(publicStoreDomain) ||
-            item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
+        if (hasChildren) {
+          return (
+            <div key={item.id} className="header-menu-item-wrapper">
+              <NavLink
+                className="header-menu-item header-menu-item--parent"
+                end
+                onClick={close}
+                prefetch="intent"
+                style={activeLinkStyle}
+                to={url}
+              >
+                {item.title}
+                <span className="header-menu-chevron" aria-hidden="true">▾</span>
+              </NavLink>
+              <ul className="header-menu-dropdown">
+                {item.items.map((child) => {
+                  const childUrl = resolveUrl(child.url);
+                  if (!childUrl) return null;
+                  return (
+                    <li key={child.id}>
+                      <NavLink
+                        className="header-menu-dropdown-item"
+                        onClick={close}
+                        prefetch="intent"
+                        style={activeLinkStyle}
+                        to={childUrl}
+                      >
+                        {child.title}
+                      </NavLink>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        }
+
         return (
           <NavLink
             className="header-menu-item"
