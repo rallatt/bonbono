@@ -239,7 +239,8 @@ button.reset:hover:not(:has(> *)) {
   padding: 0 1rem;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 200;
+  overflow: visible;
 }
 
 .header a,
@@ -248,18 +249,16 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-logo {
-  color: white;
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
-.header-logo:hover,
-.header-logo.active {
-  color: #F8DAE7;
-  text-decoration: none;
+.header-logo-img {
+  height: 52px;
+  width: auto;
+  mix-blend-mode: multiply;
 }
 
 .header-menu-mobile-toggle {
@@ -574,20 +573,16 @@ button.reset:hover:not(:has(> *)) {
   inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 2.5rem 3rem;
-  background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, transparent 60%);
+  gap: 1.5rem;
 }
 
-.hero-banner-tagline {
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: white;
-  margin: 0 0 1.25rem;
-  line-height: 1.1;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+.hero-banner-logo {
+  width: min(520px, 80vw);
+  height: auto;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.15));
 }
 
 .hero-banner-cta {

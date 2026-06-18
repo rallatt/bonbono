@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Await, NavLink, useAsyncValue } from 'react-router';
 import { useAnalytics, useOptimisticCart } from '@shopify/hydrogen';
 import { useAside } from './Aside';
+import logoImg from '../assets/Logo ovale.png';
 
 /**
  * @param {HeaderProps}
@@ -11,7 +12,7 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
   return (
     <header className="header">
       <NavLink prefetch="intent" to="/" className="header-logo" end>
-        Bonbono
+        <img src={logoImg} alt="Bonbono" className="header-logo-img" />
       </NavLink>
       <HeaderMenu
         menu={menu}
