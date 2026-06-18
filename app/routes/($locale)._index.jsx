@@ -4,7 +4,6 @@ import { Image } from '@shopify/hydrogen';
 import { ProductItem } from '../components/ProductItem';
 import { MockShopNotice } from '../components/MockShopNotice';
 import bannerImg from '../assets/banner.jpg';
-import logoImg from '../assets/Logo ovale.png';
 
 /**
  * @type {Route.MetaFunction}
@@ -81,7 +80,7 @@ function HeroBanner() {
     <div className="hero-banner">
       <img src={bannerImg} alt="Bonbons colorés" className="hero-banner-img" />
       <div className="hero-banner-overlay">
-        <img src={logoImg} alt="Bonbono" className="hero-banner-logo" />
+        <p className="hero-banner-tagline">Bonbons et cadeaux</p>
         <Link to="/collections/all" className="hero-banner-cta">
           Découvrir
         </Link>
