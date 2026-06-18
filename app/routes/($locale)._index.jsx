@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { Image } from '@shopify/hydrogen';
 import { ProductItem } from '../components/ProductItem';
 import { MockShopNotice } from '../components/MockShopNotice';
-import bannerImg from '../assets/banner.jpg';
+import logoOvaleImg from '../assets/Logo ovale.png';
 
 /**
  * @type {Route.MetaFunction}
@@ -78,13 +78,10 @@ export default function Homepage() {
 function HeroBanner() {
   return (
     <div className="hero-banner">
-      <img src={bannerImg} alt="Bonbons colorés" className="hero-banner-img" />
-      <div className="hero-banner-overlay">
-        <p className="hero-banner-tagline">Bonbons et cadeaux</p>
-        <Link to="/collections/all" className="hero-banner-cta">
-          Découvrir
-        </Link>
-      </div>
+      <img src={logoOvaleImg} alt="Bonbono — Bonbons et cadeaux" className="hero-banner-logo-main" />
+      <Link to="/collections/all" className="hero-banner-cta">
+        Découvrir
+      </Link>
     </div>
   );
 }
