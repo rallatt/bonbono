@@ -11,13 +11,14 @@ import { ProductPrice } from '../components/ProductPrice';
 import { ProductImage } from '../components/ProductImage';
 import { ProductForm } from '../components/ProductForm';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({ data }) => {
   return [
-    { title: `Hydrogen | ${data?.product.title ?? ''}` },
+    { title: t('meta.product', { name: data?.product.title ?? '' }) },
     {
       rel: 'canonical',
       href: `/products/${data?.product.handle}`,
@@ -122,7 +123,7 @@ export default function Product() {
         <br />
         <br />
         <p>
-          <strong>Description</strong>
+          <strong>{t('product.description')}</strong>
         </p>
         <br />
         <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />

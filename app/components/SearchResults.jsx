@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Image, Money, Pagination } from '@shopify/hydrogen';
 import { urlWithTrackingParams } from '../lib/search';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {Omit<SearchResultsProps, 'error' | 'type'>}
@@ -28,7 +29,7 @@ function SearchResultsArticles({ term, articles }) {
 
   return (
     <div className="search-result">
-      <h2>Articles</h2>
+      <h2>{t('search.results.articles')}</h2>
       <div>
         {articles?.nodes?.map((article) => {
           const articleUrl = urlWithTrackingParams({
@@ -61,7 +62,7 @@ function SearchResultsPages({ term, pages }) {
 
   return (
     <div className="search-result">
-      <h2>Pages</h2>
+      <h2>{t('search.results.pages')}</h2>
       <div>
         {pages?.nodes?.map((page) => {
           const pageUrl = urlWithTrackingParams({
@@ -94,7 +95,7 @@ function SearchResultsProducts({ term, products }) {
 
   return (
     <div className="search-result">
-      <h2>Products</h2>
+      <h2>{t('search.results.products')}</h2>
       <Pagination connection={products}>
         {({ nodes, isLoading, NextLink, PreviousLink }) => {
           const ItemsMarkup = nodes.map((product) => {
@@ -126,7 +127,7 @@ function SearchResultsProducts({ term, products }) {
             <div>
               <div>
                 <PreviousLink>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+                  {isLoading ? t('loading') : <span>{t('search.load_previous')}</span>}
                 </PreviousLink>
               </div>
               <div>
@@ -135,7 +136,7 @@ function SearchResultsProducts({ term, products }) {
               </div>
               <div>
                 <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+                  {isLoading ? t('loading') : <span>{t('search.load_more')}</span>}
                 </NextLink>
               </div>
             </div>
@@ -148,7 +149,7 @@ function SearchResultsProducts({ term, products }) {
 }
 
 function SearchResultsEmpty() {
-  return <p>No results, try a different search.</p>;
+  return <p>{t('search.no_results')}</p>;
 }
 
 /** @typedef {RegularSearchReturn['result']['items']} SearchItems */

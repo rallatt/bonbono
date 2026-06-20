@@ -3,6 +3,7 @@ import { useVariantUrl } from '../lib/variants';
 import { Link } from 'react-router';
 import { ProductPrice } from './ProductPrice';
 import { useAside } from './Aside';
+import { t } from '../i18n/index.js';
 
 /**
  * A single line item in the cart. It displays the product image, title, price.
@@ -68,7 +69,7 @@ export function CartLineItem({ layout, line, childrenMap }) {
       {lineItemChildren ? (
         <div>
           <p id={childrenLabelId} className="sr-only">
-            Line items with {product.title}
+            {t('cart.line.children.aria', { title: product.title })}
           </p>
           <ul aria-labelledby={childrenLabelId} className="cart-line-children">
             {lineItemChildren.map((childLine) => (
@@ -100,10 +101,10 @@ function CartLineQuantity({ line }) {
 
   return (
     <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+      <small>{t('cart.line.quantity', { quantity })} &nbsp;&nbsp;</small>
       <CartLineUpdateButton lines={[{ id: lineId, quantity: prevQuantity }]}>
         <button
-          aria-label="Decrease quantity"
+          aria-label={t('cart.line.decrease')}
           disabled={quantity <= 1 || !!isOptimistic}
           name="decrease-quantity"
           value={prevQuantity}
@@ -114,7 +115,7 @@ function CartLineQuantity({ line }) {
       &nbsp;
       <CartLineUpdateButton lines={[{ id: lineId, quantity: nextQuantity }]}>
         <button
-          aria-label="Increase quantity"
+          aria-label={t('cart.line.increase')}
           name="increase-quantity"
           value={nextQuantity}
           disabled={!!isOptimistic}
@@ -146,7 +147,7 @@ function CartLineRemoveButton({ lineIds, disabled }) {
       inputs={{ lineIds }}
     >
       <button disabled={disabled} type="submit">
-        Remove
+        {t('cart.line.remove')}
       </button>
     </CartForm>
   );

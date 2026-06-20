@@ -1,12 +1,13 @@
 import { useLoaderData } from 'react-router';
 import { Image } from '@shopify/hydrogen';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({ data }) => {
-  return [{ title: `Hydrogen | ${data?.article.title ?? ''} article` }];
+  return [{ title: t('meta.article', { name: data?.article.title ?? '' }) }];
 };
 
 /**

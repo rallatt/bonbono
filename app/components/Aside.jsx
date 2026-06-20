@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {useId} from 'react';
+import {t} from '../i18n/index.js';
 
 /**
  * A side bar component with Overlay
@@ -48,7 +49,7 @@ export function Aside({children, heading, type}) {
       <aside>
         <header>
           <h3 id={id}>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
+          <button className="close reset" onClick={close} aria-label={t('aside.close')}>
             &times;
           </button>
         </header>

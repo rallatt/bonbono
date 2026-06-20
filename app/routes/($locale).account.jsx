@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from 'react-router';
 import { CUSTOMER_DETAILS_QUERY } from '../graphql/customer-account/CustomerDetailsQuery';
+import { t } from '../i18n/index.js';
 
 export function shouldRevalidate() {
   return true;
@@ -42,9 +43,9 @@ export default function AccountLayout() {
 
   const heading = customer
     ? customer.firstName
-      ? `Welcome, ${customer.firstName}`
-      : `Welcome to your account.`
-    : 'Account Details';
+      ? t('account.welcome.name', { name: customer.firstName })
+      : t('account.welcome')
+    : t('account.details');
 
   return (
     <div className="account">
@@ -69,15 +70,15 @@ function AccountMenu() {
   return (
     <nav role="navigation">
       <NavLink to="/account/orders" style={isActiveStyle}>
-        Orders &nbsp;
+        {t('account.nav.orders')} &nbsp;
       </NavLink>
       &nbsp;|&nbsp;
       <NavLink to="/account/profile" style={isActiveStyle}>
-        &nbsp; Profile &nbsp;
+        &nbsp; {t('account.nav.profile')} &nbsp;
       </NavLink>
       &nbsp;|&nbsp;
       <NavLink to="/account/addresses" style={isActiveStyle}>
-        &nbsp; Addresses &nbsp;
+        &nbsp; {t('account.nav.addresses')} &nbsp;
       </NavLink>
       &nbsp;|&nbsp;
       <Logout />
@@ -88,7 +89,7 @@ function AccountMenu() {
 function Logout() {
   return (
     <Form className="account-logout" method="POST" action="/account/logout">
-      &nbsp;<button type="submit">Sign out</button>
+      &nbsp;<button type="submit">{t('account.sign_out')}</button>
     </Form>
   );
 }

@@ -1,12 +1,13 @@
 import { Link, useLoaderData } from 'react-router';
 import { getPaginationVariables } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: `Hydrogen | Blogs` }];
+  return [{ title: t('meta.blogs') }];
 };
 
 /**
@@ -60,7 +61,7 @@ export default function Blogs() {
 
   return (
     <div className="blogs">
-      <h1>Blogs</h1>
+      <h1>{t('blogs.title')}</h1>
       <div className="blogs-grid">
         <PaginatedResourceSection connection={blogs}>
           {({ node: blog }) => (

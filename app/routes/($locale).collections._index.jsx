@@ -1,6 +1,7 @@
 import { useLoaderData, Link } from 'react-router';
 import { getPaginationVariables, Image } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {Route.LoaderArgs} args
@@ -51,7 +52,7 @@ export default function Collections() {
 
   return (
     <div className="collections">
-      <h1>Collections</h1>
+      <h1>{t('collections.title')}</h1>
       <PaginatedResourceSection
         connection={collections}
         resourcesClassName="collections-grid"

@@ -2,12 +2,13 @@ import { useLoaderData } from 'react-router';
 import { getPaginationVariables } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
 import { ProductItem } from '../components/ProductItem';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: `Hydrogen | Products` }];
+  return [{ title: t('meta.products') }];
 };
 
 /**
@@ -60,7 +61,7 @@ export default function Collection() {
   return (
     <div className="collection">
       <div className="page-title-band">
-        <h1>Tous nos produits</h1>
+        <h1>{t('collections.all.title')}</h1>
       </div>
       <PaginatedResourceSection
         connection={products}

@@ -1,11 +1,12 @@
 import { useLoaderData } from 'react-router';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({ data }) => {
-  return [{ title: `Hydrogen | ${data?.page.title ?? ''}` }];
+  return [{ title: t('meta.page', { name: data?.page.title ?? '' }) }];
 };
 
 /**
@@ -86,7 +87,7 @@ function StoreMap({ apiKey }) {
 
   return (
     <section className="store-map-section">
-      <h2 className="store-map-heading">Nous trouver</h2>
+      <h2 className="store-map-heading">{t('store.find_us')}</h2>
       <address className="store-map-address">
         366 rue de Castelnau Est<br />
         Montréal, QC<br />
@@ -95,7 +96,7 @@ function StoreMap({ apiKey }) {
       {mapSrc ? (
         <div className="store-map-frame">
           <iframe
-            title="Localisation Bonbono"
+            title={t('store.map.iframe_title')}
             src={mapSrc}
             width="100%"
             height="100%"
@@ -107,7 +108,7 @@ function StoreMap({ apiKey }) {
         </div>
       ) : (
         <p className="store-map-missing">
-          Carte indisponible — clé Google Maps manquante.
+          {t('store.map.unavailable')}
         </p>
       )}
       <a
@@ -116,7 +117,7 @@ function StoreMap({ apiKey }) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Voir sur Google Maps →
+        {t('store.map.view_gmaps')}
       </a>
     </section>
   );

@@ -1,10 +1,11 @@
 import {Link, useLoaderData} from 'react-router';
+import {t} from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.policy.title ?? ''}`}];
+  return [{title: t('meta.policy', { name: data?.policy.title ?? '' })}];
 };
 
 /**
@@ -48,7 +49,7 @@ export default function Policy() {
       <br />
       <br />
       <div>
-        <Link to="/policies">← Back to Policies</Link>
+        <Link to="/policies">{t('policies.back')}</Link>
       </div>
       <br />
       <h1>{policy.title}</h1>

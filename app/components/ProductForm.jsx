@@ -1,6 +1,7 @@
 import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
+import {t} from '../i18n/index.js';
 
 /**
  * @param {{
@@ -110,7 +111,7 @@ export function ProductForm({productOptions, selectedVariant}) {
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {selectedVariant?.availableForSale ? t('product.add_to_cart') : t('product.sold_out')}
       </AddToCartButton>
     </div>
   );

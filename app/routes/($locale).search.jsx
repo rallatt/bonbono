@@ -3,12 +3,13 @@ import { getPaginationVariables, Analytics } from '@shopify/hydrogen';
 import { SearchForm } from '../components/SearchForm';
 import { SearchResults } from '../components/SearchResults';
 import { getEmptyPredictiveSearchResult } from '../lib/search';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: `Hydrogen | Search` }];
+  return [{ title: t('meta.search') }];
 };
 
 /**
@@ -39,19 +40,19 @@ export default function SearchPage() {
 
   return (
     <div className="search">
-      <h1>Search</h1>
+      <h1>{t('search.title')}</h1>
       <SearchForm>
         {({ inputRef }) => (
           <>
             <input
               defaultValue={term}
               name="q"
-              placeholder="Search…"
+              placeholder={t('search.placeholder')}
               ref={inputRef}
               type="search"
             />
             &nbsp;
-            <button type="submit">Search</button>
+            <button type="submit">{t('search.button')}</button>
           </>
         )}
       </SearchForm>

@@ -6,12 +6,13 @@ import {
   useNavigation,
   useOutletContext,
 } from 'react-router';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: 'Profile' }];
+  return [{ title: t('meta.profile') }];
 };
 
 /**
@@ -89,30 +90,30 @@ export default function AccountProfile() {
 
   return (
     <div className="account-profile">
-      <h2>My profile</h2>
+      <h2>{t('profile.title')}</h2>
       <br />
       <Form method="PUT">
-        <legend>Personal information</legend>
+        <legend>{t('profile.personal_info')}</legend>
         <fieldset>
-          <label htmlFor="firstName">First name</label>
+          <label htmlFor="firstName">{t('profile.first_name')}</label>
           <input
             id="firstName"
             name="firstName"
             type="text"
             autoComplete="given-name"
-            placeholder="First name"
-            aria-label="First name"
+            placeholder={t('profile.first_name')}
+            aria-label={t('profile.first_name')}
             defaultValue={customer.firstName ?? ''}
             minLength={2}
           />
-          <label htmlFor="lastName">Last name</label>
+          <label htmlFor="lastName">{t('profile.last_name')}</label>
           <input
             id="lastName"
             name="lastName"
             type="text"
             autoComplete="family-name"
-            placeholder="Last name"
-            aria-label="Last name"
+            placeholder={t('profile.last_name')}
+            aria-label={t('profile.last_name')}
             defaultValue={customer.lastName ?? ''}
             minLength={2}
           />
@@ -127,7 +128,7 @@ export default function AccountProfile() {
           <br />
         )}
         <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
+          {state !== 'idle' ? t('profile.updating') : t('profile.update')}
         </button>
       </Form>
     </div>

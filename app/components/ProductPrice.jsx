@@ -1,4 +1,5 @@
 import {Money} from '@shopify/hydrogen';
+import {t} from '../i18n/index.js';
 
 /**
  * @param {{
@@ -8,7 +9,7 @@ import {Money} from '@shopify/hydrogen';
  */
 export function ProductPrice({price, compareAtPrice}) {
   return (
-    <div aria-label="Price" className="product-price" role="group">
+    <div aria-label={t('product.price.aria')} className="product-price" role="group">
       {compareAtPrice ? (
         <div className="product-price-on-sale">
           {price ? <Money data={price} /> : null}

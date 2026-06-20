@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Image, Money, CartForm } from '@shopify/hydrogen';
 import { useVariantUrl } from '../lib/variants';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {{
@@ -42,12 +43,12 @@ export function ProductItem({ product, loading }) {
           inputs={{ lines: [{ merchandiseId: firstVariant.id, quantity: 1 }] }}
         >
           <button type="submit" className="product-item-add-btn">
-            Ajouter au panier
+            {t('product.add_to_cart')}
           </button>
         </CartForm>
       ) : (
         <Link to={variantUrl} className="product-item-add-btn product-item-add-btn--unavailable">
-          Voir le produit
+          {t('product.view')}
         </Link>
       )}
     </div>

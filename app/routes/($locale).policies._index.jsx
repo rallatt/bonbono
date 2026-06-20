@@ -1,4 +1,5 @@
 import {useLoaderData, Link} from 'react-router';
+import {t} from '../i18n/index.js';
 
 /**
  * @param {Route.LoaderArgs}
@@ -28,7 +29,7 @@ export default function Policies() {
 
   return (
     <div className="policies">
-      <h1>Policies</h1>
+      <h1>{t('policies.title')}</h1>
       <div>
         {policies.map((policy) => (
           <fieldset key={policy.id}>

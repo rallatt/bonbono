@@ -9,6 +9,7 @@ import {
   SearchFormPredictive,
 } from './SearchFormPredictive';
 import { SearchResultsPredictive } from './SearchResultsPredictive';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {PageLayoutProps}
@@ -49,8 +50,8 @@ export function PageLayout({
  */
 function CartAside({ cart }) {
   return (
-    <Aside type="cart" heading="PANIER">
-      <Suspense fallback={<p>Chargement du panier...</p>}>
+    <Aside type="cart" heading={t('aside.cart.heading')}>
+      <Suspense fallback={<p>{t('cart.loading')}</p>}>
         <Await resolve={cart}>
           {(cart) => {
             return <CartMain cart={cart} layout="aside" />;
@@ -64,7 +65,7 @@ function CartAside({ cart }) {
 function SearchAside() {
   const queriesDatalistId = useId();
   return (
-    <Aside type="search" heading="Recherche de produits">
+    <Aside type="search" heading={t('aside.search.heading')}>
       <div className="predictive-search">
         <br />
         <SearchFormPredictive>
@@ -74,13 +75,13 @@ function SearchAside() {
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="Rechercher..."
+                placeholder={t('search.placeholder')}
                 ref={inputRef}
                 type="search"
                 list={queriesDatalistId}
               />
               &nbsp;
-              <button onClick={goToSearch}>Rechercher</button>
+              <button onClick={goToSearch}>{t('search.button')}</button>
             </>
           )}
         </SearchFormPredictive>
@@ -90,7 +91,7 @@ function SearchAside() {
             const { articles, collections, pages, products, queries } = items;
 
             if (state === 'loading' && term.current) {
-              return <div>Loading...</div>;
+              return <div>{t('loading')}</div>;
             }
 
             if (!total) {
@@ -153,7 +154,7 @@ function MobileMenuAside({ header, publicStoreDomain }) {
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="NAVIGATION">
+      <Aside type="mobile" heading={t('aside.mobile.heading')}>
         <HeaderMenu
           menu={header.menu}
           viewport="mobile"

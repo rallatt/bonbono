@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { useAside } from './Aside';
 import { CartLineItem } from './CartLineItem';
 import { CartSummary } from './CartSummary';
+import { t } from '../i18n/index.js';
 /**
  * Returns a map of all line items and their children.
  * @param {CartLine[]} lines
@@ -47,12 +48,12 @@ export function CartMain({ layout, cart: originalCart }) {
   return (
     <section
       className={className}
-      aria-label={layout === 'page' ? 'Cart page' : 'Cart drawer'}
+      aria-label={layout === 'page' ? t('cart.page.aria') : t('cart.drawer.aria')}
     >
       <CartEmpty hidden={linesCount} layout={layout} />
       <div className="cart-details">
         <p id="cart-lines" className="sr-only">
-          Line items
+          {t('cart.lines.aria')}
         </p>
         <div>
           <ul aria-labelledby="cart-lines">
@@ -92,13 +93,10 @@ function CartEmpty({ hidden = false }) {
   return (
     <div hidden={hidden}>
       <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
-      </p>
+      <p>{t('cart.empty')}</p>
       <br />
       <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
+        {t('cart.continue_shopping')}
       </Link>
     </div>
   );

@@ -2,12 +2,13 @@ import { useLoaderData, Link } from 'react-router';
 import { Image } from '@shopify/hydrogen';
 import { MockShopNotice } from '../components/MockShopNotice';
 import logoOvaleImg from '../assets/cleanLogo.png';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: 'Bonbono — Bonbons et cadeaux' }];
+  return [{ title: t('home.meta') }];
 };
 
 export async function loader({ context }) {
@@ -44,10 +45,10 @@ function HeroBanner() {
     <div className="hero-banner">
       <div className="hero-banner-content">
         <img src={logoOvaleImg} alt="Bonbono" className="hero-banner-logo-main" />
-        <p className="hero-banner-tagline">Des bonbons. Et d'autres mauvaises idées.</p>
+        <p className="hero-banner-tagline">{t('home.tagline')}</p>
       </div>
       <Link to="/collections/all" className="hero-banner-cta">
-        Découvrir
+        {t('home.cta')}
       </Link>
     </div>
   );
@@ -59,7 +60,7 @@ function FeaturedCategories({ categories }) {
   if (!categories?.length) return null;
   return (
     <section className="featured-categories">
-      <h2 className="featured-categories-title">Nos catégories</h2>
+      <h2 className="featured-categories-title">{t('home.categories')}</h2>
       <div className="featured-categories-grid">
         {categories.map((collection, i) => (
           <Link

@@ -6,6 +6,7 @@ import {
   urlWithTrackingParams,
 } from '../lib/search';
 import { useAside } from './Aside';
+import { t } from '../i18n/index.js';
 
 /**
  * Component that renders predictive search results
@@ -59,7 +60,7 @@ function SearchResultsPredictiveArticles({ term, articles, closeSearch }) {
 
   return (
     <div className="predictive-search-result" key="articles">
-      <h5>Articles</h5>
+      <h5>{t('search.results.articles')}</h5>
       <ul>
         {articles.map((article) => {
           const articleUrl = urlWithTrackingParams({
@@ -99,7 +100,7 @@ function SearchResultsPredictiveCollections({ term, collections, closeSearch }) 
 
   return (
     <div className="predictive-search-result" key="collections">
-      <h5>Collections</h5>
+      <h5>{t('search.results.collections')}</h5>
       <ul>
         {collections.map((collection) => {
           const collectionUrl = urlWithTrackingParams({
@@ -139,7 +140,7 @@ function SearchResultsPredictivePages({ term, pages, closeSearch }) {
 
   return (
     <div className="predictive-search-result" key="pages">
-      <h5>Pages</h5>
+      <h5>{t('search.results.pages')}</h5>
       <ul>
         {pages.map((page) => {
           const pageUrl = urlWithTrackingParams({
@@ -171,7 +172,7 @@ function SearchResultsPredictiveProducts({ term, products, closeSearch }) {
 
   return (
     <div className="predictive-search-result" key="products">
-      <h5>Products</h5>
+      <h5>{t('search.results.products')}</h5>
       <ul>
         {products.map((product) => {
           const productUrl = urlWithTrackingParams({
@@ -237,7 +238,7 @@ function SearchResultsPredictiveEmpty({ term }) {
 
   return (
     <p>
-      No results found for <q>{term.current}</q>
+      {t('search.no_results_for', { term: term.current })}
     </p>
   );
 }

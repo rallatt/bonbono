@@ -10,12 +10,13 @@ import {
   DELETE_ADDRESS_MUTATION,
   CREATE_ADDRESS_MUTATION,
 } from '../graphql/customer-account/CustomerAddressMutations';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = () => {
-  return [{ title: 'Addresses' }];
+  return [{ title: t('meta.addresses') }];
 };
 
 /**
@@ -255,18 +256,18 @@ export default function Addresses() {
 
   return (
     <div className="account-addresses">
-      <h2>Addresses</h2>
+      <h2>{t('addresses.title')}</h2>
       <br />
       <div>
         <div>
-          <legend>Create address</legend>
+          <legend>{t('addresses.create.legend')}</legend>
           <NewAddressForm key={addresses.nodes.length} />
         </div>
         <br />
         <hr />
         <br />
         {!addresses.nodes.length ? (
-          <p>You have no addresses saved.</p>
+          <p>{t('addresses.no_saved')}</p>
         ) : (
           <ExistingAddresses
             addresses={addresses}
@@ -306,7 +307,7 @@ function NewAddressForm() {
             formMethod="POST"
             type="submit"
           >
-            {stateForMethod('POST') !== 'idle' ? 'Creating' : 'Create'}
+            {stateForMethod('POST') !== 'idle' ? t('addresses.creating') : t('addresses.create')}
           </button>
         </div>
       )}
@@ -320,7 +321,7 @@ function NewAddressForm() {
 function ExistingAddresses({ addresses, defaultAddress }) {
   return (
     <div>
-      <legend>Existing addresses</legend>
+      <legend>{t('addresses.existing.legend')}</legend>
       {addresses.nodes.map((address) => (
         <AddressForm
           key={address.id}
@@ -335,14 +336,14 @@ function ExistingAddresses({ addresses, defaultAddress }) {
                 formMethod="PUT"
                 type="submit"
               >
-                {stateForMethod('PUT') !== 'idle' ? 'Saving' : 'Save'}
+                {stateForMethod('PUT') !== 'idle' ? t('addresses.saving') : t('addresses.save')}
               </button>
               <button
                 disabled={stateForMethod('DELETE') !== 'idle'}
                 formMethod="DELETE"
                 type="submit"
               >
-                {stateForMethod('DELETE') !== 'idle' ? 'Deleting' : 'Delete'}
+                {stateForMethod('DELETE') !== 'idle' ? t('addresses.deleting') : t('addresses.delete')}
               </button>
             </div>
           )}
@@ -372,107 +373,107 @@ export function AddressForm({ addressId, address, defaultAddress, children }) {
     <Form id={addressId}>
       <fieldset>
         <input type="hidden" name="addressId" defaultValue={addressId} />
-        <label htmlFor="firstName">First name*</label>
+        <label htmlFor="firstName">{t('addresses.first_name')}</label>
         <input
-          aria-label="First name"
+          aria-label={t('addresses.first_name.aria')}
           autoComplete="given-name"
           defaultValue={address?.firstName ?? ''}
           id="firstName"
           name="firstName"
-          placeholder="First name"
+          placeholder={t('addresses.first_name.aria')}
           required
           type="text"
         />
-        <label htmlFor="lastName">Last name*</label>
+        <label htmlFor="lastName">{t('addresses.last_name')}</label>
         <input
-          aria-label="Last name"
+          aria-label={t('addresses.last_name.aria')}
           autoComplete="family-name"
           defaultValue={address?.lastName ?? ''}
           id="lastName"
           name="lastName"
-          placeholder="Last name"
+          placeholder={t('addresses.last_name.aria')}
           required
           type="text"
         />
-        <label htmlFor="company">Company</label>
+        <label htmlFor="company">{t('addresses.company')}</label>
         <input
-          aria-label="Company"
+          aria-label={t('addresses.company.aria')}
           autoComplete="organization"
           defaultValue={address?.company ?? ''}
           id="company"
           name="company"
-          placeholder="Company"
+          placeholder={t('addresses.company.aria')}
           type="text"
         />
-        <label htmlFor="address1">Address line*</label>
+        <label htmlFor="address1">{t('addresses.address1')}</label>
         <input
-          aria-label="Address line 1"
+          aria-label={t('addresses.address1.aria')}
           autoComplete="address-line1"
           defaultValue={address?.address1 ?? ''}
           id="address1"
           name="address1"
-          placeholder="Address line 1*"
+          placeholder={t('addresses.address1.placeholder')}
           required
           type="text"
         />
-        <label htmlFor="address2">Address line 2</label>
+        <label htmlFor="address2">{t('addresses.address2')}</label>
         <input
-          aria-label="Address line 2"
+          aria-label={t('addresses.address2.aria')}
           autoComplete="address-line2"
           defaultValue={address?.address2 ?? ''}
           id="address2"
           name="address2"
-          placeholder="Address line 2"
+          placeholder={t('addresses.address2.placeholder')}
           type="text"
         />
-        <label htmlFor="city">City*</label>
+        <label htmlFor="city">{t('addresses.city')}</label>
         <input
-          aria-label="City"
+          aria-label={t('addresses.city.aria')}
           autoComplete="address-level2"
           defaultValue={address?.city ?? ''}
           id="city"
           name="city"
-          placeholder="City"
+          placeholder={t('addresses.city.aria')}
           required
           type="text"
         />
-        <label htmlFor="zoneCode">State / Province*</label>
+        <label htmlFor="zoneCode">{t('addresses.province')}</label>
         <input
-          aria-label="State/Province"
+          aria-label={t('addresses.province.aria')}
           autoComplete="address-level1"
           defaultValue={address?.zoneCode ?? ''}
           id="zoneCode"
           name="zoneCode"
-          placeholder="State / Province"
+          placeholder={t('addresses.province.aria')}
           required
           type="text"
         />
-        <label htmlFor="zip">Zip / Postal Code*</label>
+        <label htmlFor="zip">{t('addresses.zip')}</label>
         <input
-          aria-label="Zip"
+          aria-label={t('addresses.zip.aria')}
           autoComplete="postal-code"
           defaultValue={address?.zip ?? ''}
           id="zip"
           name="zip"
-          placeholder="Zip / Postal Code"
+          placeholder={t('addresses.zip.aria')}
           required
           type="text"
         />
-        <label htmlFor="territoryCode">Country Code*</label>
+        <label htmlFor="territoryCode">{t('addresses.country')}</label>
         <input
-          aria-label="Country code"
+          aria-label={t('addresses.country.aria')}
           autoComplete="country"
           defaultValue={address?.territoryCode ?? ''}
           id="territoryCode"
           name="territoryCode"
-          placeholder="Country"
+          placeholder={t('addresses.country.placeholder')}
           required
           type="text"
           maxLength={2}
         />
-        <label htmlFor="phoneNumber">Phone</label>
+        <label htmlFor="phoneNumber">{t('addresses.phone')}</label>
         <input
-          aria-label="Phone Number"
+          aria-label={t('addresses.phone.aria')}
           autoComplete="tel"
           defaultValue={address?.phoneNumber ?? ''}
           id="phoneNumber"
@@ -488,7 +489,7 @@ export function AddressForm({ addressId, address, defaultAddress, children }) {
             name="defaultAddress"
             type="checkbox"
           />
-          <label htmlFor="defaultAddress">Set as default address</label>
+          <label htmlFor="defaultAddress">{t('addresses.set_default')}</label>
         </div>
         {error ? (
           <p>

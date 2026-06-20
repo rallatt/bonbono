@@ -3,12 +3,13 @@ import { getPaginationVariables, Analytics } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
 import { ProductItem } from '../components/ProductItem';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({ data }) => {
-  return [{ title: `Hydrogen | ${data?.collection.title ?? ''} Collection` }];
+  return [{ title: t('meta.collection', { name: data?.collection.title ?? '' }) }];
 };
 
 /**

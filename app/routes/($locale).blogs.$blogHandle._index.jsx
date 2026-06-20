@@ -2,12 +2,13 @@ import { Link, useLoaderData } from 'react-router';
 import { Image, getPaginationVariables } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
 export const meta = ({ data }) => {
-  return [{ title: `Hydrogen | ${data?.blog.title ?? ''} blog` }];
+  return [{ title: t('meta.blog', { name: data?.blog.title ?? '' }) }];
 };
 
 /**

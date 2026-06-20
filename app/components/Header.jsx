@@ -3,6 +3,7 @@ import { Await, NavLink, useAsyncValue } from 'react-router';
 import { useAnalytics, useOptimisticCart } from '@shopify/hydrogen';
 import { useAside } from './Aside';
 import logoImg from '../assets/cleanLogo.png';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {HeaderProps}
@@ -146,7 +147,7 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const { open } = useAside();
   return (
-    <button className="reset" onClick={() => open('search')} aria-label="Recherche">
+    <button className="reset" onClick={() => open('search')} aria-label={t('aside.search.heading')}>
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
         <circle cx="11" cy="11" r="7" />
         <line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round" />
@@ -176,7 +177,7 @@ function CartBadge({ count }) {
         });
       }}
     >
-      Panier <span aria-label={`(${count} articles)`}>{count}</span>
+      Panier <span aria-label={t('header.cart.aria', { count })}>{count}</span>
     </a>
   );
 }
@@ -207,7 +208,7 @@ const FALLBACK_HEADER_MENU = {
       id: 'gid://shopify/MenuItem/461609500728',
       resourceId: null,
       tags: [],
-      title: 'Collections',
+      title: t('nav.collections'),
       type: 'HTTP',
       url: '/collections',
       items: [],
@@ -216,7 +217,7 @@ const FALLBACK_HEADER_MENU = {
       id: 'gid://shopify/MenuItem/461609533496',
       resourceId: null,
       tags: [],
-      title: 'Blog',
+      title: t('nav.blog'),
       type: 'HTTP',
       url: '/blogs/journal',
       items: [],
@@ -225,7 +226,7 @@ const FALLBACK_HEADER_MENU = {
       id: 'gid://shopify/MenuItem/461609566264',
       resourceId: null,
       tags: [],
-      title: 'Policies',
+      title: t('nav.policies'),
       type: 'HTTP',
       url: '/policies',
       items: [],
@@ -234,7 +235,7 @@ const FALLBACK_HEADER_MENU = {
       id: 'gid://shopify/MenuItem/461609599032',
       resourceId: 'gid://shopify/Page/92591030328',
       tags: [],
-      title: 'About',
+      title: t('nav.about'),
       type: 'PAGE',
       url: '/pages/about',
       items: [],
