@@ -1,7 +1,5 @@
-import { Await, useLoaderData, Link } from 'react-router';
-import { Suspense } from 'react';
+import { useLoaderData, Link } from 'react-router';
 import { Image } from '@shopify/hydrogen';
-import { ProductItem } from '../components/ProductItem';
 import { MockShopNotice } from '../components/MockShopNotice';
 import logoOvaleImg from '../assets/cleanLogo.png';
 
@@ -12,65 +10,31 @@ export const meta = () => {
   return [{ title: 'Bonbono — Bonbons et cadeaux' }];
 };
 
-/**
- * @param {Route.LoaderArgs} args
- */
-export async function loader(args) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
+export async function loader({ context }) {
+  const { storefront } = context;
 
-  // Await the critical data required to render initial state of the page
-  const criticalData = await loadCriticalData(args);
-
-  return { ...deferredData, ...criticalData };
-}
-
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- * @param {Route.LoaderArgs}
- */
-async function loadCriticalData({ context }) {
-  const [{ collections }] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
-    // Add other queries here, so that they are loaded in parallel
+  const [categoriesData] = await Promise.all([
+    storefront.query(HOMEPAGE_CATEGORIES_QUERY),
   ]);
 
   return {
     isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
-    featuredCollection: collections.nodes[0],
-  };
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- * @param {Route.LoaderArgs}
- */
-function loadDeferredData({ context }) {
-  const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
-
-  return {
-    recommendedProducts,
+    categories: [
+      categoriesData.bonbons,
+      categoriesData.cuisine,
+      categoriesData.papeterie,
+      categoriesData.nouveautes,
+    ].filter(Boolean),
   };
 }
 
 export default function Homepage() {
-  /** @type {LoaderReturnData} */
   const data = useLoaderData();
   return (
     <div className="home">
       {data.isShopLinked ? null : <MockShopNotice />}
       <HeroBanner />
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <FeaturedCategories categories={data.categories} />
     </div>
   );
 }
@@ -89,66 +53,42 @@ function HeroBanner() {
   );
 }
 
-/**
- * @param {{
- *   collection: FeaturedCollectionFragment;
- * }}
- */
-function FeaturedCollection({ collection }) {
-  if (!collection) return null;
-  const image = collection?.image;
-  return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
-          <Image
-            data={image}
-            sizes="100vw"
-            alt={image.altText || collection.title}
-          />
-        </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
-  );
-}
+const CATEGORY_COLORS = ['#F8DAE7', '#C8F4AE', '#C8F4AE', '#F8DAE7'];
 
-/**
- * @param {{
- *   products: Promise<RecommendedProductsQuery | null>;
- * }}
- */
-function RecommendedProducts({ products }) {
+function FeaturedCategories({ categories }) {
+  if (!categories?.length) return null;
   return (
-    <section
-      className="recommended-products"
-      aria-labelledby="recommended-products"
-    >
-      <h2 id="recommended-products">Nos coups de coeur</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="recommended-products-grid">
-              {response
-                ? response.products.nodes.map((product) => (
-                  <ProductItem key={product.id} product={product} />
-                ))
-                : null}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
+    <section className="featured-categories">
+      <h2 className="featured-categories-title">Nos catégories</h2>
+      <div className="featured-categories-grid">
+        {categories.map((collection, i) => (
+          <Link
+            key={collection.id}
+            to={`/collections/${collection.handle}`}
+            className="featured-category-card"
+            style={{ '--card-bg': CATEGORY_COLORS[i % CATEGORY_COLORS.length] }}
+          >
+            {collection.image && (
+              <div className="featured-category-image">
+                <Image
+                  data={collection.image}
+                  sizes="(min-width: 45em) 25vw, 50vw"
+                  alt={collection.image.altText || collection.title}
+                />
+              </div>
+            )}
+            <span className="featured-category-title">{collection.title}</span>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }
 
-const FEATURED_COLLECTION_QUERY = `#graphql
-  fragment FeaturedCollection on Collection {
+const HOMEPAGE_CATEGORIES_QUERY = `#graphql
+  fragment CategoryCollection on Collection {
     id
+    handle
     title
     image {
       id
@@ -157,54 +97,15 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       width
       height
     }
-    handle
   }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
+  query HomepageCategories($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...FeaturedCollection
-      }
-    }
-  }
-`;
-
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
-    id
-    title
-    handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    featuredImage {
-      id
-      url
-      altText
-      width
-      height
-    }
-    variants(first: 1) {
-      nodes {
-        id
-        availableForSale
-      }
-    }
-  }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...RecommendedProduct
-      }
-    }
+    bonbons: collection(handle: "bonbons") { ...CategoryCollection }
+    cuisine: collection(handle: "accessoires-de-cuisine") { ...CategoryCollection }
+    papeterie: collection(handle: "papeterie-autres-trouvailles") { ...CategoryCollection }
+    nouveautes: collection(handle: "nouveautes") { ...CategoryCollection }
   }
 `;
 
 /** @typedef {import('./+types/_index').Route} Route */
-/** @typedef {import('storefrontapi.generated').FeaturedCollectionFragment} FeaturedCollectionFragment */
-/** @typedef {import('storefrontapi.generated').RecommendedProductsQuery} RecommendedProductsQuery */
 /** @typedef {ReturnType<typeof useLoaderData<typeof loader>>} LoaderReturnData */
