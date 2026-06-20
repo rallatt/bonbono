@@ -108,7 +108,7 @@ function EmptyOrders({ hasFilters = false }) {
           <p>{t('orders.empty')}</p>
           <br />
           <p>
-            <Link to="/collections">{t('orders.start_shopping')}</Link>
+            <Link to="/collections/all">{t('orders.start_shopping')}</Link>
           </p>
         </>
       )}

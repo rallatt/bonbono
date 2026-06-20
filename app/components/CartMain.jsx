@@ -95,7 +95,7 @@ function CartEmpty({ hidden = false }) {
       <br />
       <p>{t('cart.empty')}</p>
       <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
+      <Link to="/collections/all" onClick={close} prefetch="viewport">
         {t('cart.continue_shopping')}
       </Link>
     </div>
