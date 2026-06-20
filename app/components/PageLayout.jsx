@@ -2,7 +2,7 @@ import { Await, Link } from 'react-router';
 import { Suspense, useId } from 'react';
 import { Aside } from './Aside';
 import { Footer } from './Footer';
-import { Header, HeaderMenu } from './Header';
+import { Header } from './Header';
 import { CartMain } from './CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -26,7 +26,6 @@ export function PageLayout({
     <Aside.Provider>
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       {header && (
         <Header
           header={header}
@@ -141,28 +140,6 @@ function SearchAside() {
         </SearchResultsPredictive>
       </div>
     </Aside>
-  );
-}
-
-/**
- * @param {{
- *   header: PageLayoutProps['header'];
- *   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
- * }}
- */
-function MobileMenuAside({ header, publicStoreDomain }) {
-  return (
-    header.menu &&
-    header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading={t('aside.mobile.heading')}>
-        <HeaderMenu
-          menu={header.menu}
-          viewport="mobile"
-          primaryDomainUrl={header.shop.primaryDomain.url}
-          publicStoreDomain={publicStoreDomain}
-        />
-      </Aside>
-    )
   );
 }
 

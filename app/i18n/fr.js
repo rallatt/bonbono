@@ -22,6 +22,8 @@ export const fr = {
   'nav.blog': 'Blogue',
   'nav.policies': 'Politiques',
   'nav.about': 'À propos',
+  'nav.more': 'Plus',
+  'nav.mobile_menu': 'Menu',
 
   // Footer fallback menu items
   'footer.privacy': 'Politique de confidentialité',
