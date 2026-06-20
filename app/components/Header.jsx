@@ -69,6 +69,19 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
   );
 }
 
+function useIsTouch() {
+  const [isTouch, setIsTouch] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
+    setIsTouch(mq.matches);
+    const handler = (e) => setIsTouch(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return isTouch;
+}
+
 /**
  * Desktop nav with overflow detection.
  * Items that don't fit in the available space collapse into an animated "Plus" dropdown.
@@ -93,6 +106,9 @@ function OverflowNav({ items, resolveUrl }) {
   const navRef = useRef(null);
   const rulerRef = useRef(null);
   const [visibleCount, setVisibleCount] = useState(items.length);
+  const isTouch = useIsTouch();
+  const [openId, setOpenId] = useState(null);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   const compute = useCallback(() => {
     const nav = navRef.current;
@@ -150,6 +166,20 @@ function OverflowNav({ items, resolveUrl }) {
     flipDropdowns(navRef.current);
   }, [visibleCount]);
 
+  // Touch: close all dropdowns when tapping outside the nav
+  useEffect(() => {
+    if (!isTouch) return;
+    if (openId === null && !moreOpen) return;
+    const handler = (e) => {
+      if (!navRef.current?.contains(e.target)) {
+        setOpenId(null);
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener('pointerdown', handler);
+    return () => document.removeEventListener('pointerdown', handler);
+  }, [isTouch, openId, moreOpen]);
+
   const visibleItems = items.slice(0, visibleCount);
   const overflowItems = items.slice(visibleCount);
 
@@ -190,14 +220,16 @@ function OverflowNav({ items, resolveUrl }) {
           const hasChildren = item.items?.length > 0;
 
           if (hasChildren) {
+            const isOpen = openId === item.id;
             return (
-              <div key={item.id} className="header-menu-item-wrapper">
+              <div key={item.id} className={`header-menu-item-wrapper${isOpen ? ' is-open' : ''}`}>
                 <NavLink
                   className="header-menu-item header-menu-item--parent"
                   end
                   prefetch="intent"
                   style={activeLinkStyle}
                   to={url}
+                  onClick={isTouch ? (e) => { e.preventDefault(); setOpenId(isOpen ? null : item.id); } : undefined}
                 >
                   {HEADER_TITLE_BY_URL[url] ?? item.title}
                   <span className="header-menu-chevron" aria-hidden="true">
@@ -215,6 +247,7 @@ function OverflowNav({ items, resolveUrl }) {
                           prefetch="intent"
                           style={activeLinkStyle}
                           to={childUrl}
+                          onClick={() => setOpenId(null)}
                         >
                           {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
                         </NavLink>
@@ -241,8 +274,11 @@ function OverflowNav({ items, resolveUrl }) {
         })}
 
         {overflowItems.length > 0 && (
-          <div className="header-menu-more-wrapper">
-            <button className="header-menu-item header-menu-more-btn reset">
+          <div className={`header-menu-more-wrapper${moreOpen ? ' is-open' : ''}`}>
+            <button
+              className="header-menu-item header-menu-more-btn reset"
+              onClick={isTouch ? () => setMoreOpen((v) => !v) : undefined}
+            >
               {t('nav.more')}
               <span className="header-menu-chevron" aria-hidden="true">▾</span>
             </button>
@@ -253,13 +289,15 @@ function OverflowNav({ items, resolveUrl }) {
                 const hasChildren = item.items?.length > 0;
 
                 if (hasChildren) {
+                  const isOverflowItemOpen = openId === `overflow-${item.id}`;
                   return (
-                    <li key={item.id} className="header-menu-item-wrapper">
+                    <li key={item.id} className={`header-menu-item-wrapper${isOverflowItemOpen ? ' is-open' : ''}`}>
                       <NavLink
                         className="header-menu-dropdown-item header-menu-item--parent"
                         to={url}
                         prefetch="intent"
                         style={activeLinkStyle}
+                        onClick={isTouch ? (e) => { e.preventDefault(); setOpenId(isOverflowItemOpen ? null : `overflow-${item.id}`); } : undefined}
                       >
                         {HEADER_TITLE_BY_URL[url] ?? item.title}
                         <span className="header-menu-chevron" aria-hidden="true">▾</span>
@@ -275,6 +313,7 @@ function OverflowNav({ items, resolveUrl }) {
                                 to={childUrl}
                                 prefetch="intent"
                                 style={activeLinkStyle}
+                                onClick={() => { setOpenId(null); setMoreOpen(false); }}
                               >
                                 {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
                               </NavLink>
@@ -293,6 +332,7 @@ function OverflowNav({ items, resolveUrl }) {
                       to={url}
                       prefetch="intent"
                       style={activeLinkStyle}
+                      onClick={() => setMoreOpen(false)}
                     >
                       {HEADER_TITLE_BY_URL[url] ?? item.title}
                     </NavLink>

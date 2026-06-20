@@ -410,7 +410,9 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-menu-item-wrapper:hover .header-menu-chevron,
+.header-menu-item-wrapper.is-open .header-menu-chevron,
 .header-menu-more-wrapper:hover > .header-menu-more-btn > .header-menu-chevron,
+.header-menu-more-wrapper.is-open > .header-menu-more-btn > .header-menu-chevron,
 .header-menu-chevron.is-open {
   transform: rotate(180deg);
 }
@@ -457,7 +459,27 @@ button.reset:hover:not(:has(> *)) {
   pointer-events: auto;
 }
 
-.header-menu-item-wrapper:hover .header-menu-dropdown {
+@media (hover: hover) and (pointer: fine) {
+  .header-menu-item-wrapper:hover .header-menu-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scaleY(1) translateY(0);
+    transition:
+      opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      visibility 0s,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Keep dropdown open briefly when cursor briefly leaves the hover area */
+  .header-menu-item-wrapper:not(:hover) .header-menu-dropdown,
+  .header-menu-more-wrapper:not(:hover) .header-menu-overflow-dropdown {
+    transition-delay: 120ms;
+  }
+}
+
+/* Touch: show dropdown when wrapper has .is-open class (toggled via JS) */
+.header-menu-item-wrapper.is-open .header-menu-dropdown {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -466,12 +488,6 @@ button.reset:hover:not(:has(> *)) {
     opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
     visibility 0s,
     transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Keep dropdown open briefly when cursor briefly leaves the hover area */
-.header-menu-item-wrapper:not(:hover) .header-menu-dropdown,
-.header-menu-more-wrapper:not(:hover) .header-menu-overflow-dropdown {
-  transition-delay: 120ms;
 }
 
 .header .header-menu-dropdown-item {
@@ -582,7 +598,8 @@ li:last-child .header-menu-dropdown-item {
   transition: background 0.15s, border-color 0.15s;
 }
 
-.header-menu-more-wrapper:hover .header-menu-more-btn::before {
+.header-menu-more-wrapper:hover .header-menu-more-btn::before,
+.header-menu-more-wrapper.is-open .header-menu-more-btn::before {
   background: rgba(255, 255, 255, 0.30);
   border-color: rgba(255, 255, 255, 0.65);
 }
@@ -611,8 +628,21 @@ li:last-child .header-menu-dropdown-item {
     transform 0.2s ease-in;
 }
 
-.header-menu-more-wrapper:hover .header-menu-overflow-dropdown,
-.header-menu-more-wrapper:focus-within .header-menu-overflow-dropdown {
+@media (hover: hover) and (pointer: fine) {
+  .header-menu-more-wrapper:hover .header-menu-overflow-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scaleY(1) translateY(0);
+    transition:
+      opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+      visibility 0s,
+      transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+.header-menu-more-wrapper:focus-within .header-menu-overflow-dropdown,
+.header-menu-more-wrapper.is-open .header-menu-overflow-dropdown {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
