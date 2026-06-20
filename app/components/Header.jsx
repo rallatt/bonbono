@@ -73,12 +73,26 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
  * Desktop nav with overflow detection.
  * Items that don't fit in the available space collapse into an animated "Plus" dropdown.
  */
+function flipDropdowns(nav) {
+  if (!nav) return;
+  // Only flip top-level wrappers — nested ones inside the overflow menu are inline
+  nav.querySelectorAll(':scope > .header-menu-item-wrapper').forEach((wrapper) => {
+    const dropdown = wrapper.querySelector('.header-menu-dropdown');
+    if (!dropdown) return;
+    // Reset first so we measure the natural left-aligned position
+    delete wrapper.dataset.flip;
+    // position:absolute + visibility:hidden still produces a measurable rect
+    const rect = dropdown.getBoundingClientRect();
+    if (rect.right > window.innerWidth - 8) {
+      wrapper.dataset.flip = 'right';
+    }
+  });
+}
+
 function OverflowNav({ items, resolveUrl }) {
   const navRef = useRef(null);
   const rulerRef = useRef(null);
   const [visibleCount, setVisibleCount] = useState(items.length);
-  const [overflowOpen, setOverflowOpen] = useState(false);
-  const [overflowClosing, setOverflowClosing] = useState(false);
 
   const compute = useCallback(() => {
     const nav = navRef.current;
@@ -95,10 +109,11 @@ function OverflowNav({ items, resolveUrl }) {
       .slice(0, -1)
       .map((el) => el.getBoundingClientRect().width);
 
-    const availWidth = nav.getBoundingClientRect().width;
+    const navStyle = window.getComputedStyle(nav);
+    const paddingRight = parseFloat(navStyle.paddingRight) || 0;
+    const availWidth = nav.getBoundingClientRect().width - paddingRight;
     // Use columnGap for flex gap
-    const gap =
-      parseFloat(window.getComputedStyle(nav).columnGap) || 12;
+    const gap = parseFloat(navStyle.columnGap) || 12;
 
     let total = 0;
     let count = 0;
@@ -131,26 +146,9 @@ function OverflowNav({ items, resolveUrl }) {
     return () => ro.disconnect();
   }, [compute]);
 
-  // Close overflow dropdown on outside click
   useEffect(() => {
-    if (!overflowOpen) return;
-    const handler = (e) => {
-      if (!navRef.current?.contains(e.target)) closeOverflow();
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [overflowOpen]);
-
-  const closeOverflow = () => {
-    setOverflowClosing(true);
-    setTimeout(() => {
-      setOverflowOpen(false);
-      setOverflowClosing(false);
-    }, 220);
-  };
-
-  const toggleOverflow = () =>
-    overflowOpen ? closeOverflow() : setOverflowOpen(true);
+    flipDropdowns(navRef.current);
+  }, [visibleCount]);
 
   const visibleItems = items.slice(0, visibleCount);
   const overflowItems = items.slice(visibleCount);
@@ -244,42 +242,64 @@ function OverflowNav({ items, resolveUrl }) {
 
         {overflowItems.length > 0 && (
           <div className="header-menu-more-wrapper">
-            <button
-              className="header-menu-item header-menu-more-btn reset"
-              aria-expanded={overflowOpen}
-              onClick={toggleOverflow}
-            >
+            <button className="header-menu-item header-menu-more-btn reset">
               {t('nav.more')}
-              <span
-                className={`header-menu-chevron${overflowOpen ? ' is-open' : ''}`}
-                aria-hidden="true"
-              >
-                ▾
-              </span>
+              <span className="header-menu-chevron" aria-hidden="true">▾</span>
             </button>
-            {overflowOpen && (
-              <ul
-                className={`header-menu-overflow-dropdown${overflowClosing ? ' closing' : ''}`}
-              >
-                {overflowItems.map((item) => {
-                  const url = resolveUrl(item.url);
-                  if (!url) return null;
+            <ul className="header-menu-overflow-dropdown">
+              {overflowItems.map((item) => {
+                const url = resolveUrl(item.url);
+                if (!url) return null;
+                const hasChildren = item.items?.length > 0;
+
+                if (hasChildren) {
                   return (
-                    <li key={item.id}>
+                    <li key={item.id} className="header-menu-item-wrapper">
                       <NavLink
-                        className="header-menu-dropdown-item"
+                        className="header-menu-dropdown-item header-menu-item--parent"
                         to={url}
                         prefetch="intent"
                         style={activeLinkStyle}
-                        onClick={closeOverflow}
                       >
                         {HEADER_TITLE_BY_URL[url] ?? item.title}
+                        <span className="header-menu-chevron" aria-hidden="true">▾</span>
                       </NavLink>
+                      <ul className="header-menu-dropdown">
+                        {item.items.map((child) => {
+                          const childUrl = resolveUrl(child.url);
+                          if (!childUrl) return null;
+                          return (
+                            <li key={child.id}>
+                              <NavLink
+                                className="header-menu-dropdown-item"
+                                to={childUrl}
+                                prefetch="intent"
+                                style={activeLinkStyle}
+                              >
+                                {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+                              </NavLink>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </li>
                   );
-                })}
-              </ul>
-            )}
+                }
+
+                return (
+                  <li key={item.id}>
+                    <NavLink
+                      className="header-menu-dropdown-item"
+                      to={url}
+                      prefetch="intent"
+                      style={activeLinkStyle}
+                    >
+                      {HEADER_TITLE_BY_URL[url] ?? item.title}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         )}
       </nav>

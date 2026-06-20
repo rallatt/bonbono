@@ -16,19 +16,37 @@ body {
   letter-spacing: 0.01em;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Paytone One', cursive;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: #176131;
 }
 
-h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
-h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
-h3 { font-size: 1.8rem; }
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
 
-a { color: #E55A7E; }
-a:hover { color: #176131; }
+h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+a {
+  color: #E55A7E;
+}
+
+a:hover {
+  color: #176131;
+}
 
 img {
   border-radius: 4px;
@@ -217,6 +235,7 @@ aside li {
   pointer-events: auto;
   visibility: visible;
 }
+
 /* reveal aside */
 .overlay.expanded aside {
   transform: translateX(calc(var(--aside-width) * -1));
@@ -225,10 +244,9 @@ aside li {
 button.reset {
   border: 0;
   background: inherit;
-  font-size: inherit;
 }
 
-button.reset > * {
+button.reset>* {
   margin: 0;
 }
 
@@ -275,12 +293,13 @@ button.reset:hover:not(:has(> *)) {
 .header-logo-img {
   height: 68px;
   width: auto;
-  filter: brightness(0) invert(1) drop-shadow(2px 3px 6px rgba(0,0,0,0.25));
+  filter: brightness(0) invert(1) drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.25));
 }
 
 .header-menu-mobile-toggle {
   font-size: 1.4rem;
   line-height: 1;
+
   @media (min-width: 48em) {
     display: none;
   }
@@ -332,11 +351,14 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-desktop {
   display: none;
   min-width: 0;
+
   @media (min-width: 48em) {
+    align-items: center;
     display: flex;
     flex: 1;
     gap: clamp(0.5rem, 1.5vw, 1.5rem);
     margin-left: clamp(1rem, 2vw, 3rem);
+    padding-right: 1.5rem;
   }
 }
 
@@ -359,6 +381,7 @@ button.reset:hover:not(:has(> *)) {
   font-size: clamp(0.85rem, 1.3vw, 1.5rem);
   font-weight: 400;
   letter-spacing: 0.04em;
+  text-decoration: none !important;
   white-space: nowrap;
 }
 
@@ -379,6 +402,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-menu-item-wrapper:hover .header-menu-chevron,
+.header-menu-more-wrapper:hover > .header-menu-more-btn > .header-menu-chevron,
 .header-menu-chevron.is-open {
   transform: rotate(180deg);
 }
@@ -387,26 +411,42 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-dropdown {
   background: white;
   border-radius: 0.75rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   list-style: none;
   margin: 0;
+  max-height: calc(100vh - var(--header-height) - 1.5rem);
   min-width: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 0;
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
   z-index: 100;
-  overflow: hidden;
   /* hidden state */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: scaleY(0.82) translateY(-8px);
+  transform: scaleY(0.92) translateY(-6px);
   transform-origin: top left;
   transition:
-    opacity 0.15s ease,
-    visibility 0.15s,
-    transform 0.15s ease;
+    opacity 0.2s ease,
+    visibility 0.2s,
+    transform 0.2s ease;
+}
+
+/* Invisible bridge so cursor can travel from trigger to dropdown without it closing.
+   Scoped to direct nav children only — nested wrappers inside the overflow dropdown
+   are in a vertical list where the bridge would cover the next item and block hover. */
+.header-menu-desktop > .header-menu-item-wrapper::after,
+.header-menu-more-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -1rem;
+  right: -1rem;
+  height: 12px;
+  pointer-events: auto;
 }
 
 .header-menu-item-wrapper:hover .header-menu-dropdown {
@@ -418,6 +458,12 @@ button.reset:hover:not(:has(> *)) {
     opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
     visibility 0s,
     transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Keep dropdown open briefly when cursor briefly leaves the hover area */
+.header-menu-item-wrapper:not(:hover) .header-menu-dropdown,
+.header-menu-more-wrapper:not(:hover) .header-menu-overflow-dropdown {
+  transition-delay: 120ms;
 }
 
 .header .header-menu-dropdown-item {
@@ -474,7 +520,7 @@ li:last-child .header-menu-dropdown-item {
   margin-left: auto;
 }
 
-.header-ctas > * {
+.header-ctas>* {
   min-width: fit-content;
 }
 
@@ -487,12 +533,32 @@ li:last-child .header-menu-dropdown-item {
 .header-menu-more-btn {
   display: flex;
   align-items: center;
+  align-self: center;
   gap: 0.3rem;
   cursor: pointer;
   background: none;
   border: none;
   color: white;
+  font-size: clamp(0.85rem, 1.3vw, 1.5rem);
   padding: 0;
+  position: relative;
+}
+
+/* Pill drawn via pseudo-element — zero layout impact, so no size change */
+.header-menu-more-btn::before {
+  content: '';
+  position: absolute;
+  inset: -0.3rem -0.65rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.42);
+  border-radius: 100px;
+  pointer-events: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.header-menu-more-wrapper:hover .header-menu-more-btn::before {
+  background: rgba(255, 255, 255, 0.30);
+  border-color: rgba(255, 255, 255, 0.65);
 }
 
 .header-menu-overflow-dropdown {
@@ -503,28 +569,96 @@ li:last-child .header-menu-dropdown-item {
   top: calc(100% + 10px);
   right: 0;
   min-width: 200px;
-  background: white;
+  background: #F8DAE7;
   border-radius: 1rem;
-  box-shadow: 0 10px 32px rgba(229, 90, 126, 0.18), 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 32px rgba(229, 90, 126, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
   z-index: 300;
-  overflow: hidden;
-  transform-origin: top right;
-  animation: overflowMenuIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.header-menu-overflow-dropdown.closing {
-  animation: overflowMenuOut 0.2s ease-in forwards;
+  /* hidden state — same transition pattern as .header-menu-dropdown */
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  transform: scaleY(0.92) translateY(-6px);
+  transform-origin: top right;
+  transition:
+    opacity 0.2s ease-in,
+    visibility 0s 0.2s,
+    transform 0.2s ease-in;
 }
 
-@keyframes overflowMenuIn {
-  from { opacity: 0; transform: scaleY(0.75) translateY(-8px); }
-  to   { opacity: 1; transform: scaleY(1)    translateY(0);    }
+.header-menu-more-wrapper:hover .header-menu-overflow-dropdown,
+.header-menu-more-wrapper:focus-within .header-menu-overflow-dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scaleY(1) translateY(0);
+  transition:
+    opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0s,
+    transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes overflowMenuOut {
-  from { opacity: 1; transform: scaleY(1)    translateY(0);    }
-  to   { opacity: 0; transform: scaleY(0.75) translateY(-8px); }
+/* Clip hover-bg to border-radius on first/last items */
+.header-menu-overflow-dropdown>li:first-child>.header-menu-dropdown-item,
+.header-menu-overflow-dropdown>li:first-child>.header-menu-item-wrapper>.header-menu-dropdown-item {
+  border-top-left-radius: 0.9rem;
+  border-top-right-radius: 0.9rem;
+  padding-top: 1rem;
+}
+
+.header-menu-overflow-dropdown>li:last-child>.header-menu-dropdown-item,
+.header-menu-overflow-dropdown>li:last-child>.header-menu-item-wrapper>.header-menu-dropdown-item {
+  border-bottom-left-radius: 0.9rem;
+  border-bottom-right-radius: 0.9rem;
+  padding-bottom: 1rem;
+}
+
+/* Items inside overflow dropdown sit on pink — override hover to use brand pink bg */
+.header-menu-overflow-dropdown>li>.header-menu-dropdown-item:hover {
+  background: #E55A7E;
+  color: white;
+}
+
+/* Thin on-brand scrollbar inside dropdowns */
+.header-menu-dropdown::-webkit-scrollbar,
+.header-menu-overflow-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.header-menu-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* White dropdown: pink thumb */
+.header-menu-dropdown::-webkit-scrollbar-thumb {
+  background: #E55A7E;
+  border-radius: 100px;
+}
+
+
+/* Flip dropdown to right-align when near the right viewport edge */
+.header-menu-item-wrapper[data-flip] .header-menu-dropdown {
+  left: auto;
+  right: 0;
+  transform-origin: top right;
+}
+
+/* Nested submenus inside overflow: fly out to the LEFT (overflow is right-aligned).
+   No overflow clipping on the pink container, so these float freely. */
+.header-menu-overflow-dropdown .header-menu-item-wrapper {
+  position: relative;
+}
+
+.header-menu-overflow-dropdown .header-menu-item-wrapper .header-menu-dropdown {
+  left: auto;
+  right: 100%;
+  top: 0;
+  transform-origin: top right;
+}
+
+/* Items inside the nested white submenu: distinct hover so it reads clearly on pink surroundings */
+.header-menu-overflow-dropdown .header-menu-item-wrapper .header-menu-dropdown .header-menu-dropdown-item:hover {
+  background: #E55A7E;
+  color: white;
 }
 
 /* ---- Mobile menu backdrop ---- */
@@ -543,8 +677,25 @@ li:last-child .header-menu-dropdown-item {
   pointer-events: none;
 }
 
-@keyframes backdropIn  { from { opacity: 0; } to { opacity: 1; } }
-@keyframes backdropOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
 
 /* ---- Mobile menu panel ---- */
 
@@ -573,13 +724,27 @@ li:last-child .header-menu-dropdown-item {
 }
 
 @keyframes mobileMenuIn {
-  from { opacity: 0; transform: scaleY(0.8);  }
-  to   { opacity: 1; transform: scaleY(1);    }
+  from {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
 }
 
 @keyframes mobileMenuOut {
-  from { opacity: 1; transform: scaleY(1);    }
-  to   { opacity: 0; transform: scaleY(0.8);  }
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
 }
 
 .mobile-menu-nav {
@@ -610,8 +775,15 @@ li:last-child .header-menu-dropdown-item {
 }
 
 @keyframes mobileItemIn {
-  from { opacity: 0; transform: translateX(-18px); }
-  to   { opacity: 1; transform: translateX(0);     }
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /*
@@ -700,6 +872,7 @@ li:last-child .header-menu-dropdown-item {
   align-items: center;
   display: flex;
 }
+
 /*
 * --------------------------------------------------
 * Pagination
@@ -794,13 +967,11 @@ li:last-child .header-menu-dropdown-item {
 * --------------------------------------------------
 */
 .hero-banner {
-  background: repeating-linear-gradient(
-    90deg,
-    #F8DAE7 0,
-    #F8DAE7 80px,
-    #C8F4AE 80px,
-    #C8F4AE 160px
-  );
+  background: repeating-linear-gradient(90deg,
+      #F8DAE7 0,
+      #F8DAE7 80px,
+      #C8F4AE 80px,
+      #C8F4AE 160px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -822,7 +993,7 @@ li:last-child .header-menu-dropdown-item {
 .hero-banner-logo-main {
   width: 100%;
   height: auto;
-  filter: drop-shadow(4px 8px 20px rgba(0,0,0,0.18));
+  filter: drop-shadow(4px 8px 20px rgba(0, 0, 0, 0.18));
 }
 
 .hero-banner-tagline {
@@ -879,6 +1050,7 @@ li:last-child .header-menu-dropdown-item {
   gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
   justify-items: center;
+
   @media (min-width: 45em) {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -897,7 +1069,7 @@ li:last-child .header-menu-dropdown-item {
 
 .featured-category-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   text-decoration: none;
 }
 
@@ -956,6 +1128,7 @@ li:last-child .header-menu-dropdown-item {
 
 .featured-collection-image {
   aspect-ratio: 1 / 1;
+
   @media (min-width: 45em) {
     aspect-ratio: 16 / 9;
   }
@@ -971,6 +1144,7 @@ li:last-child .header-menu-dropdown-item {
   display: grid;
   grid-gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
+
   @media (min-width: 45em) {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -1005,6 +1179,7 @@ li:last-child .header-menu-dropdown-item {
 .collection-description {
   margin-bottom: 1rem;
   max-width: 95%;
+
   @media (min-width: 45em) {
     max-width: 600px;
   }
@@ -1016,6 +1191,7 @@ li:last-child .header-menu-dropdown-item {
   grid-template-columns: repeat(2, 1fr);
   margin-bottom: 4rem;
   padding: 0 1rem;
+
   @media (min-width: 45em) {
     grid-template-columns: repeat(3, 1fr);
     padding: 0 2rem;
@@ -1121,6 +1297,7 @@ li:last-child .header-menu-dropdown-item {
 .product {
   display: grid;
   padding: 2rem 3rem;
+
   @media (min-width: 45em) {
     grid-template-columns: 38% 1fr;
     grid-gap: 4rem;
@@ -1340,12 +1517,21 @@ li:last-child .header-menu-dropdown-item {
 * --------------------------------------------------
 */
 @keyframes candy-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes candy-bob {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .candy-loader {
@@ -1362,14 +1548,12 @@ li:last-child .header-menu-dropdown-item {
 
 .candy-loader__pop {
   animation: candy-spin 1s linear infinite;
-  background: conic-gradient(
-    #E55A7E 0deg 60deg,
-    #fff    60deg 120deg,
-    #176131 120deg 180deg,
-    #E55A7E 180deg 240deg,
-    #fff    240deg 300deg,
-    #176131 300deg 360deg
-  );
+  background: conic-gradient(#E55A7E 0deg 60deg,
+      #fff 60deg 120deg,
+      #176131 120deg 180deg,
+      #E55A7E 180deg 240deg,
+      #fff 240deg 300deg,
+      #176131 300deg 360deg);
   border-radius: 50%;
   height: 48px;
   position: relative;
@@ -1377,7 +1561,7 @@ li:last-child .header-menu-dropdown-item {
 }
 
 .candy-loader__shine {
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.55) 0%, transparent 65%);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.55) 0%, transparent 65%);
   border-radius: 50%;
   inset: 0;
   position: absolute;
@@ -1417,13 +1601,11 @@ li:last-child .header-menu-dropdown-item {
 .candy-placeholder {
   align-items: center;
   aspect-ratio: 1 / 1;
-  background: repeating-linear-gradient(
-    45deg,
-    #fce8ef 0px,
-    #fce8ef 18px,
-    #fff    18px,
-    #fff    36px
-  );
+  background: repeating-linear-gradient(45deg,
+      #fce8ef 0px,
+      #fce8ef 18px,
+      #fff 18px,
+      #fff 36px);
   border-radius: 1rem;
   display: flex;
   justify-content: center;
