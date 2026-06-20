@@ -68,18 +68,20 @@ export default function SearchPage() {
 
         {error && <p className="search-error">{error}</p>}
 
-        {!term || !result?.total ? (
-          <SearchResults.Empty />
-        ) : (
-          <SearchResults result={result} term={term}>
-            {({ articles, pages, products, term }) => (
-              <div className="search-results-grid">
-                <SearchResults.Products products={products} term={term} />
-                <SearchResults.Pages pages={pages} term={term} />
-                <SearchResults.Articles articles={articles} term={term} />
-              </div>
-            )}
-          </SearchResults>
+        {term && (
+          !result?.total ? (
+            <SearchResults.Empty />
+          ) : (
+            <SearchResults result={result} term={term}>
+              {({ articles, pages, products, term }) => (
+                <div className="search-results-grid">
+                  <SearchResults.Products products={products} term={term} />
+                  <SearchResults.Pages pages={pages} term={term} />
+                  <SearchResults.Articles articles={articles} term={term} />
+                </div>
+              )}
+            </SearchResults>
+          )
         )}
       </div>
 
