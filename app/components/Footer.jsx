@@ -32,6 +32,18 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
  *   publicStoreDomain: string;
  * }}
  */
+const FOOTER_TITLE_BY_URL = {
+  '/search': t('search.title'),
+  '/collections': t('nav.collections'),
+  '/blogs/journal': t('nav.blog'),
+  '/policies': t('nav.policies'),
+  '/pages/about': t('nav.about'),
+  '/policies/privacy-policy': t('footer.privacy'),
+  '/policies/refund-policy': t('footer.refund'),
+  '/policies/shipping-policy': t('footer.shipping'),
+  '/policies/terms-of-service': t('footer.terms'),
+};
+
 function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
     <nav className="footer-menu" role="navigation">
@@ -44,10 +56,11 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
           item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
             : item.url;
+        const title = FOOTER_TITLE_BY_URL[url] ?? item.title;
         const isExternal = !url.startsWith('/');
         return isExternal ? (
           <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
+            {title}
           </a>
         ) : (
           <NavLink
@@ -57,7 +70,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
             style={activeLinkStyle}
             to={url}
           >
-            {item.title}
+            {title}
           </NavLink>
         );
       })}

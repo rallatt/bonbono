@@ -52,6 +52,14 @@ export function HeaderMenu({
       : url;
   };
 
+  const HEADER_TITLE_BY_URL = {
+    '/search': t('search.title'),
+    '/collections': t('nav.collections'),
+    '/blogs/journal': t('nav.blog'),
+    '/policies': t('nav.policies'),
+    '/pages/about': t('nav.about'),
+  };
+
   return (
     <nav className={className} role="navigation">
       {viewport === 'mobile' && (
@@ -75,7 +83,7 @@ export function HeaderMenu({
                 style={activeLinkStyle}
                 to={url}
               >
-                {item.title}
+                {HEADER_TITLE_BY_URL[url] ?? item.title}
                 <span className="header-menu-chevron" aria-hidden="true">▾</span>
               </NavLink>
               <ul className="header-menu-dropdown">
@@ -91,7 +99,7 @@ export function HeaderMenu({
                         style={activeLinkStyle}
                         to={childUrl}
                       >
-                        {child.title}
+                        {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
                       </NavLink>
                     </li>
                   );
@@ -111,7 +119,7 @@ export function HeaderMenu({
             style={activeLinkStyle}
             to={url}
           >
-            {item.title}
+            {HEADER_TITLE_BY_URL[url] ?? item.title}
           </NavLink>
         );
       })}
