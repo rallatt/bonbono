@@ -36,16 +36,16 @@ export function ProductItem({ product, loading }) {
         )}
         <div className="product-item-info">
           <h4>{product.title}</h4>
-          <p className="product-item-price">
+          <div className="product-item-price">
             <Money data={product.priceRange.minVariantPrice} />
-          </p>
+          </div>
         </div>
       </Link>
       {firstVariant?.availableForSale ? (
         <CartForm
           route="/cart"
           action={CartForm.ACTIONS.LinesAdd}
-          inputs={{ lines: [{ merchandiseId: firstVariant.id, quantity: 1 }] }}
+          inputs={{ lines: [{ merchandiseId: firstVariant.id, quantity: 1, selectedVariant: firstVariant }] }}
         >
           <button type="submit" className="product-item-add-btn">
             {t('product.add_to_cart')}
