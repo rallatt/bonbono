@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { Image, Money, CartForm } from '@shopify/hydrogen';
 import { useVariantUrl } from '../lib/variants';
 import { t } from '../i18n/index.js';
-import { CandyImageWrapper } from './CandyLoader.jsx';
+import { CandyImageWrapper, CandyPlaceholder } from './CandyLoader.jsx';
 
 /**
  * @param {{
@@ -21,7 +21,7 @@ export function ProductItem({ product, loading }) {
   return (
     <div className="product-item">
       <Link className="product-item-link" prefetch="intent" to={variantUrl}>
-        {image && (
+        {image ? (
           <CandyImageWrapper>
             <Image
               alt={image.altText || product.title}
@@ -31,6 +31,8 @@ export function ProductItem({ product, loading }) {
               sizes="(min-width: 45em) 400px, 100vw"
             />
           </CandyImageWrapper>
+        ) : (
+          <CandyPlaceholder />
         )}
         <div className="product-item-info">
           <h4>{product.title}</h4>

@@ -1,5 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 
+const CANDY_EMOJIS = ['🍬', '🍭', '🍡', '🧁', '🍩'];
+
+export function CandyPlaceholder() {
+  const emoji = CANDY_EMOJIS[Math.floor(Math.random() * CANDY_EMOJIS.length)];
+  return (
+    <div className="candy-placeholder" aria-hidden="true">
+      <span className="candy-placeholder__emoji">{emoji}</span>
+    </div>
+  );
+}
+
 export function CandyLoader() {
   return (
     <div className="candy-loader" aria-hidden="true">

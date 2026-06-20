@@ -1412,3 +1412,27 @@ li:last-child .header-menu-dropdown-item {
   min-height: 300px;
   width: 100%;
 }
+
+/* No-image placeholder */
+.candy-placeholder {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #fce8ef 0px,
+    #fce8ef 18px,
+    #fff    18px,
+    #fff    36px
+  );
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.candy-placeholder__emoji {
+  animation: candy-bob 2s ease-in-out infinite, candy-spin 4s linear infinite;
+  display: block;
+  font-size: 3rem;
+  line-height: 1;
+}

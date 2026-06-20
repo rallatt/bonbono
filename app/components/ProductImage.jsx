@@ -1,6 +1,6 @@
 import {Image} from '@shopify/hydrogen';
 import {t} from '../i18n/index.js';
-import {CandyImageWrapper} from './CandyLoader.jsx';
+import {CandyImageWrapper, CandyPlaceholder} from './CandyLoader.jsx';
 
 /**
  * @param {{
@@ -9,7 +9,11 @@ import {CandyImageWrapper} from './CandyLoader.jsx';
  */
 export function ProductImage({image}) {
   if (!image) {
-    return <div className="product-image" />;
+    return (
+      <div className="product-image">
+        <CandyPlaceholder />
+      </div>
+    );
   }
   return (
     <div className="product-image">
