@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Await, NavLink, useAsyncValue } from 'react-router';
 import { useAnalytics, useOptimisticCart } from '@shopify/hydrogen';
 import { useAside } from './Aside';
-import logoImg from '../assets/Logo ovale.png';
+import logoImg from '../assets/cleanLogo.png';
 
 /**
  * @param {HeaderProps}
@@ -176,7 +176,7 @@ function CartBadge({ count }) {
         });
       }}
     >
-      Cart <span aria-label={`(items: ${count})`}>{count}</span>
+      Panier <span aria-label={`(${count} articles)`}>{count}</span>
     </a>
   );
 }

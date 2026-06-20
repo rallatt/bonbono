@@ -3,7 +3,7 @@
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
-  --header-height: 64px;
+  --header-height: 88px;
   --color-dark: #176131;
   --color-light: #fff;
 }
@@ -11,21 +11,21 @@
 body {
   background-color: #fff;
   color: #176131;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: 'Paytone One', system-ui, sans-serif;
   font-size: 1.05rem;
   letter-spacing: 0.01em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-family: 'Paytone One', cursive;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: #176131;
 }
 
-h1 { font-size: clamp(2rem, 4vw, 3rem); }
-h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
-h3 { font-size: 1.4rem; }
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 3.5vw, 3rem); }
+h3 { font-size: 1.8rem; }
 
 a { color: #E55A7E; }
 a:hover { color: #176131; }
@@ -251,6 +251,7 @@ button.reset:hover:not(:has(> *)) {
   align-items: center;
   background: #E55A7E;
   display: flex;
+  flex-wrap: nowrap;
   height: var(--header-height);
   padding: 0 1rem;
   position: sticky;
@@ -274,7 +275,7 @@ button.reset:hover:not(:has(> *)) {
 .header-logo-img {
   height: 68px;
   width: auto;
-  clip-path: ellipse(46% 46% at 50% 50%);
+  filter: brightness(0) invert(1) drop-shadow(2px 3px 6px rgba(0,0,0,0.25));
 }
 
 .header-menu-mobile-toggle {
@@ -291,16 +292,22 @@ button.reset:hover:not(:has(> *)) {
 
 .header-menu-desktop {
   display: none;
-  grid-gap: 1rem;
+  min-width: 0;
   @media (min-width: 45em) {
     display: flex;
-    grid-gap: 1rem;
-    margin-left: 3rem;
+    gap: clamp(0.5rem, 1.5vw, 1.5rem);
+    margin-left: clamp(1rem, 2vw, 3rem);
+    flex-shrink: 1;
   }
 }
 
 .header-menu-item {
   cursor: pointer;
+  font-family: 'Paytone One', cursive;
+  font-size: clamp(0.85rem, 1.3vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 /* Dropdown wrapper */
@@ -346,9 +353,11 @@ button.reset:hover:not(:has(> *)) {
 .header .header-menu-dropdown-item {
   color: #176131;
   display: block;
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-size: 1rem;
-  padding: 0.5rem 1.25rem;
+  font-family: 'Paytone One', cursive;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.5rem;
   text-decoration: none;
   transition: background 150ms;
   white-space: nowrap;
@@ -396,8 +405,9 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 .footer {
-  background: #176131;
+  background: linear-gradient(#F8DAE7 3rem, #176131 3rem);
   margin-top: auto;
+  padding-top: 3rem;
 }
 
 .footer-menu {
@@ -490,9 +500,10 @@ button.reset:hover:not(:has(> *)) {
   background: #E55A7E;
   border-radius: 100px;
   color: white;
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-family: 'Paytone One', cursive;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
   padding: 0.65rem 2.5rem;
   text-decoration: none;
   transition: background 150ms;
@@ -568,34 +579,66 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 .hero-banner {
-  background: white;
+  background: repeating-linear-gradient(
+    90deg,
+    #F8DAE7 0,
+    #F8DAE7 80px,
+    #C8F4AE 80px,
+    #C8F4AE 160px
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
-  gap: 2rem;
+  min-height: calc(100vh - var(--header-height));
+  left: calc(-50vw + 50%);
+  position: relative;
+  width: 100vw;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.hero-banner-content {
+  display: flex;
+  flex-direction: column;
+  width: min(900px, 88vw);
 }
 
 .hero-banner-logo-main {
-  width: min(600px, 90vw);
+  width: 100%;
   height: auto;
+  filter: drop-shadow(4px 8px 20px rgba(0,0,0,0.18));
+}
+
+.hero-banner-tagline {
+  color: #E55A7E;
+  font-family: 'Paytone One', cursive;
+  font-size: clamp(1.5rem, 2.7vw, 2.1rem);
+  margin: 0;
+  text-align: center;
+  -webkit-text-stroke: 2px white;
+  paint-order: stroke fill;
+  letter-spacing: 0.02em;
 }
 
 .hero-banner-cta {
   background: #E55A7E;
   color: white;
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 0.6rem 1.75rem;
+  font-family: 'Paytone One', cursive;
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.9rem 3rem;
   border-radius: 100px;
   text-decoration: none;
-  transition: background 150ms;
+  transition: background 150ms, transform 150ms;
+  letter-spacing: 0.03em;
+  margin-top: 3rem;
 }
 
 .hero-banner-cta:hover {
   background: #176131;
+  color: white;
+  transform: scale(1.05);
 }
 
 /*
@@ -603,6 +646,38 @@ button.reset:hover:not(:has(> *)) {
 * routes/__index
 * --------------------------------------------------
 */
+.recommended-products {
+  padding: 2rem 0;
+}
+
+.recommended-products h2 {
+  color: #E55A7E;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Guimauve page-title band — full width, used on collection and page routes */
+.page-title-band {
+  background: #C8F4AE;
+  left: calc(-50vw + 50%);
+  margin-bottom: 2rem;
+  padding: 2rem 1rem;
+  position: relative;
+  text-align: center;
+  width: 100vw;
+}
+
+.page-title-band h1 {
+  color: #176131;
+  margin: 0 0 0.5rem;
+}
+
+.page-title-band p {
+  color: #176131;
+  margin: 0;
+}
+
 .featured-collection {
   display: block;
   margin-bottom: 2rem;
@@ -640,6 +715,7 @@ button.reset:hover:not(:has(> *)) {
 * routes/collections._index.tsx
 * --------------------------------------------------
 */
+
 .collections-grid {
   display: grid;
   grid-gap: 1.5rem;
@@ -666,14 +742,107 @@ button.reset:hover:not(:has(> *)) {
 
 .products-grid {
   display: grid;
-  grid-gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
-  margin-bottom: 2rem;
+  grid-gap: 4rem 3rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 4rem;
+  padding: 0 1rem;
+  @media (min-width: 45em) {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 2rem;
+  }
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+  width: 100%;
+}
+
+.product-item-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-item-link:hover {
+  text-decoration: none;
 }
 
 .product-item img {
+  border-radius: 1rem;
   height: auto;
-  width: 100%;
+  width: 80%;
+  max-width: 280px;
+  align-self: center;
+  transition: transform 200ms;
+}
+
+.product-item-link:hover img {
+  transform: scale(1.02);
+}
+
+.product-item-info {
+  margin-top: auto;
+  padding: 0.75rem 0;
+}
+
+.product-item-info h4 {
+  font-family: 'Paytone One', cursive;
+  font-size: 1.2rem;
+  margin: 0;
+  color: #176131;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  text-align: center;
+  word-break: break-word;
+}
+
+.product-item-price {
+  color: #E55A7E;
+  font-family: 'Paytone One', cursive;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.product-item form {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.product-item-add-btn {
+  background: #176131;
+  border: none;
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font-family: 'Paytone One', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background 150ms, transform 150ms;
+  width: fit-content;
+}
+
+.product-item-add-btn:hover {
+  background: #E55A7E;
+  color: white;
+  text-decoration: none;
+  transform: scale(1.03);
+}
+
+.product-item-add-btn--unavailable {
+  background: #bbb;
+  cursor: default;
 }
 
 /*
@@ -683,19 +852,23 @@ button.reset:hover:not(:has(> *)) {
 */
 .product {
   display: grid;
+  padding: 2rem 3rem;
   @media (min-width: 45em) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 38% 1fr;
     grid-gap: 4rem;
+    padding: 3rem 5rem;
   }
 }
 
 .product h1 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
   margin-top: 0;
 }
 
 .product-image img {
   height: auto;
   width: 100%;
+  border-radius: 1rem;
 }
 
 .product-main {
@@ -753,7 +926,7 @@ button.reset:hover:not(:has(> *)) {
 
 .store-map-heading {
   color: #E55A7E;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: 'Baloo 2', system-ui, sans-serif;
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
@@ -761,7 +934,7 @@ button.reset:hover:not(:has(> *)) {
 
 .store-map-address {
   color: #176131;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: 'Baloo 2', system-ui, sans-serif;
   font-size: 1.15rem;
   font-style: normal;
   line-height: 1.6;
@@ -791,7 +964,7 @@ button.reset:hover:not(:has(> *)) {
 .store-map-gmaps-link {
   color: #176131;
   display: inline-block;
-  font-family: 'Fredoka', system-ui, sans-serif;
+  font-family: 'Baloo 2', system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 600;
   margin-top: 1rem;

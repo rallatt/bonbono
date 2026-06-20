@@ -49,8 +49,8 @@ export function PageLayout({
  */
 function CartAside({ cart }) {
   return (
-    <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
+    <Aside type="cart" heading="PANIER">
+      <Suspense fallback={<p>Chargement du panier...</p>}>
         <Await resolve={cart}>
           {(cart) => {
             return <CartMain cart={cart} layout="aside" />;
@@ -74,13 +74,13 @@ function SearchAside() {
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="Search"
+                placeholder="Rechercher..."
                 ref={inputRef}
                 type="search"
                 list={queriesDatalistId}
               />
               &nbsp;
-              <button onClick={goToSearch}>Search</button>
+              <button onClick={goToSearch}>Rechercher</button>
             </>
           )}
         </SearchFormPredictive>
@@ -153,7 +153,7 @@ function MobileMenuAside({ header, publicStoreDomain }) {
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
+      <Aside type="mobile" heading="NAVIGATION">
         <HeaderMenu
           menu={header.menu}
           viewport="mobile"

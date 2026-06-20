@@ -77,8 +77,10 @@ export default function Collection() {
 
   return (
     <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
+      <div className="page-title-band">
+        <h1>{collection.title}</h1>
+        {collection.description && <p>{collection.description}</p>}
+      </div>
       <PaginatedResourceSection
         connection={collection.products}
         resourcesClassName="products-grid"
@@ -125,6 +127,12 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
       }
       maxVariantPrice {
         ...MoneyProductItem
+      }
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
       }
     }
   }

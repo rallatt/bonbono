@@ -23,6 +23,8 @@ export default async function handleRequest(
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
     frameSrc: ['https://www.google.com'],
+    styleSrc: ['https://fonts.googleapis.com'],
+    fontSrc: ['https://fonts.gstatic.com'],
   });
 
   const body = await renderToReadableStream(

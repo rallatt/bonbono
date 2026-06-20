@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { Image } from '@shopify/hydrogen';
 import { ProductItem } from '../components/ProductItem';
 import { MockShopNotice } from '../components/MockShopNotice';
-import logoOvaleImg from '../assets/Logo ovale.png';
+import logoOvaleImg from '../assets/cleanLogo.png';
 
 /**
  * @type {Route.MetaFunction}
@@ -78,7 +78,10 @@ export default function Homepage() {
 function HeroBanner() {
   return (
     <div className="hero-banner">
-      <img src={logoOvaleImg} alt="Bonbono — Bonbons et cadeaux" className="hero-banner-logo-main" />
+      <div className="hero-banner-content">
+        <img src={logoOvaleImg} alt="Bonbono" className="hero-banner-logo-main" />
+        <p className="hero-banner-tagline">Des bonbons. Et d'autres mauvaises idées.</p>
+      </div>
       <Link to="/collections/all" className="hero-banner-cta">
         Découvrir
       </Link>
@@ -124,7 +127,7 @@ function RecommendedProducts({ products }) {
       className="recommended-products"
       aria-labelledby="recommended-products"
     >
-      <h2 id="recommended-products">Recommended Products</h2>
+      <h2 id="recommended-products">Nos coups de coeur</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
@@ -183,6 +186,12 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       altText
       width
       height
+    }
+    variants(first: 1) {
+      nodes {
+        id
+        availableForSale
+      }
     }
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
