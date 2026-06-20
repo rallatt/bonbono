@@ -32,7 +32,7 @@ export function ProductItem({ product, loading }) {
             />
           </CandyImageWrapper>
         ) : (
-          <CandyPlaceholder />
+          <CandyPlaceholder seed={product.handle} />
         )}
         <div className="product-item-info">
           <h4>{product.title}</h4>
