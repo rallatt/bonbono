@@ -39,37 +39,50 @@ export default function SearchPage() {
   if (type === 'predictive') return null;
 
   return (
-    <div className="search">
-      <h1>{t('search.title')}</h1>
-      <SearchForm>
-        {({ inputRef }) => (
-          <>
-            <input
-              defaultValue={term}
-              name="q"
-              placeholder={t('search.placeholder')}
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button type="submit">{t('search.button')}</button>
-          </>
-        )}
-      </SearchForm>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {!term || !result?.total ? (
-        <SearchResults.Empty />
-      ) : (
-        <SearchResults result={result} term={term}>
-          {({ articles, pages, products, term }) => (
-            <div>
-              <SearchResults.Products products={products} term={term} />
-              <SearchResults.Pages pages={pages} term={term} />
-              <SearchResults.Articles articles={articles} term={term} />
+    <div className="search-page">
+      <div className="page-title-band">
+        <h1>🔍 {t('search.title')}</h1>
+      </div>
+
+      <div className="search-page-body">
+        <SearchForm className="search-page-form">
+          {({ inputRef }) => (
+            <div className="search-input-row">
+              <input
+                className="search-input"
+                defaultValue={term}
+                name="q"
+                placeholder={t('search.placeholder')}
+                ref={inputRef}
+                type="search"
+              />
+              <button className="search-submit-btn" type="submit" aria-label={t('search.button')}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round" />
+                </svg>
+              </button>
             </div>
           )}
-        </SearchResults>
-      )}
+        </SearchForm>
+
+        {error && <p className="search-error">{error}</p>}
+
+        {!term || !result?.total ? (
+          <SearchResults.Empty />
+        ) : (
+          <SearchResults result={result} term={term}>
+            {({ articles, pages, products, term }) => (
+              <div className="search-results-grid">
+                <SearchResults.Products products={products} term={term} />
+                <SearchResults.Pages pages={pages} term={term} />
+                <SearchResults.Articles articles={articles} term={term} />
+              </div>
+            )}
+          </SearchResults>
+        )}
+      </div>
+
       <Analytics.SearchView data={{ searchTerm: term, searchResults: result }} />
     </div>
   );

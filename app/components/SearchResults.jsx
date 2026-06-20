@@ -149,7 +149,12 @@ function SearchResultsProducts({ term, products }) {
 }
 
 function SearchResultsEmpty() {
-  return <p>{t('search.no_results')}</p>;
+  return (
+    <div className="search-empty">
+      <span className="search-empty-emoji">🍬</span>
+      <p>{t('search.no_results')}</p>
+    </div>
+  );
 }
 
 /** @typedef {RegularSearchReturn['result']['items']} SearchItems */
