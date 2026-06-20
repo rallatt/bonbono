@@ -53,14 +53,14 @@ export function CartLineItem({ layout, line, childrenMap }) {
             </p>
           </Link>
           <ProductPrice price={line?.cost?.totalAmount} />
-          <ul>
-            {selectedOptions.map((option) => (
-              <li key={option.name}>
-                <small>
-                  {option.name}: {option.value}
-                </small>
-              </li>
-            ))}
+          <ul className="cart-line-options">
+            {selectedOptions
+              .filter((o) => o.value !== 'Default Title')
+              .map((option) => (
+                <li key={option.name}>
+                  <small>{option.name}: {option.value}</small>
+                </li>
+              ))}
           </ul>
           <CartLineQuantity line={line} />
         </div>
@@ -101,29 +101,29 @@ function CartLineQuantity({ line }) {
 
   return (
     <div className="cart-line-quantity">
-      <small>{t('cart.line.quantity', { quantity })} &nbsp;&nbsp;</small>
       <CartLineUpdateButton lines={[{ id: lineId, quantity: prevQuantity }]}>
         <button
+          className="cart-qty-btn"
           aria-label={t('cart.line.decrease')}
           disabled={quantity <= 1 || !!isOptimistic}
           name="decrease-quantity"
           value={prevQuantity}
         >
-          <span>&#8722; </span>
+          −
         </button>
       </CartLineUpdateButton>
-      &nbsp;
+      <span className="cart-qty-count">{quantity}</span>
       <CartLineUpdateButton lines={[{ id: lineId, quantity: nextQuantity }]}>
         <button
+          className="cart-qty-btn"
           aria-label={t('cart.line.increase')}
           name="increase-quantity"
           value={nextQuantity}
           disabled={!!isOptimistic}
         >
-          <span>&#43;</span>
+          +
         </button>
       </CartLineUpdateButton>
-      &nbsp;
       <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
     </div>
   );
@@ -146,7 +146,7 @@ function CartLineRemoveButton({ lineIds, disabled }) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{ lineIds }}
     >
-      <button disabled={disabled} type="submit">
+      <button className="cart-remove-btn" disabled={disabled} type="submit">
         {t('cart.line.remove')}
       </button>
     </CartForm>

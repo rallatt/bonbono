@@ -50,11 +50,10 @@ function CartCheckoutActions({ checkoutUrl }) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>{t('cart.checkout')}</p>
+    <div className="cart-checkout-actions">
+      <a href={checkoutUrl} target="_self" className="cart-checkout-btn">
+        {t('cart.checkout')}
       </a>
-      <br />
     </div>
   );
 }
@@ -100,18 +99,18 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
+        <div className="cart-code-row">
           <label htmlFor={discountCodeInputId} className="sr-only">
             {t('cart.discount.code.label')}
           </label>
           <input
             id={discountCodeInputId}
+            className="cart-code-input"
             type="text"
             name="discountCode"
             placeholder={t('cart.discount.code.placeholder')}
           />
-          &nbsp;
-          <button type="submit" aria-label={t('cart.discount.apply.aria')}>
+          <button className="cart-code-btn" type="submit" aria-label={t('cart.discount.apply.aria')}>
             {t('cart.discount.apply')}
           </button>
         </div>
@@ -223,19 +222,20 @@ function CartGiftCard({ giftCardCodes, giftCardHeadingId, giftCardInputId }) {
       )}
 
       <AddGiftCardForm fetcherKey="gift-card-add">
-        <div>
+        <div className="cart-code-row">
           <label htmlFor={giftCardInputId} className="sr-only">
             {t('cart.giftcard.label')}
           </label>
           <input
             id={giftCardInputId}
+            className="cart-code-input"
             type="text"
             name="giftCardCode"
             placeholder={t('cart.giftcard.placeholder')}
             ref={giftCardCodeInput}
           />
-          &nbsp;
           <button
+            className="cart-code-btn"
             type="submit"
             disabled={giftCardAddFetcher.state !== 'idle'}
             aria-label={t('cart.giftcard.apply.aria')}

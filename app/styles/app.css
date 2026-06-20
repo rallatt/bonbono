@@ -205,7 +205,7 @@ aside li {
   transition: opacity 400ms ease-in-out;
   transition: opacity 400ms;
   visibility: hidden;
-  z-index: 10;
+  z-index: 300;
 }
 
 .overlay .close-outside {
@@ -837,6 +837,7 @@ li:last-child .header-menu-dropdown-item {
   height: 100%;
   max-height: calc(100vh - var(--cart-aside-summary-height));
   overflow-y: auto;
+  padding: 0 1.25rem;
   width: auto;
 }
 
@@ -844,35 +845,233 @@ li:last-child .header-menu-dropdown-item {
   max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
 }
 
+.cart-main > .cart-details > div > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .cart-line {
-  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(23, 97, 49, 0.1);
+  padding: 1rem 0;
+}
+
+.cart-line:last-child {
+  border-bottom: none;
 }
 
 .cart-line-inner {
+  align-items: flex-start;
   display: flex;
+  gap: 0.875rem;
 }
 
 .cart-line img {
-  height: 100%;
+  border-radius: 0.75rem;
   display: block;
-  margin-right: 0.75rem;
+  flex-shrink: 0;
+  height: 80px;
+  object-fit: cover;
+  width: 80px;
 }
 
+.cart-line-inner > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-line-inner a {
+  text-decoration: none;
+}
+
+.cart-line-inner a p {
+  color: #176131;
+  font-family: 'Paytone One', cursive;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  margin: 0 0 0.2rem;
+}
+
+.cart-line-options {
+  list-style: none;
+  margin: 0 0 0.3rem;
+  padding: 0;
+}
+
+.cart-line-options li {
+  color: #999;
+  font-size: 0.72rem;
+  margin: 0;
+}
+
+/* Quantity stepper */
+.cart-line-quantity {
+  align-items: center;
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.cart-qty-btn {
+  align-items: center;
+  background: #F8DAE7;
+  border: none;
+  border-radius: 50%;
+  color: #176131;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 700;
+  height: 26px;
+  justify-content: center;
+  line-height: 1;
+  transition: background 150ms, color 150ms;
+  width: 26px;
+}
+
+.cart-qty-btn:hover:not(:disabled) {
+  background: #E55A7E;
+  color: white;
+}
+
+.cart-qty-btn:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.cart-qty-count {
+  color: #176131;
+  font-family: 'Paytone One', cursive;
+  font-size: 0.9rem;
+  min-width: 1.5ch;
+  text-align: center;
+}
+
+.cart-remove-btn {
+  background: none;
+  border: none;
+  color: #bbb;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.4rem;
+  text-transform: uppercase;
+  transition: color 150ms;
+}
+
+.cart-remove-btn:hover:not(:disabled) {
+  color: #E55A7E;
+}
+
+/* Cart summary (sticky footer of the aside) */
 .cart-summary-page {
   position: relative;
 }
 
 .cart-summary-aside {
   background: white;
-  border-top: 1px solid var(--color-dark);
+  border-top: 2px solid rgba(23, 97, 49, 0.15);
   bottom: 0;
-  padding-top: 0.75rem;
+  padding: 1rem 1.25rem 1.25rem;
   position: absolute;
-  width: calc(var(--aside-width) - 40px);
+  width: calc(var(--aside-width) - 2.5rem);
 }
 
-.cart-line-quantity {
+.cart-summary-aside h4 {
+  color: #176131;
+  font-family: 'Paytone One', cursive;
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+}
+
+.cart-subtotal {
+  align-items: center;
   display: flex;
+  font-family: 'Paytone One', cursive;
+  font-size: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.cart-subtotal dt {
+  color: #176131;
+}
+
+.cart-subtotal dd {
+  color: #E55A7E;
+  margin: 0;
+}
+
+/* Discount + gift card code rows */
+.cart-code-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.cart-code-input {
+  background: white;
+  border: 1.5px solid rgba(23, 97, 49, 0.25);
+  border-radius: 8px;
+  color: #176131;
+  flex: 1;
+  font-size: 0.8rem;
+  min-width: 0;
+  padding: 0.45rem 0.75rem;
+  transition: border-color 150ms;
+}
+
+.cart-code-input::placeholder {
+  color: #aaa;
+}
+
+.cart-code-input:focus {
+  border-color: #176131;
+  outline: none;
+}
+
+.cart-code-btn {
+  background: #176131;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.75rem;
+  transition: background 150ms;
+  white-space: nowrap;
+}
+
+.cart-code-btn:hover {
+  background: #E55A7E;
+}
+
+/* Checkout button */
+.cart-checkout-actions {
+  margin-top: 0.75rem;
+}
+
+.cart-checkout-btn {
+  background: #E55A7E;
+  border-radius: 100px;
+  color: white;
+  display: block;
+  font-family: 'Paytone One', cursive;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background 150ms, transform 150ms;
+}
+
+.cart-checkout-btn:hover {
+  background: #176131;
+  color: white;
+  transform: scale(1.02);
 }
 
 /* Child line components (warranties, gift wrapping, etc.) */
@@ -884,11 +1083,6 @@ li:last-child .header-menu-dropdown-item {
   align-items: center;
   display: flex;
   margin-top: 0.25rem;
-}
-
-.cart-subtotal {
-  align-items: center;
-  display: flex;
 }
 
 /*
