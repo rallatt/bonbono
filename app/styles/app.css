@@ -866,6 +866,14 @@ li:last-child .header-menu-dropdown-item {
   min-width: fit-content;
 }
 
+.footer-copyright {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  text-align: center;
+  padding: 1rem 1rem 0;
+  margin: 0;
+}
+
 .footer-extra {
   display: flex;
   flex-wrap: wrap;

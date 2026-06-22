@@ -18,6 +18,9 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                 publicStoreDomain={publicStoreDomain}
               />
             )}
+            <p className="footer-copyright">
+              {t('footer.copyright', { year: new Date().getFullYear() })}
+            </p>
             <div className="footer-extra">
               <a
                 href="https://www.instagram.com/bonbono.ca/"
