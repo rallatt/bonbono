@@ -30,6 +30,8 @@ export const fr = {
   'footer.refund': 'Politique de remboursement',
   'footer.shipping': 'Politique de livraison',
   'footer.terms': "Conditions d'utilisation",
+  'footer.instagram': 'Instagram',
+  'footer.sister_boutique': 'Notre boutique sœur',
 
   // Header
   'header.cart.aria': '({{count}} articles)',

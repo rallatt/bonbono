@@ -69,7 +69,6 @@ function FeaturedCategories({ navItems }) {
             className="featured-category-card"
             style={{ '--card-bg': CATEGORY_COLORS[i % CATEGORY_COLORS.length] }}
           >
-            <div className="featured-category-image" />
             <span className="featured-category-title">{item.title}</span>
           </Link>
         ))}
