@@ -894,7 +894,6 @@ li:last-child .header-menu-dropdown-item {
 .footer-instagram {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
 }
 
 .footer-instagram:hover,
