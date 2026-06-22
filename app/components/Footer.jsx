@@ -84,9 +84,19 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
             : item.url;
         const title = FOOTER_TITLE_BY_URL[url] ?? item.title;
         const isExternal = !url.startsWith('/');
+        const isSearch = url === '/search';
+        const label = isSearch ? (
+          <>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" style={{display:'inline',verticalAlign:'middle',marginRight:'0.3rem'}}>
+              <circle cx="11" cy="11" r="7" />
+              <line x1="16.5" y1="16.5" x2="22" y2="22" strokeLinecap="round" />
+            </svg>
+            {title}
+          </>
+        ) : title;
         return isExternal ? (
           <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {title}
+            {label}
           </a>
         ) : (
           <NavLink
@@ -96,7 +106,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
             style={activeLinkStyle}
             to={url}
           >
-            {title}
+            {label}
           </NavLink>
         );
       })}

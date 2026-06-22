@@ -855,9 +855,10 @@ li:last-child .header-menu-dropdown-item {
 
 .footer-menu {
   justify-content: center;
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 1rem;
+  gap: 1rem;
   padding: 1rem;
 }
 

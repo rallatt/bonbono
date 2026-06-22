@@ -32,7 +32,7 @@ export const fr = {
   'footer.terms': "Conditions d'utilisation",
   'footer.instagram': 'Instagram',
   'footer.sister_boutique': 'Notre boutique sœur',
-  'footer.copyright': '© {year} Bonbono. Tous droits réservés.',
+  'footer.copyright': '© {{year}} Bonbono. Tous droits réservés.',
 
   // Header
   'header.cart.aria': '({{count}} articles)',
