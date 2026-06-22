@@ -1,5 +1,4 @@
-import { useLoaderData, Link } from 'react-router';
-import { Image } from '@shopify/hydrogen';
+import { useLoaderData, useRouteLoaderData, Link } from 'react-router';
 import { MockShopNotice } from '../components/MockShopNotice';
 import logoOvaleImg from '../assets/cleanLogo.png';
 import { t } from '../i18n/index.js';
@@ -12,30 +11,31 @@ export const meta = () => {
 };
 
 export async function loader({ context }) {
-  const { storefront } = context;
-
-  const [categoriesData] = await Promise.all([
-    storefront.query(HOMEPAGE_CATEGORIES_QUERY),
-  ]);
-
   return {
     isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
-    categories: [
-      categoriesData.bonbons,
-      categoriesData.cuisine,
-      categoriesData.papeterie,
-      categoriesData.nouveautes,
-    ].filter(Boolean),
   };
+}
+
+function resolveMenuUrl(url) {
+  if (!url) return null;
+  try { return new URL(url).pathname; }
+  catch { return url; }
 }
 
 export default function Homepage() {
   const data = useLoaderData();
+  const rootData = useRouteLoaderData('root');
+  const menuItems = rootData?.header?.menu?.items ?? [];
+  const navItems = menuItems
+    .filter((item) => !item.title.toLowerCase().includes('contact'))
+    .map((item) => ({ id: item.id, title: item.title, url: resolveMenuUrl(item.url) }))
+    .filter((item) => item.url);
+
   return (
     <div className="home">
       {data.isShopLinked ? null : <MockShopNotice />}
       <HeroBanner />
-      <FeaturedCategories categories={data.categories} />
+      <FeaturedCategories navItems={navItems} />
     </div>
   );
 }
@@ -56,57 +56,27 @@ function HeroBanner() {
 
 const CATEGORY_COLORS = ['#F8DAE7', '#C8F4AE', '#C8F4AE', '#F8DAE7'];
 
-function FeaturedCategories({ categories }) {
-  if (!categories?.length) return null;
+function FeaturedCategories({ navItems }) {
+  if (!navItems?.length) return null;
   return (
     <section className="featured-categories">
       <h2 className="featured-categories-title">{t('home.categories')}</h2>
       <div className="featured-categories-grid">
-        {categories.map((collection, i) => (
+        {navItems.map((item, i) => (
           <Link
-            key={collection.id}
-            to={`/collections/${collection.handle}`}
+            key={item.id}
+            to={item.url}
             className="featured-category-card"
             style={{ '--card-bg': CATEGORY_COLORS[i % CATEGORY_COLORS.length] }}
           >
-            {collection.image && (
-              <div className="featured-category-image">
-                <Image
-                  data={collection.image}
-                  sizes="(min-width: 45em) 25vw, 50vw"
-                  alt={collection.image.altText || collection.title}
-                />
-              </div>
-            )}
-            <span className="featured-category-title">{collection.title}</span>
+            <div className="featured-category-image" />
+            <span className="featured-category-title">{item.title}</span>
           </Link>
         ))}
       </div>
     </section>
   );
 }
-
-const HOMEPAGE_CATEGORIES_QUERY = `#graphql
-  fragment CategoryCollection on Collection {
-    id
-    handle
-    title
-    image {
-      id
-      url
-      altText
-      width
-      height
-    }
-  }
-  query HomepageCategories($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    bonbons: collection(handle: "bonbons") { ...CategoryCollection }
-    cuisine: collection(handle: "accessoires-de-cuisine") { ...CategoryCollection }
-    papeterie: collection(handle: "papeterie-autres-trouvailles") { ...CategoryCollection }
-    nouveautes: collection(handle: "nouveautes") { ...CategoryCollection }
-  }
-`;
 
 /** @typedef {import('./+types/_index').Route} Route */
 /** @typedef {ReturnType<typeof useLoaderData<typeof loader>>} LoaderReturnData */
