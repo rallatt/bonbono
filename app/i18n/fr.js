@@ -119,7 +119,7 @@ export const fr = {
   'collections.all.title': 'Tous nos produits',
 
   // Store map (pages/$handle StoreMap component)
-  'store.find_us': 'Nous trouver',
+  'store.find_us': 'Bonbono',
   'store.map.iframe_title': 'Localisation Bonbono',
   'store.map.unavailable': 'Carte indisponible — clé Google Maps manquante.',
   'store.map.view_gmaps': 'Voir sur Google Maps →',
