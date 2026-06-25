@@ -1416,8 +1416,8 @@ li:last-child .header-menu-dropdown-item {
 */
 .hero-banner {
   background: repeating-linear-gradient(90deg,
-      #F8DAE7 0,
-      #F8DAE7 80px,
+      #fff 0,
+      #fff 80px,
       #C8F4AE 80px,
       #C8F4AE 160px);
   display: flex;
