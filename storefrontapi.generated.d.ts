@@ -377,51 +377,6 @@ export type FooterQuery = {
   >;
 };
 
-export type CategoryCollectionFragment = Pick<
-  StorefrontAPI.Collection,
-  'id' | 'handle' | 'title'
-> & {
-  image?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
-  >;
-};
-
-export type HomepageCategoriesQueryVariables = StorefrontAPI.Exact<{
-  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
-  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
-}>;
-
-export type HomepageCategoriesQuery = {
-  bonbons?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'id' | 'handle' | 'title'> & {
-      image?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
-      >;
-    }
-  >;
-  cuisine?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'id' | 'handle' | 'title'> & {
-      image?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
-      >;
-    }
-  >;
-  papeterie?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'id' | 'handle' | 'title'> & {
-      image?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
-      >;
-    }
-  >;
-  nouveautes?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Collection, 'id' | 'handle' | 'title'> & {
-      image?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
-      >;
-    }
-  >;
-};
-
 export type ArticleQueryVariables = StorefrontAPI.Exact<{
   articleHandle: StorefrontAPI.Scalars['String']['input'];
   blogHandle: StorefrontAPI.Scalars['String']['input'];
@@ -1346,10 +1301,6 @@ interface GeneratedQueryTypes {
   '#graphql\n  query Footer(\n    $country: CountryCode\n    $footerMenuHandle: String!\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    menu(handle: $footerMenuHandle) {\n      ...Menu\n    }\n  }\n  #graphql\n  fragment MenuItem on MenuItem {\n    id\n    resourceId\n    tags\n    title\n    type\n    url\n  }\n  fragment ChildMenuItem on MenuItem {\n    ...MenuItem\n  }\n  fragment ParentMenuItem on MenuItem {\n    ...MenuItem\n    items {\n      ...ChildMenuItem\n    }\n  }\n  fragment Menu on Menu {\n    id\n    items {\n      ...ParentMenuItem\n    }\n  }\n\n': {
     return: FooterQuery;
     variables: FooterQueryVariables;
-  };
-  '#graphql\n  fragment CategoryCollection on Collection {\n    id\n    handle\n    title\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n  }\n  query HomepageCategories($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    bonbons: collection(handle: "bonbons") { ...CategoryCollection }\n    cuisine: collection(handle: "accessoires-de-cuisine") { ...CategoryCollection }\n    papeterie: collection(handle: "papeterie-autres-trouvailles") { ...CategoryCollection }\n    nouveautes: collection(handle: "nouveautes") { ...CategoryCollection }\n  }\n': {
-    return: HomepageCategoriesQuery;
-    variables: HomepageCategoriesQueryVariables;
   };
   '#graphql\n  query Article(\n    $articleHandle: String!\n    $blogHandle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    blog(handle: $blogHandle) {\n      handle\n      articleByHandle(handle: $articleHandle) {\n        handle\n        title\n        contentHtml\n        publishedAt\n        author: authorV2 {\n          name\n        }\n        image {\n          id\n          altText\n          url\n          width\n          height\n        }\n        seo {\n          description\n          title\n        }\n      }\n    }\n  }\n': {
     return: ArticleQuery;

@@ -11,6 +11,8 @@ const HEADER_TITLE_BY_URL = {
   '/blogs/journal': t('nav.blog'),
   '/policies': t('nav.policies'),
   '/pages/about': t('nav.about'),
+  '/pages/le-patch-bar': t('nav.patch_bar'),
+  '/pages/cadeaux-corpo': t('nav.corporate_gifts'),
 };
 
 /**
@@ -47,6 +49,7 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
 
   return (
     <>
+      <MarqueeTicker />
       <header className="header">
         <NavLink prefetch="intent" to="/" className="header-logo" end>
           <img src={logoImg} alt="Bonbono" className="header-logo-img" />
@@ -66,6 +69,20 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
         resolveUrl={resolveUrl}
       />
     </>
+  );
+}
+
+function MarqueeTicker() {
+  const items = [t('marquee.item1'), t('marquee.item2'), t('marquee.item3')];
+  const track = [...items, ...items];
+  return (
+    <div className="marquee-wrap" aria-hidden="true">
+      <div className="marquee-track">
+        {track.map((item, i) => (
+          <span key={i}>{item}</span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -632,6 +649,24 @@ const FALLBACK_HEADER_MENU = {
       title: t('nav.collections'),
       type: 'HTTP',
       url: '/collections',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/461609500729',
+      resourceId: null,
+      tags: [],
+      title: t('nav.patch_bar'),
+      type: 'HTTP',
+      url: '/pages/le-patch-bar',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/461609500730',
+      resourceId: null,
+      tags: [],
+      title: t('nav.corporate_gifts'),
+      type: 'HTTP',
+      url: '/pages/cadeaux-corpo',
       items: [],
     },
     {

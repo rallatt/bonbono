@@ -63,15 +63,21 @@ function loadDeferredData({ context }) {
   return {};
 }
 
+// These pages carry their own full-bleed hero/title inside page.body,
+// so the generic title header would just duplicate it.
+const HANDLES_WITHOUT_GENERIC_HEADER = new Set(['le-patch-bar', 'cadeaux-corpo']);
+
 export default function Page() {
   /** @type {LoaderReturnData} */
   const { page, googleMapsApiKey } = useLoaderData();
 
   return (
     <div className="page">
-      <header>
-        <h1>{page.title}</h1>
-      </header>
+      {!HANDLES_WITHOUT_GENERIC_HEADER.has(page.handle) && (
+        <header>
+          <h1>{page.title}</h1>
+        </header>
+      )}
       {page.handle !== 'contact' && (
         <main dangerouslySetInnerHTML={{ __html: page.body }} />
       )}

@@ -19,6 +19,8 @@ export const fr = {
 
   // Navigation fallback menu items
   'nav.collections': 'Collections',
+  'nav.patch_bar': 'Le Patch Bar',
+  'nav.corporate_gifts': 'Cadeaux corpo',
   'nav.blog': 'Blogue',
   'nav.policies': 'Politiques',
   'nav.about': 'À propos',
@@ -36,6 +38,11 @@ export const fr = {
 
   // Header
   'header.cart.aria': '({{count}} articles)',
+
+  // Marquee ticker (scrolling banner above the header)
+  'marquee.item1': '🍬 Des bonbons. Et d’autres mauvaises idées.',
+  'marquee.item2': 'Livraison gratuite dès 40 $',
+  'marquee.item3': 'Nouveaux arrivages chaque mois',
 
   // Aside / modal
   'aside.close': 'Fermer',
@@ -113,7 +120,33 @@ export const fr = {
   'home.meta': 'Bonbono — Bonbons et cadeaux',
   'home.tagline': "Des bonbons. Et d'autres mauvaises idées.",
   'home.cta': 'Découvrir',
-  'home.categories': 'Nos catégories',
+  'home.categories': 'Nos univers',
+  'home.categories.eyebrow': 'À explorer',
+
+  'home.hero.tag': 'Confiserie et mauvaises idées depuis le quartier',
+  'home.hero.title_line1': 'Croque ton bonheur,',
+  'home.hero.title_prefix': 'un',
+  'home.hero.title_accent': 'bonbon',
+  'home.hero.title_suffix': 'à la fois',
+  'home.hero.paragraph': "Bonbons choisis un par un, idées cadeaux qui sortent de l'ordinaire, et une station DIY pour customiser tes trucs. Bienvenue chez Bonbono.",
+  'home.hero.cta_shop': 'Voir la boutique',
+  'home.hero.cta_patchbar': 'Découvrir Le Patch Bar',
+
+  'home.steps.eyebrow': 'Comment ça marche',
+  'home.steps.title': 'De la boutique à ta porte, en 4 étapes',
+  'home.steps.subtitle': 'En ligne ou sur place, la commande de bonbons ne devrait jamais être compliquée.',
+  'home.steps.1.title': 'Choisis tes articles',
+  'home.steps.1.body': 'Parcours nos rayons en ligne ou en boutique, au poids ou en sachet préparé.',
+  'home.steps.2.title': 'Ajoute une touche cadeau',
+  'home.steps.2.body': 'Emballage, carte personnalisée, ou un petit extra pour rendre ça mémorable.',
+  'home.steps.3.title': 'On prépare ta commande',
+  'home.steps.3.body': 'Chaque commande est assemblée à la main.',
+  'home.steps.4.title': 'Livraison ou cueillette',
+  'home.steps.4.body': 'Reçois-la chez toi ou viens la chercher en boutique en 48 heures.',
+
+  'home.cta_strip.title': 'Envie de faire le plein?',
+  'home.cta_strip.body': 'Commande en ligne et viens la chercher en boutique, ou fais-toi livrer directement chez toi.',
+  'home.cta_strip.button': 'Commander maintenant',
 
   // Collections all page
   'collections.all.title': 'Tous nos produits',
