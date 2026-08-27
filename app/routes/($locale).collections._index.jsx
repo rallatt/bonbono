@@ -52,7 +52,10 @@ export default function Collections() {
 
   return (
     <div className="collections">
-      <h1>{t('collections.title')}</h1>
+      <div className="page-title-band">
+        <span className="hero-tag">{t('nav.collections')}</span>
+        <h1>{t('collections.title')}</h1>
+      </div>
       <PaginatedResourceSection
         connection={collections}
         resourcesClassName="collections-grid"

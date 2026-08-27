@@ -61,6 +61,7 @@ export default function Collection() {
   return (
     <div className="collection">
       <div className="page-title-band">
+        <span className="hero-tag">{t('nav.collections')}</span>
         <h1>{t('collections.all.title')}</h1>
       </div>
       <PaginatedResourceSection

@@ -79,6 +79,7 @@ export default function Collection() {
   return (
     <div className="collection">
       <div className="page-title-band">
+        <span className="hero-tag">{t('nav.collections')}</span>
         <h1>{collection.title}</h1>
         {collection.description && <p>{collection.description}</p>}
       </div>

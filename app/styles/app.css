@@ -1843,10 +1843,12 @@ li:last-child .header-menu-dropdown-item {
 
 /* Guimauve page-title band — full width, used on collection and page routes */
 .page-title-band {
-  background: #C8F4AE;
+  background:
+    radial-gradient(circle at 88% 20%, #C8F4AE 0, #C8F4AE 90px, transparent 91px),
+    #FFFBF3;
   left: calc(-50vw + 50%);
   margin-bottom: 2rem;
-  padding: 2rem 1rem;
+  padding: 3rem 1.25rem 2.5rem;
   position: relative;
   text-align: center;
   width: 100vw;
@@ -1854,12 +1856,16 @@ li:last-child .header-menu-dropdown-item {
 
 .page-title-band h1 {
   color: #176131;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
   margin: 0 0 0.5rem;
 }
 
 .page-title-band p {
-  color: #176131;
-  margin: 0;
+  color: #2A4A34;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  letter-spacing: normal;
+  margin: 0.5rem auto 0;
+  max-width: 560px;
 }
 
 .featured-collection {
