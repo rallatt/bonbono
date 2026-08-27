@@ -2,6 +2,7 @@ import { redirect, useLoaderData } from 'react-router';
 import { getPaginationVariables, Analytics } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { filterVisibleProducts } from '../lib/productAvailability';
 import { ProductItem } from '../components/ProductItem';
 import { t } from '../i18n/index.js';
 
@@ -58,7 +59,10 @@ async function loadCriticalData({ context, params, request }) {
   redirectIfHandleIsLocalized(request, { handle, data: collection });
 
   return {
-    collection,
+    collection: {
+      ...collection,
+      products: filterVisibleProducts(collection.products),
+    },
   };
 }
 
@@ -116,6 +120,7 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    productType
     featuredImage {
       id
       altText

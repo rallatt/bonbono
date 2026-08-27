@@ -167,6 +167,11 @@ export const fr = {
   'contact.info.social_title': 'Suivez-nous',
   'contact.info.social_handle': '@bonbono.ca',
 
+  // Le Patch Bar — live best-sellers grid (rest of the page is authored in Shopify)
+  'patchbar.catalog.eyebrow': 'Le mur à patchs',
+  'patchbar.catalog.title': 'Nos meilleurs vendeurs',
+  'patchbar.catalog.subtitle': 'Les 20 patchs les plus populaires du moment, mis à jour en continu.',
+
   // Account
   'account.welcome.name': 'Bienvenue, {{name}}',
   'account.welcome': 'Bienvenue dans votre compte.',

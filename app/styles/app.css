@@ -2519,6 +2519,45 @@ li:last-child .header-menu-dropdown-item {
   transform: translateY(-4px);
 }
 
+.patch-item--real {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.patch-item--real:hover {
+  text-decoration: none;
+}
+
+.patch-item-photo {
+  border: 2.5px solid #176131;
+  border-radius: 50%;
+  height: 84px;
+  margin: 0 auto 0.75rem;
+  overflow: hidden;
+  width: 84px;
+}
+
+.patch-item-photo img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.patch-item--real h4 {
+  font-family: 'Fredoka', cursive;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.patch-item--real span {
+  color: #E55A7E;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 .patch-item-icon {
   align-items: center;
   background: #F8DAE7;

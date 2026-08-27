@@ -1,5 +1,8 @@
-import { useLoaderData } from 'react-router';
+import { useLoaderData, Link } from 'react-router';
+import { Image, Money } from '@shopify/hydrogen';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
+import { useVariantUrl } from '../lib/variants';
+import { filterVisibleProducts } from '../lib/productAvailability';
 import { t } from '../i18n/index.js';
 import {
   IconLollipop,
@@ -11,6 +14,10 @@ import {
   IconPin,
   IconMail,
 } from '../components/CandyIcons';
+
+// Placed in the Le Patch Bar page's Shopify-authored body, in the exact
+// spot where the live best-sellers grid below should be spliced in.
+const PATCH_CATALOG_MARKER = '<!--PATCH_CATALOG-->';
 
 /**
  * @type {Route.MetaFunction}
@@ -42,12 +49,19 @@ async function loadCriticalData({ context, request, params }) {
     throw new Error('Missing page handle');
   }
 
-  const [{ page }] = await Promise.all([
+  const isPatchBar = params.handle === 'le-patch-bar';
+
+  const [{ page }, patchCollection] = await Promise.all([
     context.storefront.query(PAGE_QUERY, {
       variables: {
         handle: params.handle,
       },
     }),
+    isPatchBar
+      ? context.storefront
+          .query(PATCH_BAR_BESTSELLERS_QUERY, { variables: { first: 20 } })
+          .then((data) => data.collection)
+      : null,
     // Add other queries here, so that they are loaded in parallel
   ]);
 
@@ -60,6 +74,7 @@ async function loadCriticalData({ context, request, params }) {
   return {
     page,
     googleMapsApiKey: context.env.PUBLIC_GOOGLE_MAPS_API_KEY,
+    patchProducts: filterVisibleProducts(patchCollection?.products)?.nodes ?? null,
   };
 }
 
@@ -80,7 +95,7 @@ const HANDLES_WITHOUT_GENERIC_HEADER = new Set(['le-patch-bar', 'cadeaux-corpo',
 
 export default function Page() {
   /** @type {LoaderReturnData} */
-  const { page, googleMapsApiKey } = useLoaderData();
+  const { page, googleMapsApiKey, patchProducts } = useLoaderData();
 
   return (
     <div className="page">
@@ -89,11 +104,78 @@ export default function Page() {
           <h1>{page.title}</h1>
         </header>
       )}
-      {page.handle !== 'contact' && (
+      {page.handle === 'contact' && <StoreMap apiKey={googleMapsApiKey} />}
+      {page.handle === 'le-patch-bar' && (
+        <PatchBarBody body={page.body} products={patchProducts} />
+      )}
+      {page.handle !== 'contact' && page.handle !== 'le-patch-bar' && (
         <main dangerouslySetInnerHTML={{ __html: page.body }} />
       )}
-      {page.handle === 'contact' && <StoreMap apiKey={googleMapsApiKey} />}
     </div>
+  );
+}
+
+/**
+ * The Le Patch Bar page's content is authored in Shopify (so the shop owner
+ * can edit copy without touching code), except for the "mur à patchs" grid,
+ * which shows real inventory. A marker comment in the page body marks where
+ * that live grid gets spliced in between the two static HTML halves.
+ */
+function PatchBarBody({ body, products }) {
+  const markerIndex = body.indexOf(PATCH_CATALOG_MARKER);
+
+  if (markerIndex === -1 || !products?.length) {
+    return <main dangerouslySetInnerHTML={{ __html: body }} />;
+  }
+
+  const before = body.slice(0, markerIndex);
+  const after = body.slice(markerIndex + PATCH_CATALOG_MARKER.length);
+
+  return (
+    <main>
+      <div dangerouslySetInnerHTML={{ __html: before }} />
+      <PatchCatalogSection products={products} />
+      <div dangerouslySetInnerHTML={{ __html: after }} />
+    </main>
+  );
+}
+
+function PatchCatalogSection({ products }) {
+  return (
+    <section className="bold-section" id="catalogue">
+      <div className="bold-section-head">
+        <span className="eyebrow">{t('patchbar.catalog.eyebrow')}</span>
+        <h2>{t('patchbar.catalog.title')}</h2>
+        <p>{t('patchbar.catalog.subtitle')}</p>
+      </div>
+      <div className="patch-catalog-grid">
+        {products.map((product) => (
+          <PatchProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PatchProductCard({ product }) {
+  const variantUrl = useVariantUrl(product.handle);
+  const image = product.featuredImage;
+
+  return (
+    <Link className="patch-item patch-item--real" to={variantUrl} prefetch="intent">
+      <div className="patch-item-photo">
+        {image ? (
+          <Image
+            alt={image.altText || product.title}
+            aspectRatio="1/1"
+            data={image}
+            sizes="120px"
+          />
+        ) : null}
+      </div>
+      <h4>{product.title}</h4>
+      <span><Money data={product.priceRange.minVariantPrice} /></span>
+    </Link>
   );
 }
 
@@ -198,6 +280,44 @@ function StoreMap({ apiKey }) {
     </div>
   );
 }
+
+const PATCH_BAR_BESTSELLERS_QUERY = `#graphql
+  query PatchBarBestsellers(
+    $language: LanguageCode,
+    $country: CountryCode,
+    $first: Int!
+  ) @inContext(language: $language, country: $country) {
+    collection(handle: "patch-bar") {
+      products(first: $first, sortKey: BEST_SELLING) {
+        nodes {
+          id
+          handle
+          title
+          productType
+          featuredImage {
+            id
+            url
+            altText
+            width
+            height
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          variants(first: 1) {
+            nodes {
+              id
+              availableForSale
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 const PAGE_QUERY = `#graphql
   query Page(

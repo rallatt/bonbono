@@ -1,6 +1,7 @@
 import { useLoaderData } from 'react-router';
 import { getPaginationVariables } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
+import { filterVisibleProducts } from '../lib/productAvailability';
 import { ProductItem } from '../components/ProductItem';
 import { t } from '../i18n/index.js';
 
@@ -41,7 +42,7 @@ async function loadCriticalData({ context, request }) {
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  return { products };
+  return { products: filterVisibleProducts(products) };
 }
 
 /**
@@ -89,6 +90,7 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    productType
     featuredImage {
       id
       altText
