@@ -317,7 +317,6 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 .header {
-  border-bottom: 3px solid #176131;
   align-items: center;
   background: #E55A7E;
   display: flex;
