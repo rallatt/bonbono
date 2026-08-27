@@ -911,7 +911,6 @@ li:last-child .header-menu-dropdown-item {
 */
 .footer {
   background: linear-gradient(#F8DAE7 3rem, #176131 3rem);
-  border-top: 3px solid #176131;
   margin-top: auto;
   padding-top: 3rem;
 }
