@@ -46,6 +46,7 @@ export default function Homepage() {
       <HowItWorks />
       <FeaturedCategories navItems={navItems} />
       <CtaStrip />
+      <GiftCardPromo />
     </div>
   );
 }
@@ -152,6 +153,27 @@ function CtaStrip() {
         {t('home.cta_strip.button')}
       </Link>
     </div>
+  );
+}
+
+function GiftCardPromo() {
+  return (
+    <section className="giftcard-promo">
+      <div className="giftcard-promo-copy">
+        <span className="eyebrow">{t('home.giftcard.eyebrow')}</span>
+        <h2>{t('home.giftcard.title')}</h2>
+        <p>{t('home.giftcard.body')}</p>
+        <Link to="/pages/carte-cadeau" className="btn-bold btn-bold--primary">
+          {t('home.giftcard.button')}
+        </Link>
+      </div>
+      <div className="giftcard-promo-visual">
+        <div className="giftcard-mini">
+          <span className="giftcard-mini-word">{t('home.giftcard.card_label')}</span>
+          <span className="giftcard-mini-amount">50 $</span>
+        </div>
+      </div>
+    </section>
   );
 }
 

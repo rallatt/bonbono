@@ -148,6 +148,12 @@ export const fr = {
   'home.cta_strip.body': 'Commande en ligne et viens la chercher en boutique, ou fais-toi livrer directement chez toi.',
   'home.cta_strip.button': 'Commander maintenant',
 
+  'home.giftcard.eyebrow': 'Toujours la bonne taille',
+  'home.giftcard.title': 'Une carte-cadeau, jamais un mauvais cadeau',
+  'home.giftcard.body': "De 15 $ à 200 $, envoyée par courriel en quelques secondes — valide sur tout le site, sans date d'expiration.",
+  'home.giftcard.button': 'Offrir une carte-cadeau',
+  'home.giftcard.card_label': 'Carte-cadeau',
+
   // Collections all page
   'collections.all.title': 'Tous nos produits',
 

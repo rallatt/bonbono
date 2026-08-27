@@ -994,15 +994,24 @@ li:last-child .header-menu-dropdown-item {
 * --------------------------------------------------
 */
 .cart-main {
-  height: 100%;
-  max-height: calc(100vh - var(--cart-aside-summary-height));
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height));
   padding: 0 1.25rem;
   width: auto;
 }
 
-.cart-main.with-discount {
-  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
+.cart-main .cart-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.cart-main > .cart-details > div:not(.cart-summary-aside) {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .cart-main > .cart-details > div > ul {
@@ -1839,6 +1848,76 @@ li:last-child .header-menu-dropdown-item {
   color: #E7FFD9;
   margin-top: 0.5rem;
   max-width: 420px;
+}
+
+.giftcard-promo {
+  align-items: center;
+  background: #C8F4AE;
+  border: 3px solid #176131;
+  border-radius: 1.5rem;
+  box-shadow: 8px 8px 0 #176131;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  margin: 0 5% 5rem;
+  overflow: hidden;
+}
+
+.giftcard-promo-copy {
+  padding: 3rem 2.75rem;
+}
+
+.giftcard-promo-copy h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin-top: 0.4rem;
+}
+
+.giftcard-promo-copy p {
+  color: #2A4A34;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  letter-spacing: normal;
+  margin: 0.75rem 0 1.5rem;
+  max-width: 420px;
+}
+
+.giftcard-promo-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.giftcard-mini {
+  aspect-ratio: 1.6 / 1;
+  background: #E55A7E;
+  border: 3px solid #176131;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 0 #176131;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  transform: rotate(-3deg);
+  width: 220px;
+}
+
+.giftcard-mini-word {
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.giftcard-mini-amount {
+  align-self: flex-end;
+  font-family: 'Paytone One', cursive;
+  font-size: 1.75rem;
+}
+
+@media (max-width: 900px) {
+  .giftcard-promo {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Guimauve page-title band — full width, used on collection and page routes */
