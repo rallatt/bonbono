@@ -188,6 +188,26 @@ export const IconBag = base('0 0 24 24', () => (
   </>
 ));
 
+export const IconPin = base('0 0 24 24', () => (
+  <>
+    <path
+      d="M12 21 C12 21 19 14.5 19 9.5 A7 7 0 0 0 5 9.5 C5 14.5 12 21 12 21 Z"
+      fill="none"
+      stroke={INK}
+      strokeWidth="2"
+      strokeLinejoin="round"
+    />
+    <circle cx="12" cy="9.5" r="2.5" fill="none" stroke={INK} strokeWidth="2" />
+  </>
+));
+
+export const IconMail = base('0 0 24 24', () => (
+  <>
+    <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke={INK} strokeWidth="2" />
+    <path d="M4 7 L12 13 L20 7" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </>
+));
+
 export const IconLightbulb = base('0 0 24 24', () => (
   <path
     d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3 11c.6.5 1 1.3 1 2h4c0-.7.4-1.5 1-2a6 6 0 0 0-3-11z"

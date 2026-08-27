@@ -157,6 +157,16 @@ export const fr = {
   'store.map.unavailable': 'Carte indisponible — clé Google Maps manquante.',
   'store.map.view_gmaps': 'Voir sur Google Maps →',
 
+  'contact.hero.tag': 'Viens nous voir',
+  'contact.hero.title_line1': 'On t’attend,',
+  'contact.hero.title_accent': 'bonbon',
+  'contact.hero.title_suffix': 'à la main',
+  'contact.hero.paragraph': "Passe en boutique, écris-nous ou suis-nous sur Instagram — on est toujours partants pour jaser bonbons.",
+  'contact.info.address_title': 'Adresse',
+  'contact.info.email_title': 'Courriel',
+  'contact.info.social_title': 'Suivez-nous',
+  'contact.info.social_handle': '@bonbono.ca',
+
   // Account
   'account.welcome.name': 'Bienvenue, {{name}}',
   'account.welcome': 'Bienvenue dans votre compte.',

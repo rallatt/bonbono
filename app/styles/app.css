@@ -2121,37 +2121,34 @@ li:last-child .header-menu-dropdown-item {
 
 /*
 * --------------------------------------------------
-* Store map (contact page)
+* Contact page — bold hero + info tiles + map, same
+* design system as the homepage and Le Patch Bar
 * --------------------------------------------------
 */
-.store-map-section {
-  background: #F8DAE7;
-  border-radius: 1.5rem;
-  margin: 3rem auto;
-  max-width: 820px;
-  padding: 2.5rem 2rem;
-  text-align: center;
-}
-
-.store-map-heading {
-  color: #E55A7E;
-  font-family: 'Baloo 2', system-ui, sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem;
-}
-
-.store-map-address {
-  color: #176131;
-  font-family: 'Baloo 2', system-ui, sans-serif;
-  font-size: 1.15rem;
-  font-style: normal;
-  line-height: 1.6;
+.contact-info-grid {
   margin-bottom: 1.5rem;
 }
 
-.store-map-frame {
-  border-radius: 1rem;
+.contact-info-detail {
+  color: #2A4A34;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.contact-info-link {
+  transition: color 150ms;
+}
+
+.contact-info-link:hover {
+  color: #E55A7E;
+}
+
+.contact-map-card {
+  border: 3px solid #176131;
+  border-radius: 1.25rem;
+  box-shadow: 6px 6px 0 #176131;
   height: 380px;
   overflow: hidden;
   width: 100%;
@@ -2160,25 +2157,8 @@ li:last-child .header-menu-dropdown-item {
 .store-map-missing {
   color: #176131;
   font-style: italic;
-  padding: 1rem 0;
-}
-
-.store-map-email {
-  color: #E55A7E;
-  font-style: normal;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.store-map-gmaps-link {
-  color: #176131;
-  display: inline-block;
-  font-family: 'Baloo 2', system-ui, sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 1rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  padding: 1rem;
+  text-align: center;
 }
 
 /*

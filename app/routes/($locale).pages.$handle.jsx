@@ -1,6 +1,16 @@
 import { useLoaderData } from 'react-router';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
 import { t } from '../i18n/index.js';
+import {
+  IconLollipop,
+  IconStar,
+  IconHeart,
+  IconDonut,
+  IconRainbow,
+  IconBear,
+  IconPin,
+  IconMail,
+} from '../components/CandyIcons';
 
 /**
  * @type {Route.MetaFunction}
@@ -63,9 +73,10 @@ function loadDeferredData({ context }) {
   return {};
 }
 
-// These pages carry their own full-bleed hero/title inside page.body,
-// so the generic title header would just duplicate it.
-const HANDLES_WITHOUT_GENERIC_HEADER = new Set(['le-patch-bar', 'cadeaux-corpo']);
+// These pages carry their own full-bleed hero/title (in page.body, or —
+// for contact — in the StoreMap component below), so the generic title
+// header would just duplicate it.
+const HANDLES_WITHOUT_GENERIC_HEADER = new Set(['le-patch-bar', 'cadeaux-corpo', 'contact']);
 
 export default function Page() {
   /** @type {LoaderReturnData} */
@@ -86,46 +97,105 @@ export default function Page() {
   );
 }
 
+const CONTACT_HERO_CHIPS = [
+  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
+  { Icon: IconStar, fill: '#E55A7E', bg: 'melon' },
+  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink' },
+  { Icon: IconDonut, fill: '#F8DAE7', bg: 'paper' },
+  { Icon: IconRainbow, fill: '#E55A7E', bg: 'melon' },
+  { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
+];
+
 function StoreMap({ apiKey }) {
   const mapSrc = apiKey
     ? `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=366+rue+de+Castelnau+Est,+Montréal,+QC&zoom=16&language=fr`
     : null;
+  const gmapsHref = 'https://www.google.com/maps?q=366+rue+de+Castelnau+Est,+Montréal,+QC';
 
   return (
-    <section className="store-map-section">
-      <h2 className="store-map-heading">{t('store.find_us')}</h2>
-      <address className="store-map-address">
-        366 rue de Castelnau Est<br />
-        Montréal, QC<br />
-        <a href="mailto:info@bonbono.ca" className="store-map-email">info@bonbono.ca</a>
-      </address>
-      {mapSrc ? (
-        <div className="store-map-frame">
-          <iframe
-            title={t('store.map.iframe_title')}
-            src={mapSrc}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+    <div className="contact-page">
+      <section className="hero-section">
+        <div className="hero-copy">
+          <span className="hero-tag">{t('contact.hero.tag')}</span>
+          <h1 className="hero-title">
+            {t('contact.hero.title_line1')}
+            <br />
+            <span className="hero-accent">{t('contact.hero.title_accent')}</span>{' '}
+            {t('contact.hero.title_suffix')}
+          </h1>
+          <p className="hero-paragraph">{t('contact.hero.paragraph')}</p>
+          <div className="hero-ctas">
+            <a href={gmapsHref} target="_blank" rel="noopener noreferrer" className="btn-bold btn-bold--primary">
+              {t('store.map.view_gmaps')}
+            </a>
+            <a href="mailto:info@bonbono.ca" className="btn-bold btn-bold--ghost">
+              info@bonbono.ca
+            </a>
+          </div>
         </div>
-      ) : (
-        <p className="store-map-missing">
-          {t('store.map.unavailable')}
-        </p>
-      )}
-      <a
-        className="store-map-gmaps-link"
-        href="https://www.google.com/maps?q=366+rue+de+Castelnau+Est,+Montréal,+QC"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {t('store.map.view_gmaps')}
-      </a>
-    </section>
+        <div className="hero-visual">
+          <div className="chip-grid">
+            {CONTACT_HERO_CHIPS.map(({ Icon, fill, bg }, i) => (
+              <div className={`chip chip--${bg}`} key={i}>
+                <Icon fill={fill} size={42} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bold-section">
+        <div className="cat-grid contact-info-grid">
+          <div className="cat-card">
+            <div className="cat-icon"><IconPin size={30} /></div>
+            <span className="cat-card-title">{t('contact.info.address_title')}</span>
+            <address className="contact-info-detail">366 rue de Castelnau Est<br />Montréal, QC</address>
+          </div>
+          <div className="cat-card">
+            <div className="cat-icon"><IconMail size={30} /></div>
+            <span className="cat-card-title">{t('contact.info.email_title')}</span>
+            <a href="mailto:info@bonbono.ca" className="contact-info-detail contact-info-link">info@bonbono.ca</a>
+          </div>
+          <div className="cat-card">
+            <div className="cat-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#176131" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="#176131" stroke="none" />
+              </svg>
+            </div>
+            <span className="cat-card-title">{t('contact.info.social_title')}</span>
+            <a
+              href="https://www.instagram.com/bonbono.ca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-info-detail contact-info-link"
+            >
+              {t('contact.info.social_handle')}
+            </a>
+          </div>
+        </div>
+
+        <div className="contact-map-card">
+          {mapSrc ? (
+            <iframe
+              title={t('store.map.iframe_title')}
+              src={mapSrc}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          ) : (
+            <p className="store-map-missing">
+              {t('store.map.unavailable')}
+            </p>
+          )}
+        </div>
+      </section>
+    </div>
   );
 }
 
