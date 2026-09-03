@@ -773,6 +773,24 @@ li:last-child .header-menu-dropdown-item {
   transform-origin: top right;
 }
 
+/* Third-level flyouts inside the primary (non-overflow) dropdown: default to
+   opening rightward alongside the trigger, flipping leftward near the edge. */
+.header-menu-desktop > .header-menu-item-wrapper > .header-menu-dropdown .header-menu-item-wrapper .header-menu-dropdown {
+  left: 100%;
+  right: auto;
+  top: -3px;
+  margin-left: 6px;
+  transform-origin: top left;
+}
+
+.header-menu-desktop > .header-menu-item-wrapper > .header-menu-dropdown .header-menu-item-wrapper[data-flip-side="left"] .header-menu-dropdown {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: 6px;
+  transform-origin: top right;
+}
+
 /* Items inside the nested white submenu: distinct hover so it reads clearly on pink surroundings */
 .header-menu-overflow-dropdown .header-menu-item-wrapper .header-menu-dropdown .header-menu-dropdown-item:hover {
   background: #E55A7E;

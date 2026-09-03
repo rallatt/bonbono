@@ -105,7 +105,7 @@ function useIsTouch() {
  */
 function flipDropdowns(nav) {
   if (!nav) return;
-  // Only flip top-level wrappers — nested ones inside the overflow menu are inline
+  // Top-level wrappers (direct children of the nav) flip left<->right
   nav.querySelectorAll(':scope > .header-menu-item-wrapper').forEach((wrapper) => {
     const dropdown = wrapper.querySelector('.header-menu-dropdown');
     if (!dropdown) return;
@@ -117,6 +117,92 @@ function flipDropdowns(nav) {
       wrapper.dataset.flip = 'right';
     }
   });
+  // Third-level flyouts nested in the primary (non-overflow) dropdown default
+  // to opening rightward — flip them leftward if they'd run off the viewport.
+  nav.querySelectorAll(
+    '.header-menu-desktop > .header-menu-item-wrapper > .header-menu-dropdown .header-menu-item-wrapper',
+  ).forEach((wrapper) => {
+    const dropdown = wrapper.querySelector(':scope > .header-menu-dropdown');
+    if (!dropdown) return;
+    delete wrapper.dataset.flipSide;
+    const rect = dropdown.getBoundingClientRect();
+    if (rect.right > window.innerWidth - 8) {
+      wrapper.dataset.flipSide = 'left';
+    }
+  });
+}
+
+/**
+ * Renders the <ul> of second-level dropdown items, including a third
+ * flyout level for any item that itself has children (e.g. "Beauté &
+ * Paillettes" under "Maison + Gadgets"). Shared by the primary nav
+ * dropdown and the overflow "Plus" dropdown.
+ */
+function DropdownList({ items, resolveUrl, isTouch, openSubId, setOpenSubId, onNavigate }) {
+  return (
+    <ul className="header-menu-dropdown">
+      {items.map((child) => {
+        const childUrl = resolveUrl(child.url);
+        if (!childUrl) return null;
+        const hasGrandchildren = child.items?.length > 0;
+
+        if (!hasGrandchildren) {
+          return (
+            <li key={child.id}>
+              <NavLink
+                className="header-menu-dropdown-item"
+                prefetch="intent"
+                style={activeLinkStyle}
+                to={childUrl}
+                onClick={onNavigate}
+              >
+                {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+              </NavLink>
+            </li>
+          );
+        }
+
+        const isSubOpen = openSubId === child.id;
+        return (
+          <li key={child.id} className={`header-menu-item-wrapper${isSubOpen ? ' is-open' : ''}`}>
+            <NavLink
+              className="header-menu-dropdown-item header-menu-item--parent"
+              prefetch="intent"
+              style={activeLinkStyle}
+              to={childUrl}
+              onClick={
+                isTouch
+                  ? (e) => { e.preventDefault(); setOpenSubId(isSubOpen ? null : child.id); }
+                  : onNavigate
+              }
+            >
+              {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+              <span className="header-menu-chevron" aria-hidden="true">▾</span>
+            </NavLink>
+            <ul className="header-menu-dropdown">
+              {child.items.map((grandchild) => {
+                const grandchildUrl = resolveUrl(grandchild.url);
+                if (!grandchildUrl) return null;
+                return (
+                  <li key={grandchild.id}>
+                    <NavLink
+                      className="header-menu-dropdown-item"
+                      prefetch="intent"
+                      style={activeLinkStyle}
+                      to={grandchildUrl}
+                      onClick={onNavigate}
+                    >
+                      {HEADER_TITLE_BY_URL[grandchildUrl] ?? grandchild.title}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        );
+      })}
+    </ul>
+  );
 }
 
 function OverflowNav({ items, resolveUrl }) {
@@ -125,6 +211,7 @@ function OverflowNav({ items, resolveUrl }) {
   const [visibleCount, setVisibleCount] = useState(items.length);
   const isTouch = useIsTouch();
   const [openId, setOpenId] = useState(null);
+  const [openSubId, setOpenSubId] = useState(null);
   const [moreOpen, setMoreOpen] = useState(false);
 
   const compute = useCallback(() => {
@@ -186,16 +273,17 @@ function OverflowNav({ items, resolveUrl }) {
   // Touch: close all dropdowns when tapping outside the nav
   useEffect(() => {
     if (!isTouch) return;
-    if (openId === null && !moreOpen) return;
+    if (openId === null && openSubId === null && !moreOpen) return;
     const handler = (e) => {
       if (!navRef.current?.contains(e.target)) {
         setOpenId(null);
+        setOpenSubId(null);
         setMoreOpen(false);
       }
     };
     document.addEventListener('pointerdown', handler);
     return () => document.removeEventListener('pointerdown', handler);
-  }, [isTouch, openId, moreOpen]);
+  }, [isTouch, openId, openSubId, moreOpen]);
 
   const visibleItems = items.slice(0, visibleCount);
   const overflowItems = items.slice(visibleCount);
@@ -253,25 +341,14 @@ function OverflowNav({ items, resolveUrl }) {
                     ▾
                   </span>
                 </NavLink>
-                <ul className="header-menu-dropdown">
-                  {item.items.map((child) => {
-                    const childUrl = resolveUrl(child.url);
-                    if (!childUrl) return null;
-                    return (
-                      <li key={child.id}>
-                        <NavLink
-                          className="header-menu-dropdown-item"
-                          prefetch="intent"
-                          style={activeLinkStyle}
-                          to={childUrl}
-                          onClick={() => setOpenId(null)}
-                        >
-                          {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
-                        </NavLink>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <DropdownList
+                  items={item.items}
+                  resolveUrl={resolveUrl}
+                  isTouch={isTouch}
+                  openSubId={openSubId}
+                  setOpenSubId={setOpenSubId}
+                  onNavigate={() => { setOpenId(null); setOpenSubId(null); }}
+                />
               </div>
             );
           }
@@ -319,25 +396,14 @@ function OverflowNav({ items, resolveUrl }) {
                         {HEADER_TITLE_BY_URL[url] ?? item.title}
                         <span className="header-menu-chevron" aria-hidden="true">▾</span>
                       </NavLink>
-                      <ul className="header-menu-dropdown">
-                        {item.items.map((child) => {
-                          const childUrl = resolveUrl(child.url);
-                          if (!childUrl) return null;
-                          return (
-                            <li key={child.id}>
-                              <NavLink
-                                className="header-menu-dropdown-item"
-                                to={childUrl}
-                                prefetch="intent"
-                                style={activeLinkStyle}
-                                onClick={() => { setOpenId(null); setMoreOpen(false); }}
-                              >
-                                {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
-                              </NavLink>
-                            </li>
-                          );
-                        })}
-                      </ul>
+                      <DropdownList
+                        items={item.items}
+                        resolveUrl={resolveUrl}
+                        isTouch={isTouch}
+                        openSubId={openSubId}
+                        setOpenSubId={setOpenSubId}
+                        onNavigate={() => { setOpenId(null); setOpenSubId(null); setMoreOpen(false); }}
+                      />
                     </li>
                   );
                 }
