@@ -773,6 +773,14 @@ li:last-child .header-menu-dropdown-item {
   transform-origin: top right;
 }
 
+/* A dropdown that contains a third-level flyout can't clip its own overflow —
+   that would cut off (or force a scrollbar around) the sideways flyout instead
+   of letting it sit beside the list. Long leaf-only dropdowns keep scrolling. */
+.header-menu-dropdown:has(.header-menu-item-wrapper) {
+  overflow: visible;
+  max-height: none;
+}
+
 /* Third-level flyouts inside the primary (non-overflow) dropdown: default to
    opening rightward alongside the trigger, flipping leftward near the edge. */
 .header-menu-desktop > .header-menu-item-wrapper > .header-menu-dropdown .header-menu-item-wrapper .header-menu-dropdown {
