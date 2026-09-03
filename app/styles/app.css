@@ -522,7 +522,11 @@ button.reset:hover:not(:has(> *)) {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .header-menu-item-wrapper:hover .header-menu-dropdown {
+  /* Direct-child combinator: hovering a wrapper reveals only its own
+     dropdown, not every dropdown nested deeper inside it (they're all
+     ".header-menu-dropdown" descendants otherwise, so a plain descendant
+     selector here would pop every grandchild flyout open at once). */
+  .header-menu-item-wrapper:hover > .header-menu-dropdown {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -534,14 +538,14 @@ button.reset:hover:not(:has(> *)) {
   }
 
   /* Keep dropdown open briefly when cursor briefly leaves the hover area */
-  .header-menu-item-wrapper:not(:hover) .header-menu-dropdown,
-  .header-menu-more-wrapper:not(:hover) .header-menu-overflow-dropdown {
+  .header-menu-item-wrapper:not(:hover) > .header-menu-dropdown,
+  .header-menu-more-wrapper:not(:hover) > .header-menu-overflow-dropdown {
     transition-delay: 120ms;
   }
 }
 
 /* Touch: show dropdown when wrapper has .is-open class (toggled via JS) */
-.header-menu-item-wrapper.is-open .header-menu-dropdown {
+.header-menu-item-wrapper.is-open > .header-menu-dropdown {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
