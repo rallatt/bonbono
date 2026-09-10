@@ -173,6 +173,8 @@ export const fr = {
   'contact.info.social_title': 'Suivez-nous',
   'contact.info.social_handle': '@bonbono.ca',
 
+  'patchbar.coming_soon': '🧵 Bientôt disponible — la station Le Patch Bar arrive très prochainement en boutique!',
+
   // Le Patch Bar — live best-sellers grid (rest of the page is authored in Shopify)
   'patchbar.catalog.eyebrow': 'Le mur à patchs',
   'patchbar.catalog.title': 'Nos meilleurs vendeurs',

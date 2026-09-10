@@ -2504,6 +2504,19 @@ li:last-child .header-menu-dropdown-item {
   margin: 1rem 0 0;
 }
 
+.coming-soon-banner {
+  background: #F8DAE7;
+  border-bottom: 3px solid #176131;
+  color: #176131;
+  font-family: 'Paytone One', cursive;
+  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+  left: calc(-50vw + 50%);
+  padding: 0.9rem 1.5rem;
+  position: relative;
+  text-align: center;
+  width: 100vw;
+}
+
 .formulas-grid {
   display: grid;
   gap: 1.5rem;

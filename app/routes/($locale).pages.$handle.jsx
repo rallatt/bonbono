@@ -106,7 +106,10 @@ export default function Page() {
       )}
       {page.handle === 'contact' && <StoreMap apiKey={googleMapsApiKey} />}
       {page.handle === 'le-patch-bar' && (
-        <PatchBarBody body={page.body} products={patchProducts} />
+        <>
+          <div className="coming-soon-banner">{t('patchbar.coming_soon')}</div>
+          <PatchBarBody body={page.body} products={patchProducts} />
+        </>
       )}
       {page.handle !== 'contact' && page.handle !== 'le-patch-bar' && (
         <main dangerouslySetInnerHTML={{ __html: page.body }} />
