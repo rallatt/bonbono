@@ -188,6 +188,29 @@ export const IconBag = base('0 0 24 24', () => (
   </>
 ));
 
+export const IconPumpkin = base('0 0 48 48', (fill) => (
+  <>
+    <path
+      d="M8 26 C8 17 15 12 24 12 C33 12 40 17 40 26 C40 35 33 42 24 42 C15 42 8 35 8 26 Z"
+      fill={fill}
+      stroke={INK}
+      strokeWidth="2.5"
+    />
+    <path d="M17 13 C17 20 17 32 17 41" fill="none" stroke={INK} strokeWidth="1.6" />
+    <path d="M31 13 C31 20 31 32 31 41" fill="none" stroke={INK} strokeWidth="1.6" />
+    <line x1="24" y1="12" x2="24" y2="6" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M24 6 C26 5 27 6 26 8" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
+  </>
+));
+
+export const IconLunchbox = base('0 0 48 48', (fill) => (
+  <>
+    <rect x="8" y="18" width="32" height="22" rx="4" fill={fill} stroke={INK} strokeWidth="2.5" />
+    <path d="M16 18 C16 10 32 10 32 18" fill="none" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+    <line x1="8" y1="27" x2="40" y2="27" stroke={INK} strokeWidth="1.6" />
+  </>
+));
+
 export const IconPin = base('0 0 24 24', () => (
   <>
     <path

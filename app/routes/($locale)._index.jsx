@@ -5,8 +5,8 @@ import {
   IconLollipop,
   IconStar,
   IconHeart,
-  IconDonut,
-  IconRainbow,
+  IconPumpkin,
+  IconLunchbox,
   IconBear,
   CATEGORY_ICONS,
 } from '../components/CandyIcons';
@@ -51,15 +51,16 @@ export default function Homepage() {
   );
 }
 
-// Labels per client copy (P0-5): the star gets "Nouveautés" as specified;
-// the other three labels are distributed provisionally across the remaining
-// chips pending client confirmation (2 chips are intentionally left unlabeled).
+// Labels per client copy (P0-5): the star gets "Nouveautés" and the heart
+// gets "Coup de cœur" as specified. Halloween and La rentrée use icons that
+// actually match the category (pumpkin, lunchbox) instead of reusing an
+// unrelated candy icon. 2 chips are intentionally left unlabeled (P3-3).
 const HERO_CHIPS = [
-  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve', labelKey: null },
   { Icon: IconStar, fill: '#E55A7E', bg: 'melon', labelKey: 'home.hero_chip.new' },
   { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', labelKey: 'home.hero_chip.favorites' },
-  { Icon: IconDonut, fill: '#F8DAE7', bg: 'paper', labelKey: 'home.hero_chip.back_to_school' },
-  { Icon: IconRainbow, fill: '#E55A7E', bg: 'melon', labelKey: null },
+  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', labelKey: 'home.hero_chip.back_to_school' },
   { Icon: IconBear, fill: '#41A500', bg: 'guimauve', labelKey: null },
 ];
 
