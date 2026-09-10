@@ -250,7 +250,15 @@ function StoreMap({ apiKey }) {
               rel="noopener noreferrer"
               className="contact-info-detail contact-info-link"
             >
-              {t('contact.info.social_handle')}
+              {t('footer.instagram')} · {t('contact.info.social_handle')}
+            </a>
+            <a
+              href="https://www.tiktok.com/@bonbono.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-info-detail contact-info-link"
+            >
+              {t('footer.tiktok')} · {t('contact.info.social_handle')}
             </a>
           </div>
         </div>

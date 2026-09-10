@@ -436,6 +436,8 @@ function OverflowNav({ items, resolveUrl }) {
 function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [openId, setOpenId] = useState(null);
+  const [openSubId, setOpenSubId] = useState(null);
 
   useEffect(() => {
     if (open) {
@@ -446,6 +448,8 @@ function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
       const timer = setTimeout(() => {
         setVisible(false);
         setClosing(false);
+        setOpenId(null);
+        setOpenSubId(null);
       }, 280);
       return () => clearTimeout(timer);
     }
@@ -493,21 +497,97 @@ function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
           {items.map((item, i) => {
             const url = resolveUrl(item.url);
             if (!url) return null;
+            const hasChildren = item.items?.length > 0;
+            const isOpen = openId === item.id;
+
             return (
-              <NavLink
-                key={item.id}
-                to={url}
-                className="mobile-menu-item"
-                onClick={onClose}
-                prefetch="intent"
-                style={({ isActive, isPending }) => ({
-                  '--i': i,
-                  fontWeight: isActive ? 'bold' : undefined,
-                  opacity: isPending ? 0.6 : undefined,
-                })}
-              >
-                {HEADER_TITLE_BY_URL[url] ?? item.title}
-              </NavLink>
+              <div className="mobile-menu-entry" key={item.id}>
+                <div className="mobile-menu-row" style={{ '--i': i }}>
+                  <NavLink
+                    to={url}
+                    className="mobile-menu-item"
+                    onClick={onClose}
+                    prefetch="intent"
+                    style={({ isActive, isPending }) => ({
+                      fontWeight: isActive ? 'bold' : undefined,
+                      opacity: isPending ? 0.6 : undefined,
+                    })}
+                  >
+                    {HEADER_TITLE_BY_URL[url] ?? item.title}
+                  </NavLink>
+                  {hasChildren && (
+                    <button
+                      type="button"
+                      className="mobile-menu-chevron-btn reset"
+                      aria-expanded={isOpen}
+                      aria-label={t('nav.expand', { title: item.title })}
+                      onClick={() => setOpenId(isOpen ? null : item.id)}
+                    >
+                      <span className={`header-menu-chevron${isOpen ? ' is-open' : ''}`} aria-hidden="true">▾</span>
+                    </button>
+                  )}
+                </div>
+                {hasChildren && isOpen && (
+                  <div className="mobile-menu-submenu">
+                    {item.items.map((child) => {
+                      const childUrl = resolveUrl(child.url);
+                      if (!childUrl) return null;
+                      const hasGrandchildren = child.items?.length > 0;
+                      const isSubOpen = openSubId === child.id;
+
+                      return (
+                        <div className="mobile-menu-entry" key={child.id}>
+                          <div className="mobile-menu-row">
+                            <NavLink
+                              to={childUrl}
+                              className="mobile-menu-item mobile-menu-item--sub"
+                              onClick={onClose}
+                              prefetch="intent"
+                              style={({ isActive, isPending }) => ({
+                                fontWeight: isActive ? 'bold' : undefined,
+                                opacity: isPending ? 0.6 : undefined,
+                              })}
+                            >
+                              {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+                            </NavLink>
+                            {hasGrandchildren && (
+                              <button
+                                type="button"
+                                className="mobile-menu-chevron-btn reset"
+                                aria-expanded={isSubOpen}
+                                aria-label={t('nav.expand', { title: child.title })}
+                                onClick={() => setOpenSubId(isSubOpen ? null : child.id)}
+                              >
+                                <span className={`header-menu-chevron${isSubOpen ? ' is-open' : ''}`} aria-hidden="true">▾</span>
+                              </button>
+                            )}
+                          </div>
+                          {hasGrandchildren && isSubOpen && (
+                            <div className="mobile-menu-submenu mobile-menu-submenu--nested">
+                              {child.items.map((grandchild) => {
+                                const grandchildUrl = resolveUrl(grandchild.url);
+                                if (!grandchildUrl) return null;
+                                return (
+                                  <NavLink
+                                    key={grandchild.id}
+                                    to={grandchildUrl}
+                                    className="mobile-menu-item mobile-menu-item--subsub"
+                                    onClick={onClose}
+                                    prefetch="intent"
+                                    style={activeLinkStyle}
+                                  >
+                                    {HEADER_TITLE_BY_URL[grandchildUrl] ?? grandchild.title}
+                                  </NavLink>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>

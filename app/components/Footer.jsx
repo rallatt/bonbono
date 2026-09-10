@@ -34,7 +34,20 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                   <circle cx="12" cy="12" r="4"/>
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
                 </svg>
-                Instagram
+                {t('footer.instagram')}
+              </a>
+              <a
+                href="https://www.tiktok.com/@bonbono.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-instagram"
+                aria-label={t('footer.tiktok')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46"/>
+                  <path d="M14 3c0 2.5 2 4.5 4.5 4.5"/>
+                </svg>
+                {t('footer.tiktok')}
               </a>
               <a
                 href="https://www.librairiegourmande.ca/"

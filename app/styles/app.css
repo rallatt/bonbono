@@ -874,6 +874,8 @@ li:last-child .header-menu-dropdown-item {
   box-shadow: 0 16px 48px rgba(229, 90, 126, 0.45);
   transform-origin: top center;
   animation: mobileMenuIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  max-height: calc(100vh - var(--header-height) - 2rem);
+  overflow-y: auto;
 
   @media (min-width: 48em) {
     display: none;
@@ -914,26 +916,83 @@ li:last-child .header-menu-dropdown-item {
   flex-direction: column;
 }
 
+.mobile-menu-row {
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobile-menu-nav > .mobile-menu-entry:last-child > .mobile-menu-row {
+  border-bottom: none;
+}
+
 .mobile-menu-item {
   display: block;
   color: white;
+  flex: 1;
   font-family: 'Fredoka', system-ui, sans-serif;
   font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: normal;
   padding: 0.8rem 0;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
   animation: mobileItemIn 0.3s ease both;
-  animation-delay: calc(var(--i) * 55ms + 80ms);
-}
-
-.mobile-menu-item:last-child {
-  border-bottom: none;
+  animation-delay: calc(var(--i, 0) * 55ms + 80ms);
 }
 
 .mobile-menu-item:hover {
   color: rgba(255, 255, 255, 0.75);
+}
+
+.mobile-menu-item--sub {
+  font-size: 1.05rem;
+}
+
+.mobile-menu-item--subsub {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+.mobile-menu-chevron-btn {
+  color: white;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  padding: 0.8rem 0 0.8rem 0.75rem;
+}
+
+.mobile-menu-chevron-btn .header-menu-chevron {
+  display: inline-block;
+  transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-menu-chevron-btn .header-menu-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.mobile-menu-submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+}
+
+.mobile-menu-submenu .mobile-menu-row {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+.mobile-menu-submenu--nested {
+  padding-left: 1.75rem;
+}
+
+.mobile-menu-submenu--nested .mobile-menu-item--subsub {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  display: block;
+  padding: 0.6rem 0;
+  text-decoration: none;
+}
+
+.mobile-menu-submenu--nested .mobile-menu-item--subsub:last-child {
+  border-bottom: none;
 }
 
 @keyframes mobileItemIn {
@@ -1836,6 +1895,12 @@ li:last-child .header-menu-dropdown-item {
   @media (min-width: 60em) {
     grid-template-columns: repeat(5, 1fr);
   }
+}
+
+.collection-subnav {
+  margin: 0 auto 2.5rem;
+  max-width: 1200px;
+  padding: 0 1.25rem;
 }
 
 .cat-card {

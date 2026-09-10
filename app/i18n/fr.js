@@ -26,6 +26,7 @@ export const fr = {
   'nav.about': 'À propos',
   'nav.more': 'Plus',
   'nav.mobile_menu': 'Menu',
+  'nav.expand': 'Afficher les sous-catégories de {{title}}',
 
   // Footer fallback menu items
   'footer.privacy': 'Politique de confidentialité',
@@ -33,6 +34,7 @@ export const fr = {
   'footer.shipping': 'Politique de livraison',
   'footer.terms': "Conditions d'utilisation",
   'footer.instagram': 'Instagram',
+  'footer.tiktok': 'TikTok',
   'footer.sister_boutique': 'Notre boutique sœur',
   'footer.copyright': '© {{year}} Bonbono. Tous droits réservés.',
 
