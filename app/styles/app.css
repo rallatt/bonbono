@@ -1711,6 +1711,13 @@ li:last-child .header-menu-dropdown-item {
   transform: rotate(-4deg);
 }
 
+.chip-cell {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .chip {
   align-items: center;
   animation: candy-bob 5s ease-in-out infinite;
@@ -1723,9 +1730,20 @@ li:last-child .header-menu-dropdown-item {
   width: 92px;
 }
 
-.chip:nth-child(2n) {
+.chip-cell:nth-child(2n) .chip {
   animation-direction: reverse;
   animation-duration: 6s;
+}
+
+.chip-label {
+  background: #176131;
+  border-radius: 100px;
+  color: #C8F4AE;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  white-space: nowrap;
 }
 
 .chip--guimauve {
@@ -1761,7 +1779,7 @@ li:last-child .header-menu-dropdown-item {
   grid-template-columns: repeat(2, 1fr);
 
   @media (min-width: 55em) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

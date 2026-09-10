@@ -51,13 +51,16 @@ export default function Homepage() {
   );
 }
 
+// Labels per client copy (P0-5): the star gets "Nouveautés" as specified;
+// the other three labels are distributed provisionally across the remaining
+// chips pending client confirmation (2 chips are intentionally left unlabeled).
 const HERO_CHIPS = [
-  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
-  { Icon: IconStar, fill: '#E55A7E', bg: 'melon' },
-  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink' },
-  { Icon: IconDonut, fill: '#F8DAE7', bg: 'paper' },
-  { Icon: IconRainbow, fill: '#E55A7E', bg: 'melon' },
-  { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
+  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', labelKey: 'home.hero_chip.new' },
+  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', labelKey: 'home.hero_chip.favorites' },
+  { Icon: IconDonut, fill: '#F8DAE7', bg: 'paper', labelKey: 'home.hero_chip.back_to_school' },
+  { Icon: IconRainbow, fill: '#E55A7E', bg: 'melon', labelKey: null },
+  { Icon: IconBear, fill: '#41A500', bg: 'guimauve', labelKey: null },
 ];
 
 function HeroBanner() {
@@ -73,6 +76,7 @@ function HeroBanner() {
           {t('home.hero.title_suffix')}
         </h1>
         <p className="hero-paragraph">{t('home.hero.paragraph')}</p>
+        <p className="hero-paragraph">{t('home.hero.paragraph2')}</p>
         <div className="hero-ctas">
           <Link to="/collections/all" className="btn-bold btn-bold--primary">
             {t('home.hero.cta_shop')}
@@ -84,9 +88,12 @@ function HeroBanner() {
       </div>
       <div className="hero-visual">
         <div className="chip-grid">
-          {HERO_CHIPS.map(({ Icon, fill, bg }, i) => (
-            <div className={`chip chip--${bg}`} key={i}>
-              <Icon fill={fill} size={42} />
+          {HERO_CHIPS.map(({ Icon, fill, bg, labelKey }, i) => (
+            <div className="chip-cell" key={i}>
+              <div className={`chip chip--${bg}`}>
+                <Icon fill={fill} size={42} />
+              </div>
+              {labelKey && <span className="chip-label">{t(labelKey)}</span>}
             </div>
           ))}
         </div>
@@ -95,19 +102,24 @@ function HeroBanner() {
   );
 }
 
+// "Ajoute une touche cadeau" (step 2) is temporarily dropped — gift wrapping
+// isn't sourced yet — but kept out of the array (not deleted) so it's a
+// one-line change to bring back. Displayed numbering (1-2-3) is the card's
+// position, not its original slot, so removing/restoring a step doesn't
+// require renumbering anything else.
+const ACTIVE_STEPS = [1, 3, 4];
+
 function HowItWorks() {
-  const steps = [1, 2, 3, 4];
   return (
     <section className="bold-section">
       <div className="bold-section-head">
         <span className="eyebrow">{t('home.steps.eyebrow')}</span>
         <h2>{t('home.steps.title')}</h2>
-        <p>{t('home.steps.subtitle')}</p>
       </div>
       <div className="steps-grid">
-        {steps.map((n) => (
+        {ACTIVE_STEPS.map((n, i) => (
           <div className="step-card" key={n}>
-            <div className="step-num">{n}</div>
+            <div className="step-num">{i + 1}</div>
             <h3>{t(`home.steps.${n}.title`)}</h3>
             <p>{t(`home.steps.${n}.body`)}</p>
           </div>
@@ -160,7 +172,6 @@ function GiftCardPromo() {
   return (
     <section className="giftcard-promo">
       <div className="giftcard-promo-copy">
-        <span className="eyebrow">{t('home.giftcard.eyebrow')}</span>
         <h2>{t('home.giftcard.title')}</h2>
         <p>{t('home.giftcard.body')}</p>
         <Link to="/pages/carte-cadeau" className="btn-bold btn-bold--primary">

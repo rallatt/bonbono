@@ -201,13 +201,7 @@ function StoreMap({ apiKey }) {
     <div className="contact-page">
       <section className="hero-section">
         <div className="hero-copy">
-          <span className="hero-tag">{t('contact.hero.tag')}</span>
-          <h1 className="hero-title">
-            {t('contact.hero.title_line1')}
-            <br />
-            <span className="hero-accent">{t('contact.hero.title_accent')}</span>{' '}
-            {t('contact.hero.title_suffix')}
-          </h1>
+          <h1 className="hero-title">{t('contact.hero.title')}</h1>
           <p className="hero-paragraph">{t('contact.hero.paragraph')}</p>
           <div className="hero-ctas">
             <a href={gmapsHref} target="_blank" rel="noopener noreferrer" className="btn-bold btn-bold--primary">
