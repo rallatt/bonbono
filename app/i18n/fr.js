@@ -133,11 +133,6 @@ export const fr = {
   'home.hero.cta_shop': 'Voir la boutique',
   'home.hero.cta_patchbar': 'Découvrir Le Patch Bar',
 
-  'home.hero_chip.new': 'Nouveautés',
-  'home.hero_chip.halloween': 'Halloween',
-  'home.hero_chip.back_to_school': 'La rentrée',
-  'home.hero_chip.favorites': 'Coup de cœur',
-
   'home.steps.eyebrow': 'Comment ça marche',
   'home.steps.title': 'De la boutique à toi, en 3 étapes faciles.',
   'home.steps.1.title': 'Choisis tes articles',

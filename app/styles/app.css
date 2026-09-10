@@ -1706,44 +1706,46 @@ li:last-child .header-menu-dropdown-item {
 
 .chip-grid {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   grid-template-columns: repeat(3, 1fr);
   transform: rotate(-4deg);
 }
 
-.chip-cell {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 .chip {
   align-items: center;
-  animation: candy-bob 5s ease-in-out infinite;
+  animation: chip-bob 4.5s ease-in-out infinite;
   border: 3px solid #176131;
   border-radius: 50%;
-  box-shadow: 4px 4px 0 #176131;
+  box-shadow: 5px 5px 0 #176131;
   display: flex;
-  height: 92px;
+  height: 128px;
   justify-content: center;
-  width: 92px;
+  transition: box-shadow 200ms ease;
+  width: 128px;
 }
 
-.chip-cell:nth-child(2n) .chip {
+.chip:nth-child(2n) {
   animation-direction: reverse;
-  animation-duration: 6s;
+  animation-duration: 5.5s;
 }
 
-.chip-label {
-  background: #176131;
-  border-radius: 100px;
-  color: #C8F4AE;
-  font-family: 'Fredoka', system-ui, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.2rem 0.65rem;
-  white-space: nowrap;
+.chip:hover {
+  box-shadow: 7px 7px 0 #176131;
+}
+
+@keyframes chip-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(-6deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    animation: none;
+  }
 }
 
 .chip--guimauve {

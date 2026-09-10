@@ -51,17 +51,17 @@ export default function Homepage() {
   );
 }
 
-// Labels per client copy (P0-5): the star gets "Nouveautés" and the heart
-// gets "Coup de cœur" as specified. Halloween and La rentrée use icons that
-// actually match the category (pumpkin, lunchbox) instead of reusing an
-// unrelated candy icon. 2 chips are intentionally left unlabeled (P3-3).
+// Icon-only chips (no caption labels — client asked for the icons to speak
+// for themselves, bigger and more animated instead). Halloween and La
+// rentrée use icons that actually match the category (pumpkin, lunchbox)
+// rather than reusing an unrelated candy icon.
 const HERO_CHIPS = [
-  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve', labelKey: null },
-  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', labelKey: 'home.hero_chip.new' },
-  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', labelKey: 'home.hero_chip.favorites' },
-  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', labelKey: 'home.hero_chip.halloween' },
-  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', labelKey: 'home.hero_chip.back_to_school' },
-  { Icon: IconBear, fill: '#41A500', bg: 'guimauve', labelKey: null },
+  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
+  { Icon: IconStar, fill: '#E55A7E', bg: 'melon' },
+  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink' },
+  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper' },
+  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon' },
+  { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
 ];
 
 function HeroBanner() {
@@ -89,12 +89,9 @@ function HeroBanner() {
       </div>
       <div className="hero-visual">
         <div className="chip-grid">
-          {HERO_CHIPS.map(({ Icon, fill, bg, labelKey }, i) => (
-            <div className="chip-cell" key={i}>
-              <div className={`chip chip--${bg}`}>
-                <Icon fill={fill} size={42} />
-              </div>
-              {labelKey && <span className="chip-label">{t(labelKey)}</span>}
+          {HERO_CHIPS.map(({ Icon, fill, bg }, i) => (
+            <div className={`chip chip--${bg}`} key={i}>
+              <Icon fill={fill} size={54} />
             </div>
           ))}
         </div>
