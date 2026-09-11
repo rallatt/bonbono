@@ -35,14 +35,19 @@ async function loadCriticalData({ context, request }) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 24,
   });
+  const isNewest = new URL(request.url).searchParams.get('sort') === 'newest';
 
   const [{ products }] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
-      variables: { ...paginationVariables },
+      variables: {
+        ...paginationVariables,
+        sortKey: isNewest ? 'CREATED_AT' : undefined,
+        reverse: isNewest ? true : undefined,
+      },
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  return { products: filterVisibleProducts(products) };
+  return { products: filterVisibleProducts(products), isNewest };
 }
 
 /**
@@ -57,13 +62,13 @@ function loadDeferredData({ context }) {
 
 export default function Collection() {
   /** @type {LoaderReturnData} */
-  const { products } = useLoaderData();
+  const { products, isNewest } = useLoaderData();
 
   return (
     <div className="collection">
       <div className="page-title-band">
         <span className="hero-tag">{t('nav.collections')}</span>
-        <h1>{t('collections.all.title')}</h1>
+        <h1>{isNewest ? t('collections.newest.title') : t('collections.all.title')}</h1>
       </div>
       <PaginatedResourceSection
         connection={products}
@@ -124,8 +129,17 @@ const CATALOG_QUERY = `#graphql
     $last: Int
     $startCursor: String
     $endCursor: String
+    $sortKey: ProductSortKeys
+    $reverse: Boolean
   ) @inContext(country: $country, language: $language) {
-    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {
+    products(
+      first: $first,
+      last: $last,
+      before: $startCursor,
+      after: $endCursor,
+      sortKey: $sortKey,
+      reverse: $reverse
+    ) {
       nodes {
         ...CollectionItem
       }

@@ -1779,6 +1779,7 @@ li:last-child .header-menu-dropdown-item {
   display: flex;
   height: 128px;
   justify-content: center;
+  text-decoration: none;
   transition: box-shadow 200ms ease;
   width: 128px;
 }

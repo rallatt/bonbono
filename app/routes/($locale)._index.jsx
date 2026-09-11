@@ -54,13 +54,15 @@ export default function Homepage() {
 // Icon-only chips (no caption labels — client asked for the icons to speak
 // for themselves, bigger and more animated instead). Halloween and La
 // rentrée use icons that actually match the category (pumpkin, lunchbox)
-// rather than reusing an unrelated candy icon.
+// rather than reusing an unrelated candy icon. Nouveautés/Halloween/La
+// rentrée link to their destinations (P1-3); the heart (Coup de cœur) stays
+// decorative until the team-picks page exists (P1-4, pending P3-3).
 const HERO_CHIPS = [
   { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
-  { Icon: IconStar, fill: '#E55A7E', bg: 'melon' },
+  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', ariaLabelKey: 'home.hero_chip.new_aria' },
   { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink' },
-  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper' },
-  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon' },
+  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', to: '/collections/halloween-bonbono', ariaLabelKey: 'home.hero_chip.halloween_aria' },
+  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', ariaLabelKey: 'home.hero_chip.back_to_school_aria' },
   { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
 ];
 
@@ -89,11 +91,17 @@ function HeroBanner() {
       </div>
       <div className="hero-visual">
         <div className="chip-grid">
-          {HERO_CHIPS.map(({ Icon, fill, bg }, i) => (
-            <div className={`chip chip--${bg}`} key={i}>
-              <Icon fill={fill} size={54} />
-            </div>
-          ))}
+          {HERO_CHIPS.map(({ Icon, fill, bg, to, ariaLabelKey }, i) =>
+            to ? (
+              <Link to={to} className={`chip chip--${bg}`} key={i} aria-label={t(ariaLabelKey)}>
+                <Icon fill={fill} size={54} />
+              </Link>
+            ) : (
+              <div className={`chip chip--${bg}`} key={i}>
+                <Icon fill={fill} size={54} />
+              </div>
+            ),
+          )}
         </div>
       </div>
     </section>

@@ -157,6 +157,11 @@ export const fr = {
 
   // Collections all page
   'collections.all.title': 'Tous nos produits',
+  'collections.newest.title': 'Nouveautés',
+
+  'home.hero_chip.new_aria': 'Voir les nouveautés',
+  'home.hero_chip.halloween_aria': 'Voir la collection Halloween',
+  'home.hero_chip.back_to_school_aria': 'Voir la collection La rentrée',
 
   // Store map (pages/$handle StoreMap component)
   'store.find_us': 'Bonbono',
