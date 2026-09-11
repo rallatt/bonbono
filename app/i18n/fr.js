@@ -149,7 +149,7 @@ export const fr = {
   'home.giftcard.title': 'Une carte-cadeau, jamais un mauvais cadeau',
   // Split in three so « Librairiegourmande.ca » can be a real link (P1-1)
   // without hardcoding any of the sentence in the JSX.
-  'home.giftcard.body_before': 'De 25 $ au montant de ton choix, envoyée par courriel en quelques secondes. Valide sur tout le site Bonbono mais aussi sur le site de ',
+  'home.giftcard.body_before': 'De 25 $ à 100 $, envoyée par courriel en quelques secondes. Valide sur tout le site Bonbono mais aussi sur le site de ',
   'home.giftcard.body_link': 'Librairiegourmande.ca',
   'home.giftcard.body_link_aria': 'Visiter Librairiegourmande.ca (nouvel onglet)',
   'home.giftcard.body_after': " sans date d'expiration.",
@@ -186,7 +186,7 @@ export const fr = {
   'store.map.unavailable': 'Carte indisponible — clé Google Maps manquante.',
   'store.map.view_gmaps': 'Voir sur Google Maps →',
 
-  'contact.hero.title': "Viens nous voir, Les travaux de la Place de Castelnau ne nous font pas peur. Et toi?",
+  'contact.hero.title': "Viens nous voir. Les travaux de la Place de Castelnau ne nous font pas peur. Et toi?",
   'contact.hero.paragraph': "Passe en boutique, écris-nous, ou suis-nous sur Instagram et TikTok pour nos concours, nos nouveautés et le reste de nos mauvaises idées.",
   'contact.info.address_title': 'Adresse',
   'contact.info.email_title': 'Courriel',
