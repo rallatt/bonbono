@@ -46,7 +46,6 @@ export default function Homepage() {
       <HeroBanner />
       <HowItWorks />
       <FeaturedCategories navItems={navItems} />
-      <CtaStrip />
       <GiftCardPromo />
     </div>
   );
@@ -84,7 +83,7 @@ function HeroBanner() {
           <Link to="/collections/all" className="btn-bold btn-bold--primary">
             {t('home.hero.cta_shop')}
           </Link>
-          <Link to="/pages/le-patch-bar" className="btn-bold btn-bold--ghost">
+          <Link to="/pages/le-patch-bar" className="btn-bold btn-bold--shine">
             {t('home.hero.cta_patchbar')}
           </Link>
         </div>
@@ -157,20 +156,6 @@ function FeaturedCategories({ navItems }) {
         })}
       </div>
     </section>
-  );
-}
-
-function CtaStrip() {
-  return (
-    <div className="cta-strip">
-      <div>
-        <h2>{t('home.cta_strip.title')}</h2>
-        <p>{t('home.cta_strip.body')}</p>
-      </div>
-      <Link to="/collections/all" className="btn-bold btn-bold--strip">
-        {t('home.cta_strip.button')}
-      </Link>
-    </div>
   );
 }
 

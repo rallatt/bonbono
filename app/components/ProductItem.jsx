@@ -25,7 +25,7 @@ export function ProductItem({ product, loading }) {
           <CandyImageWrapper>
             <Image
               alt={image.altText || product.title}
-              aspectRatio="1/1"
+              aspectRatio="4/5"
               data={image}
               loading={loading}
               sizes="(min-width: 45em) 400px, 100vw"

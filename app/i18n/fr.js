@@ -146,10 +146,6 @@ export const fr = {
   'home.steps.4.title': 'Livraison ou cueillette',
   'home.steps.4.body': 'Reçois-la chez toi ou viens la chercher en boutique en 48 heures.',
 
-  'home.cta_strip.title': 'Envie de faire le plein?',
-  'home.cta_strip.body': 'Commande en ligne et viens la chercher en boutique, ou fais-toi livrer directement chez toi.',
-  'home.cta_strip.button': 'Commander maintenant',
-
   'home.giftcard.title': 'Une carte-cadeau, jamais un mauvais cadeau',
   // Split in three so « Librairiegourmande.ca » can be a real link (P1-1)
   // without hardcoding any of the sentence in the JSX.
