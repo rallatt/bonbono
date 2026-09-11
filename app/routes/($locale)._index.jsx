@@ -1,6 +1,7 @@
 import { useLoaderData, useRouteLoaderData, Link } from 'react-router';
 import { MockShopNotice } from '../components/MockShopNotice';
 import { t } from '../i18n/index.js';
+import { GIFT_CARD_URL } from '../lib/giftCard.js';
 import {
   IconLollipop,
   IconStar,
@@ -55,12 +56,11 @@ export default function Homepage() {
 // for themselves, bigger and more animated instead). Halloween and La
 // rentrée use icons that actually match the category (pumpkin, lunchbox)
 // rather than reusing an unrelated candy icon. Nouveautés/Halloween/La
-// rentrée link to their destinations (P1-3); the heart (Coup de cœur) stays
-// decorative until the team-picks page exists (P1-4, pending P3-3).
+// rentrée/Coup de cœur all link to their destinations (P1-3).
 const HERO_CHIPS = [
   { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
   { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', ariaLabelKey: 'home.hero_chip.new_aria' },
-  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink' },
+  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', ariaLabelKey: 'home.hero_chip.favourites_aria' },
   { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', to: '/collections/halloween-bonbono', ariaLabelKey: 'home.hero_chip.halloween_aria' },
   { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', ariaLabelKey: 'home.hero_chip.back_to_school_aria' },
   { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
@@ -179,8 +179,20 @@ function GiftCardPromo() {
     <section className="giftcard-promo">
       <div className="giftcard-promo-copy">
         <h2>{t('home.giftcard.title')}</h2>
-        <p>{t('home.giftcard.body')}</p>
-        <Link to="/pages/carte-cadeau" className="btn-bold btn-bold--primary">
+        <p>
+          {t('home.giftcard.body_before')}
+          <a
+            className="giftcard-promo-link"
+            href="https://librairiegourmande.ca"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t('home.giftcard.body_link_aria')}
+          >
+            {t('home.giftcard.body_link')}
+          </a>
+          {t('home.giftcard.body_after')}
+        </p>
+        <Link to={GIFT_CARD_URL} className="btn-bold btn-bold--primary">
           {t('home.giftcard.button')}
         </Link>
       </div>

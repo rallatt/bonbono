@@ -2009,6 +2009,53 @@ li:last-child .header-menu-dropdown-item {
   max-width: 420px;
 }
 
+.giftcard-promo-copy a.giftcard-promo-link {
+  color: #176131;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: color 160ms ease;
+}
+
+.giftcard-promo-copy a.giftcard-promo-link:hover {
+  color: #E55A7E;
+}
+
+/* Coups de cœur — team picks (P1-4) */
+.favourites-group {
+  margin: 0 auto 3.5rem;
+  max-width: 1200px;
+  padding: 0 1.25rem;
+}
+
+.favourites-group-title {
+  color: #176131;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  margin: 0 0 1.25rem;
+  transform: rotate(-1deg);
+}
+
+.favourites-group-title::after {
+  background: #F8DAE7;
+  border-radius: 999px;
+  content: '';
+  display: block;
+  height: 6px;
+  margin-top: 0.5rem;
+  width: 96px;
+}
+
+.favourites-empty {
+  color: #2A4A34;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  letter-spacing: normal;
+  margin: 0 auto 4rem;
+  max-width: 480px;
+  padding: 0 1.25rem;
+  text-align: center;
+}
+
 .giftcard-promo-visual {
   display: flex;
   align-items: center;

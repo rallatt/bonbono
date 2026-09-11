@@ -151,7 +151,12 @@ export const fr = {
   'home.cta_strip.button': 'Commander maintenant',
 
   'home.giftcard.title': 'Une carte-cadeau, jamais un mauvais cadeau',
-  'home.giftcard.body': "De 25 $ au montant de ton choix, envoyée par courriel en quelques secondes. Valide sur tout le site Bonbono mais aussi sur le site de Librairiegourmande.ca sans date d'expiration.",
+  // Split in three so « Librairiegourmande.ca » can be a real link (P1-1)
+  // without hardcoding any of the sentence in the JSX.
+  'home.giftcard.body_before': 'De 25 $ au montant de ton choix, envoyée par courriel en quelques secondes. Valide sur tout le site Bonbono mais aussi sur le site de ',
+  'home.giftcard.body_link': 'Librairiegourmande.ca',
+  'home.giftcard.body_link_aria': 'Visiter Librairiegourmande.ca (nouvel onglet)',
+  'home.giftcard.body_after': " sans date d'expiration.",
   'home.giftcard.button': 'Offrir une carte-cadeau',
   'home.giftcard.card_label': 'Carte-cadeau',
 
@@ -160,8 +165,24 @@ export const fr = {
   'collections.newest.title': 'Nouveautés',
 
   'home.hero_chip.new_aria': 'Voir les nouveautés',
+  'home.hero_chip.favourites_aria': "Voir les coups de cœur de l'équipe",
   'home.hero_chip.halloween_aria': 'Voir la collection Halloween',
   'home.hero_chip.back_to_school_aria': 'Voir la collection La rentrée',
+
+  // Coups de cœur — team picks page (P1-4)
+  'favourites.meta': 'Bonbono | Coups de cœur',
+  'favourites.eyebrow': 'La sélection',
+  'favourites.title': 'Nos coups de cœur',
+  'favourites.intro': "Chaque personne de l'équipe a ses préférés. Voici les leurs.",
+  'favourites.person_heading': 'Les coups de cœur de {{name}}',
+  'favourites.empty': "Les coups de cœur arrivent bientôt. Reviens nous voir!",
+  'favourites.person.laurie': 'Laurie',
+  'favourites.person.steph': 'Steph',
+  'favourites.person.roxanne': 'Roxanne',
+  'favourites.person.jessie': 'Jessie',
+  'favourites.person.maria': 'Maria',
+  'favourites.person.yana': 'Yana',
+  'favourites.person.lauralee': 'Laura-Lee',
 
   // Store map (pages/$handle StoreMap component)
   'store.find_us': 'Bonbono',
