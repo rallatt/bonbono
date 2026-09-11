@@ -156,6 +156,13 @@ export const fr = {
   'home.giftcard.button': 'Offrir une carte-cadeau',
   'home.giftcard.card_label': 'Carte-cadeau',
 
+  // Instagram feed on the homepage (P2-7 / P3-7)
+  'home.instagram.eyebrow': 'Sur Instagram',
+  'home.instagram.title': "Nos dernières trouvailles",
+  'home.instagram.cta': 'Suivre @bonbono.mtl',
+  'home.instagram.profile_url': 'https://www.instagram.com/bonbono.mtl/',
+  'home.instagram.image_alt': 'Publication Instagram de Bonbono',
+
   // Collections all page
   'collections.all.title': 'Tous nos produits',
   'collections.newest.title': 'Nouveautés',

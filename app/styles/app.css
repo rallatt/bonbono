@@ -2141,6 +2141,67 @@ li:last-child .header-menu-dropdown-item {
   }
 }
 
+/* Instagram feed (P2-7) */
+.insta-section {
+  margin: 0 auto;
+  max-width: var(--page-max);
+  padding: 0 1.25rem clamp(4rem, 3rem + 3vw, 6rem);
+  text-align: center;
+}
+
+.insta-head {
+  margin-bottom: 2rem;
+}
+
+.insta-head h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  margin-top: 0.5rem;
+}
+
+.insta-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 2.25rem;
+}
+
+@media (min-width: 45em) {
+  .insta-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.insta-card {
+  aspect-ratio: 1 / 1;
+  border: 3px solid #176131;
+  border-radius: 1.25rem;
+  box-shadow: 5px 5px 0 #176131;
+  display: block;
+  overflow: hidden;
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+.insta-card:nth-child(2) {
+  transform: rotate(-1.5deg);
+}
+
+.insta-card:nth-child(3) {
+  transform: rotate(1.5deg);
+}
+
+.insta-card:hover {
+  box-shadow: 8px 8px 0 #176131;
+  transform: translateY(-5px) rotate(0deg);
+}
+
+.insta-card img {
+  border-radius: 0;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
 /* Guimauve page-title band — full width, used on collection and page routes */
 .page-title-band {
   background:

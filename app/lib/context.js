@@ -1,4 +1,4 @@
-import { createHydrogenContext } from '@shopify/hydrogen';
+import { createHydrogenContext, createWithCache } from '@shopify/hydrogen';
 import { AppSession } from './session';
 import { CART_QUERY_FRAGMENT } from './fragments';
 import { getLocaleFromRequest } from './i18n';
@@ -37,6 +37,10 @@ export async function createHydrogenRouterContext(
     AppSession.init(request, [env.SESSION_SECRET]),
   ]);
 
+  // Lets routes call third-party APIs (Instagram, for one) through the same
+  // edge cache Hydrogen uses for storefront queries.
+  const withCache = createWithCache({ cache, waitUntil, request });
+
   const hydrogenContext = createHydrogenContext(
     {
       env,
@@ -50,7 +54,7 @@ export async function createHydrogenRouterContext(
         queryFragment: CART_QUERY_FRAGMENT,
       },
     },
-    additionalContext,
+    { ...additionalContext, withCache },
   );
 
   return hydrogenContext;

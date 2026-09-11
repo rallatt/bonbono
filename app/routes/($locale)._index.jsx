@@ -1,7 +1,9 @@
-import { useLoaderData, useRouteLoaderData, Link } from 'react-router';
+import { Suspense } from 'react';
+import { useLoaderData, useRouteLoaderData, Link, Await } from 'react-router';
 import { MockShopNotice } from '../components/MockShopNotice';
 import { t } from '../i18n/index.js';
 import { GIFT_CARD_URL } from '../lib/giftCard.js';
+import { fetchInstagramPosts } from '../lib/instagram.js';
 import {
   IconLollipop,
   IconStar,
@@ -22,6 +24,12 @@ export const meta = () => {
 export async function loader({ context }) {
   return {
     isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
+    // Deliberately not awaited. Instagram is a third party we don't control,
+    // so it streams in after the page rather than holding up the first byte.
+    instagramPosts: fetchInstagramPosts({
+      env: context.env,
+      withCache: context.withCache,
+    }),
   };
 }
 
@@ -47,6 +55,7 @@ export default function Homepage() {
       <HowItWorks />
       <FeaturedCategories navItems={navItems} />
       <GiftCardPromo />
+      <InstagramFeed posts={data.instagramPosts} />
     </div>
   );
 }
@@ -188,6 +197,50 @@ function GiftCardPromo() {
         </div>
       </div>
     </section>
+  );
+}
+
+function InstagramFeed({ posts }) {
+  return (
+    <Suspense fallback={null}>
+      <Await resolve={posts} errorElement={null}>
+        {(resolved) =>
+          resolved?.length ? (
+            <section className="insta-section">
+              <div className="insta-head">
+                <span className="eyebrow">{t('home.instagram.eyebrow')}</span>
+                <h2>{t('home.instagram.title')}</h2>
+              </div>
+              <div className="insta-grid">
+                {resolved.map((post) => (
+                  <a
+                    className="insta-card"
+                    href={post.permalink}
+                    key={post.id}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <img
+                      alt={post.caption || t('home.instagram.image_alt')}
+                      loading="lazy"
+                      src={post.imageUrl}
+                    />
+                  </a>
+                ))}
+              </div>
+              <a
+                className="btn-bold btn-bold--primary insta-cta"
+                href={t('home.instagram.profile_url')}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {t('home.instagram.cta')}
+              </a>
+            </section>
+          ) : null
+        }
+      </Await>
+    </Suspense>
   );
 }
 

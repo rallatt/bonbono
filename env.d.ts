@@ -17,5 +17,9 @@ declare global {
     PUBLIC_CUSTOMER_ACCOUNT_API_URL: string;
     PUBLIC_CHECKOUT_DOMAIN: string;
     PUBLIC_GOOGLE_MAPS_API_KEY: string;
+    // Long-lived Instagram user token for the homepage feed. Expires after
+    // 60 days — see app/lib/instagram.js. Optional: without it the feed
+    // section simply doesn't render.
+    PRIVATE_INSTAGRAM_ACCESS_TOKEN?: string;
   }
 }
