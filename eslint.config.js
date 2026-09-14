@@ -244,4 +244,17 @@ export default [
       'react-hooks/rules-of-hooks': 'off',
     },
   },
+  {
+    // Maintenance scripts are command-line tools — printing to the terminal
+    // is the whole point, not a leftover debug statement.
+    files: ['scripts/**'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
 ];
