@@ -1827,6 +1827,36 @@ li:last-child .header-menu-dropdown-item {
   transform: rotate(-4deg);
 }
 
+.chip-cell {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.chip-cell:hover {
+  text-decoration: none;
+}
+
+.chip-label {
+  background: #176131;
+  border-radius: 100px;
+  color: #C8F4AE;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: clamp(0.72rem, 0.66rem + 0.2vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: normal;
+  padding: 0.25rem 0.75rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.chip-cell:hover .chip-label {
+  background: #E55A7E;
+  color: #fff;
+}
+
 .chip {
   align-items: center;
   animation: chip-bob 4.5s ease-in-out infinite;
@@ -1849,18 +1879,18 @@ li:last-child .header-menu-dropdown-item {
   width: 44%;
 }
 
-.chip:nth-child(2n) {
+.chip-cell:nth-child(2n) .chip {
   animation-direction: reverse;
   animation-duration: 5.5s;
 }
 
-.chip:hover {
+.chip-cell:hover .chip {
   box-shadow: 9px 9px 0 #176131;
 }
 
 /* The bob animation owns the circle's `transform`, so the hover pop goes on
    the icon — that way the chip keeps bobbing while you point at it. */
-.chip:hover svg {
+.chip-cell:hover svg {
   transform: scale(1.2) rotate(8deg);
 }
 

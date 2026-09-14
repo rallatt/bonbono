@@ -166,10 +166,11 @@ export const fr = {
   'collections.all.title': 'Tous nos produits',
   'collections.newest.title': 'Nouveautés',
 
-  'home.hero_chip.new_aria': 'Voir les nouveautés',
-  'home.hero_chip.favourites_aria': "Voir les coups de cœur de l'équipe",
-  'home.hero_chip.halloween_aria': 'Voir la collection Halloween',
-  'home.hero_chip.back_to_school_aria': 'Voir la collection La rentrée',
+  'home.hero_chip.search': 'Recherche',
+  'home.hero_chip.new': 'Nouveautés',
+  'home.hero_chip.favourites': 'Coup de cœur',
+  'home.hero_chip.halloween': 'Halloween',
+  'home.hero_chip.back_to_school': 'La rentrée',
 
   // Coups de cœur — team picks page (P1-4)
   'favourites.meta': 'Bonbono | Coups de cœur',

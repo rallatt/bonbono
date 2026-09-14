@@ -22,6 +22,39 @@ function base(viewBox, children) {
   };
 }
 
+// A real magnifying glass. The lollipop that used to sit in this hero slot
+// is a circle on a straight stick, which people kept reading as search —
+// so the slot became search, with a glyph that actually means it. The angled
+// handle is what separates the two shapes at a glance.
+export const IconSearch = base('0 0 48 48', (fill) => (
+  <>
+    <circle
+      cx="21"
+      cy="21"
+      r="13"
+      fill={fill === 'none' ? '#fff' : fill}
+      stroke={INK}
+      strokeWidth="2.5"
+    />
+    <path
+      d="M15 15 A8.5 8.5 0 0 1 21 12.5"
+      fill="none"
+      stroke={INK}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <line
+      x1="30.5"
+      y1="30.5"
+      x2="41"
+      y2="41"
+      stroke={INK}
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+  </>
+));
+
 export const IconLollipop = base('0 0 48 48', (fill) => (
   <>
     <circle cx="24" cy="18" r="14" fill={fill === 'none' ? '#fff' : fill} stroke={INK} strokeWidth="2.5" />

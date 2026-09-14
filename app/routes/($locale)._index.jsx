@@ -6,7 +6,7 @@ import { GIFT_CARD_URL } from '../lib/giftCard.js';
 import { fetchInstagramPosts } from '../lib/instagram.js';
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '../lib/social.js';
 import {
-  IconLollipop,
+  IconSearch,
   IconStar,
   IconHeart,
   IconPumpkin,
@@ -61,17 +61,17 @@ export default function Homepage() {
   );
 }
 
-// Icon-only chips (no caption labels — client asked for the icons to speak
-// for themselves, bigger and more animated instead). Halloween and La
-// rentrée use icons that actually match the category (pumpkin, lunchbox)
-// rather than reusing an unrelated candy icon. Nouveautés/Halloween/La
-// rentrée/Coup de cœur all link to their destinations (P1-3).
+// The four labelled chips are the P0-5 copy; the labels came off once and
+// the client asked for them back. Halloween and La rentrée use icons that
+// actually match the category (pumpkin, lunchbox) rather than reusing an
+// unrelated candy icon. Each labelled chip links to its destination (P1-3);
+// the remaining two stay decorative and unlabelled (P3-3).
 const HERO_CHIPS = [
-  { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
-  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', ariaLabelKey: 'home.hero_chip.new_aria' },
-  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', ariaLabelKey: 'home.hero_chip.favourites_aria' },
-  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', to: '/collections/halloween-bonbono', ariaLabelKey: 'home.hero_chip.halloween_aria' },
-  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', ariaLabelKey: 'home.hero_chip.back_to_school_aria' },
+  { Icon: IconSearch, fill: '#fff', bg: 'guimauve', to: '/search', labelKey: 'home.hero_chip.search' },
+  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
+  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
+  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', to: '/collections/halloween-bonbono', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', labelKey: 'home.hero_chip.back_to_school' },
   { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
 ];
 
@@ -100,17 +100,25 @@ function HeroBanner() {
       </div>
       <div className="hero-visual">
         <div className="chip-grid">
-          {HERO_CHIPS.map(({ Icon, fill, bg, to, ariaLabelKey }, i) =>
-            to ? (
-              <Link to={to} className={`chip chip--${bg}`} key={i} aria-label={t(ariaLabelKey)}>
+          {HERO_CHIPS.map(({ Icon, fill, bg, to, labelKey }, i) => {
+            const circle = (
+              <span className={`chip chip--${bg}`}>
                 <Icon fill={fill} size={54} />
+              </span>
+            );
+            // The label sits inside the link, so the caption is clickable too
+            // and screen readers announce the same words people can see.
+            return to ? (
+              <Link to={to} className="chip-cell" key={i}>
+                {circle}
+                <span className="chip-label">{t(labelKey)}</span>
               </Link>
             ) : (
-              <div className={`chip chip--${bg}`} key={i}>
-                <Icon fill={fill} size={54} />
+              <div className="chip-cell" key={i}>
+                {circle}
               </div>
-            ),
-          )}
+            );
+          })}
         </div>
       </div>
     </section>
