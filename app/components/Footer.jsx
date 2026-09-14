@@ -1,4 +1,5 @@
 import {Suspense} from 'react';
+import { INSTAGRAM_URL, TIKTOK_URL } from '../lib/social.js';
 import {Await, NavLink} from 'react-router';
 import {t} from '../i18n/index.js';
 
@@ -23,7 +24,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
             </p>
             <div className="footer-extra">
               <a
-                href="https://www.instagram.com/bonbono.ca/"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-instagram"
@@ -37,7 +38,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
                 {t('footer.instagram')}
               </a>
               <a
-                href="https://www.tiktok.com/@bonbono.ca"
+                href={TIKTOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-instagram"

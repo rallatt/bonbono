@@ -4,6 +4,7 @@ import { MockShopNotice } from '../components/MockShopNotice';
 import { t } from '../i18n/index.js';
 import { GIFT_CARD_URL } from '../lib/giftCard.js';
 import { fetchInstagramPosts } from '../lib/instagram.js';
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '../lib/social.js';
 import {
   IconLollipop,
   IconStar,
@@ -230,11 +231,11 @@ function InstagramFeed({ posts }) {
               </div>
               <a
                 className="btn-bold btn-bold--primary insta-cta"
-                href={t('home.instagram.profile_url')}
+                href={INSTAGRAM_URL}
                 rel="noreferrer"
                 target="_blank"
               >
-                {t('home.instagram.cta')}
+                {t('home.instagram.cta', { handle: INSTAGRAM_HANDLE })}
               </a>
             </section>
           ) : null

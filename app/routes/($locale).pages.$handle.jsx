@@ -5,6 +5,12 @@ import { useVariantUrl } from '../lib/variants';
 import { filterVisibleProducts } from '../lib/productAvailability';
 import { t } from '../i18n/index.js';
 import {
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_URL,
+  TIKTOK_HANDLE,
+  TIKTOK_URL,
+} from '../lib/social.js';
+import {
   IconLollipop,
   IconStar,
   IconHeart,
@@ -245,20 +251,20 @@ function StoreMap({ apiKey }) {
             </div>
             <span className="cat-card-title">{t('contact.info.social_title')}</span>
             <a
-              href="https://www.instagram.com/bonbono.ca/"
+              href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="contact-info-detail contact-info-link"
             >
-              {t('footer.instagram')} · {t('contact.info.social_handle')}
+              {t('footer.instagram')} · {t('contact.info.social_handle', { handle: INSTAGRAM_HANDLE })}
             </a>
             <a
-              href="https://www.tiktok.com/@bonbono.ca"
+              href={TIKTOK_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="contact-info-detail contact-info-link"
             >
-              {t('footer.tiktok')} · {t('contact.info.social_handle')}
+              {t('footer.tiktok')} · {t('contact.info.social_handle', { handle: TIKTOK_HANDLE })}
             </a>
           </div>
         </div>

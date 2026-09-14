@@ -159,8 +159,7 @@ export const fr = {
   // Instagram feed on the homepage (P2-7 / P3-7)
   'home.instagram.eyebrow': 'Sur Instagram',
   'home.instagram.title': "Nos dernières trouvailles",
-  'home.instagram.cta': 'Suivre @bonbono.mtl',
-  'home.instagram.profile_url': 'https://www.instagram.com/bonbono.mtl/',
+  'home.instagram.cta': 'Suivre @{{handle}}',
   'home.instagram.image_alt': 'Publication Instagram de Bonbono',
 
   // Collections all page
@@ -198,7 +197,7 @@ export const fr = {
   'contact.info.address_title': 'Adresse',
   'contact.info.email_title': 'Courriel',
   'contact.info.social_title': 'Suivez-nous',
-  'contact.info.social_handle': '@bonbono.ca',
+  'contact.info.social_handle': '@{{handle}}',
 
   'patchbar.coming_soon': '🧵 Bientôt disponible — la station Le Patch Bar arrive très prochainement en boutique!',
 
