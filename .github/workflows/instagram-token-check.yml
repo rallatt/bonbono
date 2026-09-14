@@ -1,0 +1,52 @@
+name: Instagram token check
+
+# The homepage Instagram feed runs on a token that expires every 60 days.
+# Left alone it dies quietly: the section just stops rendering and nobody
+# notices for weeks. This checks it weekly and fails loudly — a failed run
+# emails whoever watches the repo — so the refresh happens on purpose.
+#
+# Needs an INSTAGRAM_ACCESS_TOKEN repo secret holding the same value as the
+# PRIVATE_INSTAGRAM_ACCESS_TOKEN variable in Oxygen. Without it the job says
+# so and passes, so this doesn't nag before the feed is switched on.
+
+on:
+  schedule:
+    - cron: '0 13 * * 1' # Mondays, 09:00 Montreal time
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Is the Instagram feed still alive?
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the media endpoint
+        env:
+          TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::notice::No INSTAGRAM_ACCESS_TOKEN secret set yet — the feed isn't switched on. Nothing to check."
+            exit 0
+          fi
+
+          # The token stays out of the log: curl reads the URL from a variable
+          # and only the status code and the error message are ever echoed.
+          status=$(curl -sS -o response.json -w '%{http_code}' \
+            "https://graph.instagram.com/v25.0/me/media?fields=id,timestamp&limit=1&access_token=$TOKEN")
+
+          if [ "$status" = "200" ]; then
+            echo "Instagram token is valid. Most recent post:"
+            jq -r '.data[0].timestamp // "no posts returned"' response.json
+            exit 0
+          fi
+
+          echo "::error::Instagram returned HTTP $status — the homepage feed is not rendering."
+          jq -r '.error.message // "no error message"' response.json
+          echo ""
+          echo "Fix: run 'npm run instagram:refresh' locally and update the token in Oxygen,"
+          echo "your .env, and the INSTAGRAM_ACCESS_TOKEN repo secret."
+          echo "If the token has already expired past its refresh window, generate a new one"
+          echo "in the Meta app dashboard instead."
+          exit 1
