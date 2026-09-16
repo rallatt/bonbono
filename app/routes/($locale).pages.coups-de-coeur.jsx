@@ -23,9 +23,10 @@ const TEAM = [
 
 const TAG_PREFIX = 'coupdecoeur';
 
-// The wildcard catches any `coupdecoeur…` tag even for a name that isn't in
-// TEAM yet; the explicit terms keep the query working if wildcards are ever
-// refused for this field.
+// The explicit terms are what actually match. The Storefront API returns
+// nothing for `tag:coupdecoeur*` (checked 2026-09-16), so a new person's tag
+// only shows up once their name is added to TEAM. The wildcard is kept in
+// case Shopify starts honouring it for tags.
 const FAVOURITES_SEARCH = [
   `tag:${TAG_PREFIX}*`,
   ...TEAM.map((person) => `tag:${TAG_PREFIX}${person.key}`),
