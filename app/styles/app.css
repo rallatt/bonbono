@@ -2481,6 +2481,75 @@ li:last-child .header-menu-dropdown-item {
   border-radius: 1rem;
 }
 
+/* Product description (option B). The page font is Paytone One, a
+   headline face; long copy gets a text serif instead. Everything inside is
+   reset so markup pasted into the admin can't restyle it. */
+.product-description {
+  border-top: 2px solid #E4E0D4;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+}
+
+.product-description-title {
+  color: #176131;
+  font-family: 'Paytone One', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.85rem;
+}
+
+.product-description-body {
+  color: #26312A;
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.72;
+  max-width: 62ch;
+}
+
+.product-description-body :where(span, font, div, section) {
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.product-description-body :where(p) {
+  margin: 0 0 0.9rem;
+}
+
+.product-description-body :where(ul, ol) {
+  margin: 0 0 0.9rem;
+  padding-left: 1.2rem;
+}
+
+.product-description-body :where(li) {
+  margin-bottom: 0.35rem;
+}
+
+.product-description-body :where(h1, h2, h3, h4, h5, h6) {
+  color: #26312A;
+  font-family: inherit;
+  font-size: 1.05em;
+  font-weight: 600;
+  letter-spacing: normal;
+  margin: 1.2rem 0 0.5rem;
+}
+
+.product-description-body :where(b, strong) {
+  font-weight: 600;
+}
+
+.product-description-body :where(a) {
+  color: #176131;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.product-description-body > :last-child {
+  margin-bottom: 0;
+}
+
 .product-main {
   align-self: start;
   position: sticky;

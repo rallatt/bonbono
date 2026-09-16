@@ -12,6 +12,7 @@ import { ProductImage } from '../components/ProductImage';
 import { ProductForm } from '../components/ProductForm';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
 import { t } from '../i18n/index.js';
+import { normalizeDescriptionHtml } from '../lib/description.js';
 
 /**
  * @type {Route.MetaFunction}
@@ -104,7 +105,8 @@ export default function Product() {
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  const { title, descriptionHtml } = product;
+  const { title } = product;
+  const descriptionHtml = normalizeDescriptionHtml(product.descriptionHtml);
 
   return (
     <div className="product">
@@ -122,12 +124,17 @@ export default function Product() {
         />
         <br />
         <br />
-        <p>
-          <strong>{t('product.description')}</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
-        <br />
+        {descriptionHtml ? (
+          <section className="product-description">
+            <h2 className="product-description-title">
+              {t('product.description')}
+            </h2>
+            <div
+              className="product-description-body"
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            />
+          </section>
+        ) : null}
       </div>
       <Analytics.ProductView
         data={{
