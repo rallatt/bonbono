@@ -23,6 +23,16 @@ export default async function handleRequest(
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
     frameSrc: ['https://www.google.com'],
+    // Instagram serves post thumbnails from rotating Meta CDN hosts
+    // (instagram.f*.fna.fbcdn.net, *.cdninstagram.com). Without these the
+    // homepage feed renders as empty boxes.
+    imgSrc: [
+      "'self'",
+      'data:',
+      'https://cdn.shopify.com',
+      'https://*.cdninstagram.com',
+      'https://*.fbcdn.net',
+    ],
     styleSrc: ['https://fonts.googleapis.com'],
     fontSrc: ['https://fonts.gstatic.com'],
   });

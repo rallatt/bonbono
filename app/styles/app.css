@@ -2137,10 +2137,122 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
 }
 
 /* Coups de cœur — team picks (P1-4) */
+.fav-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.1rem;
+  justify-content: center;
+  margin: 0 auto 2.5rem;
+  max-width: var(--page-max);
+  padding: 0 1.25rem;
+}
+
+.fav-filter {
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0;
+  position: relative;
+}
+
+.fav-filter-circle {
+  align-items: center;
+  background: #F8DAE7;
+  border: 3px solid #176131;
+  border-radius: 50%;
+  box-shadow: 4px 4px 0 #176131;
+  color: #176131;
+  display: flex;
+  font-family: 'Paytone One', cursive;
+  font-size: clamp(1.1rem, 0.9rem + 0.8vw, 1.5rem);
+  height: clamp(58px, 15vw, 82px);
+  justify-content: center;
+  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  width: clamp(58px, 15vw, 82px);
+}
+
+.fav-filter:nth-child(3n+2) .fav-filter-circle {
+  background: #C8F4AE;
+}
+
+.fav-filter:nth-child(3n) .fav-filter-circle {
+  background: #fff;
+}
+
+.fav-filter:hover .fav-filter-circle {
+  box-shadow: 6px 6px 0 #176131;
+  transform: translateY(-3px);
+}
+
+.fav-filter.is-active .fav-filter-circle {
+  background: #E55A7E;
+  box-shadow: 6px 6px 0 #176131;
+  color: #fff;
+}
+
+.fav-filter-label {
+  color: #176131;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: clamp(0.78rem, 0.72rem + 0.2vw, 0.95rem);
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.fav-filter.is-active .fav-filter-label {
+  color: #E55A7E;
+}
+
+.fav-filter-count {
+  background: #176131;
+  border-radius: 100px;
+  color: #C8F4AE;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1;
+  padding: 0.18rem 0.42rem;
+  position: absolute;
+  right: -2px;
+  top: -4px;
+}
+
+.fav-filter:focus-visible {
+  outline: 3px solid #E55A7E;
+  outline-offset: 4px;
+  border-radius: 0.75rem;
+}
+
+.fav-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.fav-owners {
+  color: #2A4A34;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: normal;
+  margin: 0;
+  text-align: center;
+}
+
 .favourites-group {
   margin: 0 auto 3.5rem;
   max-width: var(--page-max);
   padding: 0 1.25rem;
+}
+
+/* The section already has side padding; the grid's own would double it and
+   squeeze the cards on a phone. */
+.favourites-group .products-grid {
+  padding: 0;
 }
 
 .favourites-group-title {
@@ -2366,8 +2478,10 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
 
 .products-grid {
   display: grid;
-  grid-gap: 4rem 3rem;
-  grid-template-columns: repeat(2, 1fr);
+  /* A flat 3rem column gap left two 119px cards on a phone — titles broke one
+     word per line and the add-to-cart button collapsed into a blob. */
+  grid-gap: clamp(1.5rem, 5vw, 4rem) clamp(0.75rem, 3vw, 3rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-bottom: 4rem;
   padding: 0 1rem;
 

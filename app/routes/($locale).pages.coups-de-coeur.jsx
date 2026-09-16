@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { ProductItem } from '../components/ProductItem';
 import { isProductVisible } from '../lib/productAvailability';
 import { t } from '../i18n/index.js';
+import { IconHeart } from '../components/CandyIcons';
 
 /**
  * Team picks (P1-4). Each staff member tags their products
@@ -58,22 +60,41 @@ export async function loader({ context }) {
 
   const visible = (products?.nodes ?? []).filter(isProductVisible);
 
-  const groups = TEAM.map((person) => ({
+  // A product can be several people's favourite, so each one carries the list
+  // of who picked it rather than being repeated once per person.
+  const items = visible
+    .map((product) => ({
+      ...product,
+      owners: TEAM.map((person) => person.key).filter((key) =>
+        (product.tags ?? []).some(
+          (tag) => normalizeTag(tag) === `${TAG_PREFIX}${key}`,
+        ),
+      ),
+    }))
+    .filter((product) => product.owners.length > 0);
+
+  const people = TEAM.map((person) => ({
     key: person.key,
     name: t(`favourites.person.${person.key}`),
-    products: visible.filter((product) =>
-      (product.tags ?? []).some(
-        (tag) => normalizeTag(tag) === `${TAG_PREFIX}${person.key}`,
-      ),
-    ),
-  })).filter((group) => group.products.length > 0);
+    initial: t(`favourites.person.${person.key}`).slice(0, 1),
+    count: items.filter((item) => item.owners.includes(person.key)).length,
+  })).filter((person) => person.count > 0);
 
-  return { groups };
+  return { items, people };
 }
 
 export default function Favourites() {
   /** @type {LoaderReturnData} */
-  const { groups } = useLoaderData();
+  const { items, people } = useLoaderData();
+  const [selected, setSelected] = useState('all');
+
+  const shown =
+    selected === 'all'
+      ? items
+      : items.filter((item) => item.owners.includes(selected));
+  const person = people.find((p) => p.key === selected);
+
+  const nameFor = (key) => people.find((p) => p.key === key)?.name ?? key;
 
   return (
     <div className="favourites">
@@ -83,28 +104,96 @@ export default function Favourites() {
         <p>{t('favourites.intro')}</p>
       </div>
 
-      {groups.length === 0 ? (
+      {people.length === 0 ? (
         <p className="favourites-empty">{t('favourites.empty')}</p>
       ) : (
-        groups.map((group) => (
-          <section className="favourites-group" key={group.key}>
+        <>
+          <div
+            className="fav-filters"
+            role="group"
+            aria-label={t('favourites.filter.aria')}
+          >
+            <FilterButton
+              active={selected === 'all'}
+              count={items.length}
+              label={t('favourites.filter.all')}
+              onSelect={() => setSelected('all')}
+            />
+            {people.map((p) => (
+              <FilterButton
+                active={selected === p.key}
+                count={p.count}
+                initial={p.initial}
+                key={p.key}
+                label={p.name}
+                onSelect={() => setSelected(p.key)}
+              />
+            ))}
+          </div>
+
+          <section className="favourites-group">
             <h2 className="favourites-group-title">
-              {t('favourites.person_heading', { name: group.name })}
+              {person
+                ? t('favourites.person_heading', { name: person.name })
+                : t('favourites.all_heading')}
             </h2>
             <div className="products-grid">
-              {group.products.map((product, index) => (
-                <ProductItem
-                  key={product.id}
-                  product={product}
-                  loading={index < 4 ? 'eager' : undefined}
-                />
+              {shown.map((product, index) => (
+                <div className="fav-cell" key={product.id}>
+                  <ProductItem
+                    product={product}
+                    loading={index < 4 ? 'eager' : undefined}
+                  />
+                  {selected === 'all' && (
+                    <p className="fav-owners">
+                      {t('favourites.loved_by', {
+                        names: formatNames(product.owners.map(nameFor)),
+                      })}
+                    </p>
+                  )}
+                </div>
               ))}
             </div>
           </section>
-        ))
+        </>
       )}
     </div>
   );
+}
+
+/**
+ * @param {{
+ *   active: boolean,
+ *   count: number,
+ *   initial?: string,
+ *   label: string,
+ *   onSelect: () => void,
+ * }}
+ */
+function FilterButton({ active, count, initial, label, onSelect }) {
+  return (
+    <button
+      aria-pressed={active}
+      className={`fav-filter${active ? ' is-active' : ''}`}
+      onClick={onSelect}
+      type="button"
+    >
+      <span className="fav-filter-circle" aria-hidden="true">
+        {initial ?? <IconHeart fill="#fff" size={26} />}
+      </span>
+      <span className="fav-filter-label">{label}</span>
+      <span className="fav-filter-count">{count}</span>
+    </button>
+  );
+}
+
+/**
+ * "Jessie", "Jessie et Roxanne", "Jessie, Maria et Roxanne".
+ * @param {string[]} names
+ */
+function formatNames(names) {
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} ${t('favourites.and')} ${names[names.length - 1]}`;
 }
 
 const FAVOURITE_ITEM_FRAGMENT = `#graphql
