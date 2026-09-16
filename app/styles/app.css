@@ -140,10 +140,18 @@ img {
   }
 }
 
+/* The drawer is a column: fixed header, then a body that takes whatever
+   height is left and scrolls on its own. 100dvh rather than 100vh, because on
+   phones 100vh includes the space behind the browser's address bar, which
+   pushed the bottom of the drawer off screen. */
 aside {
   background: var(--color-light);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
   height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
   width: min(var(--aside-width), 100vw);
   position: fixed;
   right: calc(-1 * var(--aside-width));
@@ -156,6 +164,7 @@ aside header {
   background: #E55A7E;
   border-bottom: none;
   display: flex;
+  flex: none;
   height: var(--header-height);
   justify-content: space-between;
   padding: 0 20px;
@@ -190,7 +199,11 @@ aside header h2 {
 }
 
 aside main {
+  flex: 1;
   margin: 1rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 aside p {
@@ -1116,22 +1129,29 @@ li:last-child .header-menu-dropdown-item {
 .cart-main {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--header-height));
   padding: 0 1.25rem;
   width: auto;
 }
 
-.cart-main .cart-details {
+/* In the drawer the cart fills the body exactly: the item list takes the
+   leftover space and scrolls, the summary stays pinned underneath it. */
+aside .cart-main {
+  height: 100%;
+  padding: 0 0.25rem;
+}
+
+aside .cart-main .cart-details {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
 }
 
-.cart-main > .cart-details > div:not(.cart-summary-aside) {
+aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .cart-main > .cart-details > div > ul {
@@ -1259,13 +1279,26 @@ li:last-child .header-menu-dropdown-item {
   position: relative;
 }
 
+/* Used to be position: absolute, pinned to the bottom of the drawer — on top
+   of the item list, so the last products were hidden behind it. Now it's the
+   last flex child. With discount and gift card fields open it can get tall,
+   so it scrolls itself rather than squeezing the list to nothing. */
 .cart-summary-aside {
   background: white;
   border-top: 2px solid rgba(23, 97, 49, 0.15);
-  bottom: 0;
-  padding: 1rem 1.25rem 1.25rem;
-  position: absolute;
-  width: calc(var(--aside-width) - 2.5rem);
+  flex: none;
+  max-height: 55%;
+  overflow-y: auto;
+  /* Room for the checkout button's offset shadow, which the scroll box
+     would otherwise clip. */
+  padding: 1rem 6px 6px 0;
+}
+
+/* reset.css pads every <section> 2rem top and bottom; the discount and gift
+   card blocks are sections, which left 64px of dead space around each field. */
+.cart-summary-aside > section,
+.cart-summary-page > section {
+  padding: 0;
 }
 
 .cart-summary-aside h4 {
@@ -1422,7 +1455,8 @@ li:last-child .header-menu-dropdown-item {
 * --------------------------------------------------
 */
 .predictive-search {
-  height: calc(100vh - var(--header-height) - 40px);
+  height: calc(100vh - var(--header-height) - 2rem);
+  height: calc(100dvh - var(--header-height) - 2rem);
   overflow-y: auto;
 }
 
@@ -1764,14 +1798,14 @@ li:last-child .header-menu-dropdown-item {
     #FFFBF3;
   display: grid;
   gap: 2.5rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   left: calc(-50vw + 50%);
   padding: 3rem 1.25rem 4rem;
   position: relative;
   width: 100vw;
 
   @media (min-width: 60em) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     padding: 3.5rem 5% 5rem;
   }
 }
@@ -1822,7 +1856,7 @@ li:last-child .header-menu-dropdown-item {
 
 .chip-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: clamp(0.75rem, 3vw, 1.5rem);
   grid-template-columns: repeat(3, 1fr);
   transform: rotate(-4deg);
 }
@@ -1864,11 +1898,16 @@ li:last-child .header-menu-dropdown-item {
   border-radius: 50%;
   box-shadow: 5px 5px 0 #176131;
   display: flex;
-  height: clamp(128px, 9vw, 172px);
+  height: clamp(84px, 22vw, 128px);
   justify-content: center;
   text-decoration: none;
   transition: box-shadow 200ms ease, transform 200ms ease;
-  width: clamp(128px, 9vw, 172px);
+  width: clamp(84px, 22vw, 128px);
+
+  @media (min-width: 60em) {
+    height: clamp(128px, 9vw, 172px);
+    width: clamp(128px, 9vw, 172px);
+  }
 }
 
 /* The icons are rendered at a fixed px size, so scale them off the circle
@@ -1879,6 +1918,7 @@ li:last-child .header-menu-dropdown-item {
   width: 44%;
 }
 
+.chip-grid > .chip:nth-child(2n),
 .chip-cell:nth-child(2n) .chip {
   animation-direction: reverse;
   animation-duration: 5.5s;
