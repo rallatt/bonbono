@@ -19,7 +19,12 @@ import { t } from '../i18n/index.js';
 export function CartLineItem({ layout, line, childrenMap }) {
   const { id, merchandise } = line;
   const { product, title, image, selectedOptions } = merchandise;
-  const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
+  // An optimistic line's merchandise is whatever variant the Add to cart form sent.
+  // Product cards only query { id, availableForSale }, so nothing below is guaranteed
+  // until the real cart comes back from the server.
+  const productTitle = product?.title ?? title ?? '';
+  const lineItemOptions = selectedOptions ?? [];
+  const lineItemUrl = useVariantUrl(product?.handle ?? '', lineItemOptions);
   const { close } = useAside();
   const lineItemChildren = childrenMap[id];
   const childrenLabelId = `cart-line-children-${id}`;
@@ -39,22 +44,28 @@ export function CartLineItem({ layout, line, childrenMap }) {
         )}
 
         <div>
-          <Link
-            prefetch="intent"
-            to={lineItemUrl}
-            onClick={() => {
-              if (layout === 'aside') {
-                close();
-              }
-            }}
-          >
+          {product?.handle ? (
+            <Link
+              prefetch="intent"
+              to={lineItemUrl}
+              onClick={() => {
+                if (layout === 'aside') {
+                  close();
+                }
+              }}
+            >
+              <p>
+                <strong>{productTitle}</strong>
+              </p>
+            </Link>
+          ) : (
             <p>
-              <strong>{product.title}</strong>
+              <strong>{productTitle}</strong>
             </p>
-          </Link>
+          )}
           <ProductPrice price={line?.cost?.totalAmount} />
           <ul className="cart-line-options">
-            {selectedOptions
+            {lineItemOptions
               .filter((o) => o.value !== 'Default Title')
               .map((option) => (
                 <li key={option.name}>
@@ -69,7 +80,7 @@ export function CartLineItem({ layout, line, childrenMap }) {
       {lineItemChildren ? (
         <div>
           <p id={childrenLabelId} className="sr-only">
-            {t('cart.line.children.aria', { title: product.title })}
+            {t('cart.line.children.aria', { title: productTitle })}
           </p>
           <ul aria-labelledby={childrenLabelId} className="cart-line-children">
             {lineItemChildren.map((childLine) => (
