@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Image, Money, CartForm } from '@shopify/hydrogen';
 import { useVariantUrl } from '../lib/variants';
+import { useAside } from './Aside';
 import { t } from '../i18n/index.js';
 import { CandyImageWrapper, CandyPlaceholder } from './CandyLoader.jsx';
 
@@ -14,6 +15,7 @@ import { CandyImageWrapper, CandyPlaceholder } from './CandyLoader.jsx';
  * }}
  */
 export function ProductItem({ product, loading }) {
+  const { open } = useAside();
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
   const firstVariant = product.variants?.nodes?.[0];
@@ -47,7 +49,13 @@ export function ProductItem({ product, loading }) {
           action={CartForm.ACTIONS.LinesAdd}
           inputs={{ lines: [{ merchandiseId: firstVariant.id, quantity: 1, selectedVariant: firstVariant }] }}
         >
-          <button type="submit" className="product-item-add-btn">
+          <button
+            type="submit"
+            className="product-item-add-btn"
+            onClick={() => {
+              open('cart');
+            }}
+          >
             {t('product.add_to_cart')}
           </button>
         </CartForm>

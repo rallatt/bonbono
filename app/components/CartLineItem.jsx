@@ -18,13 +18,16 @@ import { t } from '../i18n/index.js';
  */
 export function CartLineItem({ layout, line, childrenMap }) {
   const { id, merchandise } = line;
-  const { product, title, image, selectedOptions } = merchandise;
+  const { product, title, image, selectedOptions, price } = merchandise;
   // An optimistic line's merchandise is whatever variant the Add to cart form sent.
   // Product cards only query { id, availableForSale }, so nothing below is guaranteed
   // until the real cart comes back from the server.
   const productTitle = product?.title ?? title ?? '';
   const lineItemOptions = selectedOptions ?? [];
   const lineItemUrl = useVariantUrl(product?.handle ?? '', lineItemOptions);
+  // An optimistic line has no cost yet, and is always added at quantity 1,
+  // so the variant's own price is the line total until the server replies.
+  const lineItemPrice = line?.cost?.totalAmount ?? price;
   const { close } = useAside();
   const lineItemChildren = childrenMap[id];
   const childrenLabelId = `cart-line-children-${id}`;
@@ -63,7 +66,7 @@ export function CartLineItem({ layout, line, childrenMap }) {
               <strong>{productTitle}</strong>
             </p>
           )}
-          <ProductPrice price={line?.cost?.totalAmount} />
+          <ProductPrice price={lineItemPrice} />
           <ul className="cart-line-options">
             {lineItemOptions
               .filter((o) => o.value !== 'Default Title')

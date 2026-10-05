@@ -115,6 +115,27 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
       nodes {
         id
         availableForSale
+        title
+        image {
+          __typename
+          id
+          url
+          altText
+          width
+          height
+        }
+        price {
+          amount
+          currencyCode
+        }
+        product {
+          handle
+          title
+        }
+        selectedOptions {
+          name
+          value
+        }
       }
     }
   }
