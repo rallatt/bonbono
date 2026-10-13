@@ -2870,6 +2870,34 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   letter-spacing: inherit;
 }
 
+/* Descriptions are pasted into the admin from supplier sites, and the markup
+   arrives carrying its own class names. Some of those collide with this
+   page's own layout classes: a pasted `<div class="product attribute
+   overview">` picked up `.product`'s 38%/1fr grid and squeezed the copy into
+   a column one word wide. Flatten layout on any container inside the body.
+   Written as plain descendant selectors, not :where(), so they outrank a
+   collided single class like `.product` no matter the source order. */
+.product-description-body div,
+.product-description-body section,
+.product-description-body article,
+.product-description-body aside {
+  display: block;
+  float: none;
+  gap: 0;
+  grid-template-columns: none;
+  margin: 0;
+  max-width: none;
+  padding: 0;
+  width: auto;
+}
+
+.product-description-body img,
+.product-description-body svg,
+.product-description-body iframe {
+  height: auto;
+  max-width: 100%;
+}
+
 .product-description-body :where(p) {
   margin: 0 0 0.9rem;
 }
