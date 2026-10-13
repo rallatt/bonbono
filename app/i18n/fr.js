@@ -43,7 +43,7 @@ export const fr = {
 
   // Marquee ticker (scrolling banner above the header)
   'marquee.item1': '🍬 Des bonbons. Et d’autres mauvaises idées.',
-  'marquee.item2': 'Livraison gratuite dès 40 $',
+  'marquee.item2': 'Livraison gratuite dès 75 $',
   'marquee.item3': 'Nouveaux arrivages chaque mois',
 
   // Aside / modal
