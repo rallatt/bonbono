@@ -66,13 +66,16 @@ export default function Homepage() {
 // actually match the category (pumpkin, lunchbox) rather than reusing an
 // unrelated candy icon. Each labelled chip links to its destination (P1-3);
 // the remaining two stay decorative and unlabelled (P3-3).
+// Seasonal: Halloween leads the grid, in bright orange on black rather than
+// the house pastels. To go back, restore the pastel bg/fill values below and
+// drop `chip-grid--halloween` from the grid.
 const HERO_CHIPS = [
-  { Icon: IconSearch, fill: '#fff', bg: 'guimauve', to: '/search', labelKey: 'home.hero_chip.search' },
-  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
-  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
-  { Icon: IconPumpkin, fill: '#F8DAE7', bg: 'paper', to: '/collections/halloween-bonbono', labelKey: 'home.hero_chip.halloween' },
-  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', labelKey: 'home.hero_chip.back_to_school' },
-  { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
+  { Icon: IconPumpkin, fill: '#FF7518', bg: 'paper', to: '/collections/halloween-bonbono', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconSearch, fill: '#fff', bg: 'pumpkin', to: '/search', labelKey: 'home.hero_chip.search' },
+  { Icon: IconStar, fill: '#fff', bg: 'amber', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
+  { Icon: IconHeart, fill: '#fff', bg: 'pumpkin', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
+  { Icon: IconLunchbox, fill: '#fff', bg: 'amber', to: '/collections/la-rentree', labelKey: 'home.hero_chip.back_to_school' },
+  { Icon: IconBear, fill: '#FF7518', bg: 'paper' },
 ];
 
 function HeroBanner() {
@@ -99,7 +102,7 @@ function HeroBanner() {
         </div>
       </div>
       <div className="hero-visual">
-        <div className="chip-grid">
+        <div className="chip-grid chip-grid--halloween">
           {HERO_CHIPS.map(({ Icon, fill, bg, to, labelKey }, i) => {
             const circle = (
               <span className={`chip chip--${bg}`}>

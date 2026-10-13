@@ -1965,6 +1965,44 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   background: #fff;
 }
 
+/* --- Seasonal: Halloween hero chips -------------------------------------
+   Bright orange on black instead of the house pastels. Everything is scoped
+   to `.chip-grid--halloween`, so removing that one class on the homepage
+   puts the pastel chips back. */
+.chip--pumpkin {
+  background: #FF7518;
+}
+
+.chip--amber {
+  background: #FFA51F;
+}
+
+.chip-grid--halloween .chip {
+  border-color: #141414;
+  box-shadow: 5px 5px 0 #141414;
+}
+
+.chip-grid--halloween .chip-cell:hover .chip {
+  box-shadow: 9px 9px 0 #141414;
+}
+
+/* The glyph outlines are baked into the SVGs as presentation attributes,
+   which any CSS rule outranks — so the details go black without the icon
+   components needing a second ink colour. */
+.chip-grid--halloween .chip svg * {
+  stroke: #141414;
+}
+
+.chip-grid--halloween .chip-label {
+  background: #141414;
+  color: #FF9F45;
+}
+
+.chip-grid--halloween .chip-cell:hover .chip-label {
+  background: #FF7518;
+  color: #141414;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .chip {
     animation: none;
