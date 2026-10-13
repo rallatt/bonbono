@@ -1,9 +1,11 @@
 import { Suspense } from 'react';
 import { useLoaderData, useRouteLoaderData, Link, Await } from 'react-router';
+import { Image, Money } from '@shopify/hydrogen';
 import { MockShopNotice } from '../components/MockShopNotice';
 import { t } from '../i18n/index.js';
 import { GIFT_CARD_URL } from '../lib/giftCard.js';
 import { fetchInstagramPosts } from '../lib/instagram.js';
+import { filterVisibleProducts } from '../lib/productAvailability.js';
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '../lib/social.js';
 import {
   IconSearch,
@@ -22,9 +24,25 @@ export const meta = () => {
   return [{ title: t('home.meta') }];
 };
 
+// How many Halloween products the seasonal band shows. Deliberately a
+// handful, not the whole collection — the band is a doorway to
+// /collections/halloween-bonbono, not a second catalogue.
+const HALLOWEEN_PICKS = 4;
+
 export async function loader({ context }) {
+  // A seasonal band is nice-to-have, so a failure here must not take the
+  // homepage down with it.
+  const halloween = await context.storefront
+    .query(HALLOWEEN_QUERY, {
+      cache: context.storefront.CacheShort(),
+      variables: { first: 16 },
+    })
+    .then((data) => filterVisibleProducts(data?.collection?.products)?.nodes ?? [])
+    .catch(() => []);
+
   return {
     isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
+    halloweenPicks: halloween.slice(0, HALLOWEEN_PICKS),
     // Deliberately not awaited. Instagram is a third party we don't control,
     // so it streams in after the page rather than holding up the first byte.
     instagramPosts: fetchInstagramPosts({
@@ -51,6 +69,7 @@ export default function Homepage() {
 
   return (
     <div className="home">
+      <HalloweenBand products={data.halloweenPicks} />
       {data.isShopLinked ? null : <MockShopNotice />}
       <HeroBanner />
       <HowItWorks />
@@ -66,16 +85,16 @@ export default function Homepage() {
 // actually match the category (pumpkin, lunchbox) rather than reusing an
 // unrelated candy icon. Each labelled chip links to its destination (P1-3);
 // the remaining two stay decorative and unlabelled (P3-3).
-// Seasonal: Halloween leads the grid, in bright orange on black rather than
-// the house pastels. To go back, restore the pastel bg/fill values below and
-// drop `chip-grid--halloween` from the grid.
+// Seasonal: Halloween leads the grid and is the only chip in costume —
+// orange on black, `spooky: true`. The rest keep the house pastels. To undo
+// the season, move the Halloween entry back to 4th and drop its spooky flag.
 const HERO_CHIPS = [
-  { Icon: IconPumpkin, fill: '#FF7518', bg: 'paper', to: '/collections/halloween-bonbono', labelKey: 'home.hero_chip.halloween' },
-  { Icon: IconSearch, fill: '#fff', bg: 'pumpkin', to: '/search', labelKey: 'home.hero_chip.search' },
-  { Icon: IconStar, fill: '#fff', bg: 'amber', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
-  { Icon: IconHeart, fill: '#fff', bg: 'pumpkin', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
-  { Icon: IconLunchbox, fill: '#fff', bg: 'amber', to: '/collections/la-rentree', labelKey: 'home.hero_chip.back_to_school' },
-  { Icon: IconBear, fill: '#FF7518', bg: 'paper' },
+  { Icon: IconPumpkin, fill: '#FFFBF3', bg: 'spooky', spooky: true, to: '/collections/halloween-bonbono', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconSearch, fill: '#fff', bg: 'guimauve', to: '/search', labelKey: 'home.hero_chip.search' },
+  { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
+  { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
+  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', labelKey: 'home.hero_chip.back_to_school' },
+  { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
 ];
 
 function HeroBanner() {
@@ -102,22 +121,23 @@ function HeroBanner() {
         </div>
       </div>
       <div className="hero-visual">
-        <div className="chip-grid chip-grid--halloween">
-          {HERO_CHIPS.map(({ Icon, fill, bg, to, labelKey }, i) => {
+        <div className="chip-grid">
+          {HERO_CHIPS.map(({ Icon, fill, bg, to, labelKey, spooky }, i) => {
             const circle = (
               <span className={`chip chip--${bg}`}>
                 <Icon fill={fill} size={54} />
               </span>
             );
+            const cellClass = `chip-cell${spooky ? ' chip-cell--spooky' : ''}`;
             // The label sits inside the link, so the caption is clickable too
             // and screen readers announce the same words people can see.
             return to ? (
-              <Link to={to} className="chip-cell" key={i}>
+              <Link to={to} className={cellClass} key={i}>
                 {circle}
                 <span className="chip-label">{t(labelKey)}</span>
               </Link>
             ) : (
-              <div className="chip-cell" key={i}>
+              <div className={cellClass} key={i}>
                 {circle}
               </div>
             );
@@ -134,6 +154,53 @@ function HeroBanner() {
 // position, not its original slot, so removing/restoring a step doesn't
 // require renumbering anything else.
 const ACTIVE_STEPS = [1, 3, 4];
+
+/**
+ * Seasonal doorway to the Halloween collection. Shows a few real products
+ * rather than the full grid, and renders nothing at all once the collection
+ * is empty — so it disappears by itself after the season.
+ */
+function HalloweenBand({ products }) {
+  if (!products?.length) return null;
+
+  return (
+    <section className="halloween-band-wrap" aria-labelledby="halloween-band-title">
+      <div className="halloween-band">
+        <div className="halloween-band-copy">
+          <span className="halloween-band-eyebrow">{t('home.halloween.eyebrow')}</span>
+          <h2 id="halloween-band-title">{t('home.halloween.title')}</h2>
+          <p>{t('home.halloween.paragraph')}</p>
+          <Link to="/collections/halloween-bonbono" className="btn-bold btn-bold--halloween">
+            {t('home.halloween.cta')}
+          </Link>
+        </div>
+        <div className="halloween-band-grid">
+          {products.map((product) => (
+            <Link
+              className="halloween-pick"
+              key={product.id}
+              prefetch="intent"
+              to={`/products/${product.handle}`}
+            >
+              <div className="halloween-pick-photo">
+                {product.featuredImage ? (
+                  <Image
+                    alt={product.featuredImage.altText || product.title}
+                    aspectRatio="1/1"
+                    data={product.featuredImage}
+                    sizes="(min-width: 60em) 180px, 40vw"
+                  />
+                ) : null}
+              </div>
+              <h4>{product.title}</h4>
+              <span><Money data={product.priceRange.minVariantPrice} /></span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function HowItWorks() {
   return (
@@ -258,3 +325,41 @@ function InstagramFeed({ posts }) {
 
 /** @typedef {import('./+types/_index').Route} Route */
 /** @typedef {ReturnType<typeof useLoaderData<typeof loader>>} LoaderReturnData */
+
+const HALLOWEEN_QUERY = `#graphql
+  query HomepageHalloween(
+    $language: LanguageCode,
+    $country: CountryCode,
+    $first: Int!
+  ) @inContext(language: $language, country: $country) {
+    collection(handle: "halloween-bonbono") {
+      products(first: $first, sortKey: BEST_SELLING) {
+        nodes {
+          id
+          handle
+          title
+          productType
+          featuredImage {
+            id
+            url
+            altText
+            width
+            height
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          variants(first: 1) {
+            nodes {
+              id
+              availableForSale
+            }
+          }
+        }
+      }
+    }
+  }
+`;

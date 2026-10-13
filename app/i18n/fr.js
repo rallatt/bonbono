@@ -166,6 +166,12 @@ export const fr = {
   'collections.all.title': 'Tous nos produits',
   'collections.newest.title': 'Nouveautés',
 
+  // Seasonal: Halloween band on the homepage
+  'home.halloween.eyebrow': "C'est l'Halloween",
+  'home.halloween.title': "Bonbons, chocolats et trouvailles d'épouvante",
+  'home.halloween.paragraph': "Jujubes surettes, chocolats d'ici et accessoires à tête de mort — notre sélection d'Halloween, tant qu'il en reste.",
+  'home.halloween.cta': 'Tout voir',
+
   'home.hero_chip.search': 'Recherche',
   'home.hero_chip.new': 'Nouveautés',
   'home.hero_chip.favourites': 'Coup de cœur',
