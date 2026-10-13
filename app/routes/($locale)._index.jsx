@@ -12,7 +12,7 @@ import {
   IconStar,
   IconHeart,
   IconPumpkin,
-  IconLunchbox,
+  IconLollipop,
   IconBear,
   CATEGORY_ICONS,
 } from '../components/CandyIcons';
@@ -93,8 +93,10 @@ const HERO_CHIPS = [
   { Icon: IconSearch, fill: '#fff', bg: 'guimauve', to: '/search', labelKey: 'home.hero_chip.search' },
   { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
   { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
-  { Icon: IconLunchbox, fill: '#E55A7E', bg: 'melon', to: '/collections/la-rentree', labelKey: 'home.hero_chip.back_to_school' },
-  { Icon: IconBear, fill: '#41A500', bg: 'guimauve' },
+  // No Swedish collection is published to the Bonbono channel — only a tag —
+  // so this points at search for now. Swap in a collection URL if one is made.
+  { Icon: IconBear, fill: '#E55A7E', bg: 'melon', to: '/search?q=Swedish', labelKey: 'home.hero_chip.swedish' },
+  { Icon: IconLollipop, fill: '#41A500', bg: 'guimauve', to: '/collections/sans-sucres-sans-allergene-vegan', labelKey: 'home.hero_chip.no_sugar' },
 ];
 
 function HeroBanner() {

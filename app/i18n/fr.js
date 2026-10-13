@@ -176,7 +176,8 @@ export const fr = {
   'home.hero_chip.new': 'Nouveautés',
   'home.hero_chip.favourites': 'Coup de cœur',
   'home.hero_chip.halloween': 'Halloween',
-  'home.hero_chip.back_to_school': 'La rentrée',
+  'home.hero_chip.swedish': 'Swedish',
+  'home.hero_chip.no_sugar': 'Bonbons sans sucre',
 
   // Coups de cœur — team picks page (P1-4)
   'favourites.meta': 'Bonbono | Coups de cœur',

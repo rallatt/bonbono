@@ -1883,7 +1883,10 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   letter-spacing: normal;
   padding: 0.25rem 0.75rem;
   text-align: center;
-  white-space: nowrap;
+  /* Short labels still sit on one line; a long one (Bonbons sans sucre) wraps
+     rather than pushing the pill out past its column. */
+  max-width: 100%;
+  text-wrap: balance;
 }
 
 .chip-cell:hover .chip-label {
