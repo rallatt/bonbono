@@ -163,6 +163,11 @@ export const fr = {
   'home.instagram.image_alt': 'Publication Instagram de Bonbono',
 
   // Collections all page
+  'collections.sort.label': 'Trier par',
+  'collections.sort.popular': 'Populaires',
+  'collections.sort.newest': 'Nouveautés',
+  'collections.sort.price_asc': 'Prix croissant',
+  'collections.sort.price_desc': 'Prix décroissant',
   'collections.all.title': 'Tous nos produits',
   'collections.newest.title': 'Nouveautés',
 

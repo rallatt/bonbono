@@ -6,6 +6,7 @@ import { t } from '../i18n/index.js';
 import { GIFT_CARD_URL } from '../lib/giftCard.js';
 import { fetchInstagramPosts } from '../lib/instagram.js';
 import { filterVisibleProducts } from '../lib/productAvailability.js';
+import { resolveMenuUrl } from '../lib/menu.js';
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '../lib/social.js';
 import {
   IconSearch,
@@ -50,12 +51,6 @@ export async function loader({ context }) {
       withCache: context.withCache,
     }),
   };
-}
-
-function resolveMenuUrl(url) {
-  if (!url) return null;
-  try { return new URL(url).pathname; }
-  catch { return url; }
 }
 
 export default function Homepage() {

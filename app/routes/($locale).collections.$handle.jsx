@@ -5,6 +5,7 @@ import { redirectIfHandleIsLocalized } from '../lib/redirect';
 import { filterVisibleProducts } from '../lib/productAvailability';
 import { ProductItem } from '../components/ProductItem';
 import { CATEGORY_ICONS } from '../components/CandyIcons';
+import { findMenuItemByPath, resolveMenuUrl } from '../lib/menu.js';
 import { t } from '../i18n/index.js';
 
 /**
@@ -75,23 +76,6 @@ async function loadCriticalData({ context, params, request }) {
  */
 function loadDeferredData({ context }) {
   return {};
-}
-
-function resolveMenuUrl(url) {
-  if (!url) return null;
-  try { return new URL(url).pathname; }
-  catch { return url; }
-}
-
-/** Recursively searches the header menu (up to 3 levels deep) for the item
- * matching this collection, so its sub-collections can be shown as cards. */
-function findMenuItemByPath(items, targetPath) {
-  for (const item of items ?? []) {
-    if (resolveMenuUrl(item.url) === targetPath) return item;
-    const nested = findMenuItemByPath(item.items, targetPath);
-    if (nested) return nested;
-  }
-  return null;
 }
 
 export default function Collection() {

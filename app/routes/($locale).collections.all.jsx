@@ -1,9 +1,23 @@
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData, useRouteLoaderData } from 'react-router';
 import { getPaginationVariables } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
 import { filterVisibleProducts } from '../lib/productAvailability';
 import { ProductItem } from '../components/ProductItem';
+import { CATEGORY_ICONS } from '../components/CandyIcons';
+import { resolveMenuUrl } from '../lib/menu.js';
 import { t } from '../i18n/index.js';
+
+// The shop front door used to be an unsorted wall of every product. These are
+// the orderings offered instead; best sellers lead, since an arbitrary order
+// is nobody's idea of a shop. `newest` keeps its name because the homepage
+// "Nouveautés" chip has always linked to ?sort=newest.
+const SORT_OPTIONS = [
+  { key: 'popular', sortKey: 'BEST_SELLING', reverse: false, labelKey: 'collections.sort.popular' },
+  { key: 'newest', sortKey: 'CREATED_AT', reverse: true, labelKey: 'collections.sort.newest' },
+  { key: 'price-asc', sortKey: 'PRICE', reverse: false, labelKey: 'collections.sort.price_asc' },
+  { key: 'price-desc', sortKey: 'PRICE', reverse: true, labelKey: 'collections.sort.price_desc' },
+];
+const DEFAULT_SORT = SORT_OPTIONS[0];
 
 /**
  * @type {Route.MetaFunction}
@@ -35,19 +49,20 @@ async function loadCriticalData({ context, request }) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 24,
   });
-  const isNewest = new URL(request.url).searchParams.get('sort') === 'newest';
+  const requested = new URL(request.url).searchParams.get('sort');
+  const sort = SORT_OPTIONS.find((option) => option.key === requested) ?? DEFAULT_SORT;
 
   const [{ products }] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {
         ...paginationVariables,
-        sortKey: isNewest ? 'CREATED_AT' : undefined,
-        reverse: isNewest ? true : undefined,
+        sortKey: sort.sortKey,
+        reverse: sort.reverse,
       },
     }),
     // Add other queries here, so that they are loaded in parallel
   ]);
-  return { products: filterVisibleProducts(products), isNewest };
+  return { products: filterVisibleProducts(products), sort: sort.key };
 }
 
 /**
@@ -62,14 +77,53 @@ function loadDeferredData({ context }) {
 
 export default function Collection() {
   /** @type {LoaderReturnData} */
-  const { products, isNewest } = useLoaderData();
+  const { products, sort } = useLoaderData();
+  const rootData = useRouteLoaderData('root');
+  // The top-level shop categories, straight from the Shopify menu. Each one
+  // carries its own sub-navigation, so this page only needs the first level.
+  const categories = (rootData?.header?.menu?.items ?? [])
+    .map((item) => ({ id: item.id, title: item.title, url: resolveMenuUrl(item.url) }))
+    .filter((item) => item.url?.startsWith('/collections/'));
 
   return (
     <div className="collection">
       <div className="page-title-band">
         <span className="hero-tag">{t('nav.collections')}</span>
-        <h1>{isNewest ? t('collections.newest.title') : t('collections.all.title')}</h1>
+        <h1>{sort === 'newest' ? t('collections.newest.title') : t('collections.all.title')}</h1>
       </div>
+
+      {categories.length > 0 && (
+        <div className="cat-grid collection-subnav">
+          {categories.map((item, i) => {
+            const Icon = CATEGORY_ICONS[i % CATEGORY_ICONS.length];
+            return (
+              <Link className="cat-card" key={item.id} prefetch="intent" to={item.url}>
+                <div className="cat-icon">
+                  <Icon size={34} />
+                </div>
+                <span className="cat-card-title">{item.title}</span>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="shop-sort">
+        <span className="shop-sort-label">{t('collections.sort.label')}</span>
+        <div className="tabs-row">
+          {SORT_OPTIONS.map((option) => (
+            <Link
+              className={`tab-pill${option.key === sort ? ' is-active' : ''}`}
+              key={option.key}
+              preventScrollReset
+              to={`?sort=${option.key}`}
+            >
+              {t(option.labelKey)}
+            </Link>
+          ))}
+        </div>
+      </div>
+
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"

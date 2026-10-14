@@ -3341,6 +3341,34 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   color: #C8F4AE;
 }
 
+/* The sort row on /collections/all. `.tab-pill` was written for buttons; as
+   links they also need the underline suppressed. */
+.shop-sort {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 0.9rem;
+  margin: 0 auto 2rem;
+  max-width: var(--page-max);
+  padding: 0 1.25rem;
+}
+
+.shop-sort-label {
+  color: #176131;
+  font-family: 'Paytone One', cursive;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.shop-sort .tabs-row {
+  margin-bottom: 0;
+}
+
+a.tab-pill,
+a.tab-pill:hover {
+  text-decoration: none;
+}
+
 .pricing-step {
   align-items: center;
   display: flex;

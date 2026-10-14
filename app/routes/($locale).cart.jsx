@@ -15,6 +15,13 @@ export const meta = () => {
  */
 export const headers = ({ actionHeaders }) => actionHeaders;
 
+// Bonbono and Librairie Gourmande are one Shopify store behind one checkout,
+// so an order alone doesn't say which site it came from. Stamping the cart
+// carries that through to the order, where Liquid can read it as
+// `{{ order.attributes.storefront }}` — which is how the notification emails
+// pick the right shop name and contact address.
+const STOREFRONT_ATTRIBUTE = { key: 'storefront', value: 'bonbono' };
+
 /**
  * @param {Route.ActionArgs}
  */
@@ -75,6 +82,18 @@ export async function action({ request, context }) {
     }
     default:
       throw new Error(`${action} cart action is not defined`);
+  }
+
+  // Stamp the cart once, as soon as it exists. A failure here must never cost
+  // the customer their add to cart, so it is best-effort.
+  const alreadyStamped = result?.cart?.attributes?.some(
+    (attribute) => attribute.key === STOREFRONT_ATTRIBUTE.key,
+  );
+  if (result?.cart?.id && !alreadyStamped) {
+    const stamped = await cart
+      .updateAttributes([STOREFRONT_ATTRIBUTE])
+      .catch(() => null);
+    if (stamped?.cart) result = stamped;
   }
 
   const cartId = result?.cart?.id;
