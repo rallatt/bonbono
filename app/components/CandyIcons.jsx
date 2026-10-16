@@ -257,6 +257,20 @@ export const IconPin = base('0 0 24 24', () => (
   </>
 ));
 
+export const IconClock = base('0 0 24 24', () => (
+  <>
+    <circle cx="12" cy="12" r="9" fill="none" stroke={INK} strokeWidth="2" />
+    <path
+      d="M12 7 V12 L15.5 14"
+      fill="none"
+      stroke={INK}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </>
+));
+
 export const IconMail = base('0 0 24 24', () => (
   <>
     <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke={INK} strokeWidth="2" />

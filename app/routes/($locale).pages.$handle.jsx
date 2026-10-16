@@ -16,6 +16,7 @@ import {
   IconBear,
   IconPin,
   IconMail,
+  IconClock,
 } from '../components/CandyIcons';
 
 /**
@@ -103,6 +104,16 @@ export default function Page() {
   );
 }
 
+// Bonbono's own hours. The shared Shopify contact page body carries Librairie
+// Gourmande's (different shop, different hours) and is rendered on that site —
+// this route renders StoreMap instead, so the two never collide.
+const OPENING_HOURS = [
+  { dayKey: 'contact.hours.mon_tue', valueKey: 'contact.hours.mon_tue_value', closed: true },
+  { dayKey: 'contact.hours.wed', valueKey: 'contact.hours.wed_value' },
+  { dayKey: 'contact.hours.thu_fri', valueKey: 'contact.hours.thu_fri_value' },
+  { dayKey: 'contact.hours.sat_sun', valueKey: 'contact.hours.sat_sun_value' },
+];
+
 const CONTACT_HERO_CHIPS = [
   { Icon: IconLollipop, fill: '#fff', bg: 'guimauve' },
   { Icon: IconStar, fill: '#E55A7E', bg: 'melon' },
@@ -181,6 +192,19 @@ function StoreMap({ apiKey }) {
             >
               {t('footer.tiktok')} · {t('contact.info.social_handle', { handle: TIKTOK_HANDLE })}
             </a>
+          </div>
+
+          <div className="cat-card contact-hours-card">
+            <div className="cat-icon"><IconClock size={30} /></div>
+            <span className="cat-card-title">{t('contact.info.hours_title')}</span>
+            <dl className="contact-hours">
+              {OPENING_HOURS.map((row) => (
+                <div className="contact-hours-row" key={row.dayKey}>
+                  <dt>{t(row.dayKey)}</dt>
+                  <dd className={row.closed ? 'is-closed' : undefined}>{t(row.valueKey)}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
 

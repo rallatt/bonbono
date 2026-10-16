@@ -2983,6 +2983,47 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   margin-bottom: 1.5rem;
 }
 
+/* The hours card carries a small day/time list, so it needs more room than
+   the single-line cards beside it. */
+.contact-hours-card {
+  grid-column: span 2;
+}
+
+.contact-hours {
+  margin: 0.35rem 0 0;
+  width: 100%;
+}
+
+.contact-hours-row {
+  border-top: 1.5px solid #E4EFE2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+}
+
+.contact-hours-row:first-child {
+  border-top: 0;
+}
+
+.contact-hours dt,
+.contact-hours dd {
+  color: #2A4A34;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+.contact-hours dt {
+  font-weight: 600;
+}
+
+.contact-hours dd.is-closed {
+  color: #9A8F86;
+}
+
 .contact-info-detail {
   color: #2A4A34;
   font-family: 'Fredoka', system-ui, sans-serif;

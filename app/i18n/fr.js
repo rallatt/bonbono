@@ -215,6 +215,15 @@ export const fr = {
   'contact.info.address_title': 'Adresse',
   'contact.info.email_title': 'Courriel',
   'contact.info.social_title': 'Suivez-nous',
+  'contact.info.hours_title': "Heures d'ouverture",
+  'contact.hours.mon_tue': 'Lundi et mardi',
+  'contact.hours.mon_tue_value': 'Fermé',
+  'contact.hours.wed': 'Mercredi',
+  'contact.hours.wed_value': '11 h à 18 h 30',
+  'contact.hours.thu_fri': 'Jeudi et vendredi',
+  'contact.hours.thu_fri_value': '11 h à 19 h',
+  'contact.hours.sat_sun': 'Samedi et dimanche',
+  'contact.hours.sat_sun_value': '10 h 30 à 18 h 30',
   'contact.info.social_handle': '@{{handle}}',
 
   // Account
