@@ -1,12 +1,13 @@
 import { redirect, useLoaderData } from 'react-router';
 import { Money, Image } from '@shopify/hydrogen';
 import { CUSTOMER_ORDER_QUERY } from '../graphql/customer-account/CustomerOrderQuery';
-import { t } from '../i18n/index.js';
+import { metaT, useT } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ data }) => {
+export const meta = ({ data, matches }) => {
+  const t = metaT(matches);
   return [{ title: t('order.meta', { name: data?.order?.name ?? '' }) }];
 };
 
@@ -65,6 +66,7 @@ export async function loader({ params, context }) {
 }
 
 export default function OrderRoute() {
+  const t = useT();
   /** @type {LoaderReturnData} */
   const {
     order,

@@ -1,6 +1,6 @@
 import { useLoaderData } from 'react-router';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
-import { t } from '../i18n/index.js';
+import { metaT, useT } from '../i18n/index.js';
 import {
   INSTAGRAM_HANDLE,
   INSTAGRAM_URL,
@@ -22,7 +22,8 @@ import {
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ data }) => {
+export const meta = ({ data, matches }) => {
+  const t = metaT(matches);
   return [{ title: t('meta.page', { name: data?.page.title ?? '' }) }];
 };
 
@@ -124,6 +125,7 @@ const CONTACT_HERO_CHIPS = [
 ];
 
 function StoreMap({ apiKey }) {
+  const t = useT();
   const mapSrc = apiKey
     ? `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=366+rue+de+Castelnau+Est,+Montréal,+QC&zoom=16&language=fr`
     : null;

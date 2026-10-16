@@ -1,12 +1,13 @@
 import { CartForm, Money } from '@shopify/hydrogen';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useFetcher } from 'react-router';
-import { t } from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
 /**
  * @param {CartSummaryProps}
  */
 export function CartSummary({ cart, layout }) {
+  const t = useT();
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
   const summaryId = useId();
@@ -47,6 +48,7 @@ export function CartSummary({ cart, layout }) {
  * @param {{checkoutUrl?: string}}
  */
 function CartCheckoutActions({ checkoutUrl }) {
+  const t = useT();
   if (!checkoutUrl) return null;
 
   return (
@@ -70,6 +72,7 @@ function CartDiscounts({
   discountsHeadingId,
   discountCodeInputId,
 }) {
+  const t = useT();
   const codes =
     discountCodes
       ?.filter((discount) => discount.applicable)
@@ -147,6 +150,7 @@ function UpdateDiscountForm({ discountCodes, children }) {
  * }}
  */
 function CartGiftCard({ giftCardCodes, giftCardHeadingId, giftCardInputId }) {
+  const t = useT();
   const giftCardCodeInput = useRef(null);
   const removeButtonRefs = useRef(new Map());
   const previousCardIdsRef = useRef([]);
@@ -282,6 +286,7 @@ function RemoveGiftCardForm({
   onRemoveClick,
   buttonRef,
 }) {
+  const t = useT();
   return (
     <CartForm
       route="/cart"

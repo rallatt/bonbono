@@ -1,7 +1,7 @@
 import {Link, useNavigate} from 'react-router';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
-import {t} from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
 /**
  * @param {{
@@ -10,6 +10,7 @@ import {t} from '../i18n/index.js';
  * }}
  */
 export function ProductForm({productOptions, selectedVariant}) {
+  const t = useT();
   const navigate = useNavigate();
   const {open} = useAside();
   return (

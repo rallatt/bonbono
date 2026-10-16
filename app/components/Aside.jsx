@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {useId} from 'react';
-import {t} from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
 /**
  * A side bar component with Overlay
@@ -18,6 +18,7 @@ import {t} from '../i18n/index.js';
  * }}
  */
 export function Aside({children, heading, type}) {
+  const t = useT();
   const {type: activeType, close} = useAside();
   const expanded = type === activeType;
   const id = useId();

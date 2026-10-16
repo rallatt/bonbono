@@ -2,10 +2,15 @@ import { Suspense, useState, useRef, useEffect, useCallback } from 'react';
 import { Await, NavLink, useAsyncValue } from 'react-router';
 import { useAnalytics, useOptimisticCart } from '@shopify/hydrogen';
 import { useAside } from './Aside';
+import { LocaleSwitcher } from './LocaleSwitcher';
 import logoImg from '../assets/cleanLogo.png';
-import { t } from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
-const HEADER_TITLE_BY_URL = {
+// Overrides for menu entries whose Shopify title is not what we want to show.
+// A function, not a constant: the strings depend on the visitor's locale, and a
+// module-level object would freeze French at import time.
+function headerTitle(t, url) {
+  return {
   '/search': t('search.title'),
   '/collections': t('nav.collections'),
   '/blogs/journal': t('nav.blog'),
@@ -13,12 +18,14 @@ const HEADER_TITLE_BY_URL = {
   '/pages/about': t('nav.about'),
   '/pages/le-patch-bar': t('nav.patch_bar'),
   '/pages/cadeaux-corpo': t('nav.corporate_gifts'),
-};
+  }[url];
+}
 
 /**
  * @param {HeaderProps}
  */
 export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
+  const t = useT();
   const { shop, menu } = header;
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -36,7 +43,7 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
     [publicStoreDomain, primaryDomainUrl],
   );
 
-  const items = (menu || FALLBACK_HEADER_MENU).items;
+  const items = (menu || fallbackHeaderMenu(t)).items;
 
   // Close mobile menu when viewport crosses desktop breakpoint
   useEffect(() => {
@@ -73,6 +80,7 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
 }
 
 function MarqueeTicker() {
+  const t = useT();
   const items = [t('marquee.item1'), t('marquee.item2'), t('marquee.item3')];
   const track = [...items, ...items];
   return (
@@ -139,6 +147,7 @@ function flipDropdowns(nav) {
  * dropdown and the overflow "Plus" dropdown.
  */
 function DropdownList({ items, resolveUrl, isTouch, openSubId, setOpenSubId, onNavigate }) {
+  const t = useT();
   return (
     <ul className="header-menu-dropdown">
       {items.map((child) => {
@@ -156,7 +165,7 @@ function DropdownList({ items, resolveUrl, isTouch, openSubId, setOpenSubId, onN
                 to={childUrl}
                 onClick={onNavigate}
               >
-                {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+                {headerTitle(t, childUrl) ?? child.title}
               </NavLink>
             </li>
           );
@@ -176,7 +185,7 @@ function DropdownList({ items, resolveUrl, isTouch, openSubId, setOpenSubId, onN
                   : onNavigate
               }
             >
-              {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+              {headerTitle(t, childUrl) ?? child.title}
               <span className="header-menu-chevron" aria-hidden="true">▾</span>
             </NavLink>
             <ul className="header-menu-dropdown">
@@ -192,7 +201,7 @@ function DropdownList({ items, resolveUrl, isTouch, openSubId, setOpenSubId, onN
                       to={grandchildUrl}
                       onClick={onNavigate}
                     >
-                      {HEADER_TITLE_BY_URL[grandchildUrl] ?? grandchild.title}
+                      {headerTitle(t, grandchildUrl) ?? grandchild.title}
                     </NavLink>
                   </li>
                 );
@@ -206,6 +215,7 @@ function DropdownList({ items, resolveUrl, isTouch, openSubId, setOpenSubId, onN
 }
 
 function OverflowNav({ items, resolveUrl }) {
+  const t = useT();
   const navRef = useRef(null);
   const rulerRef = useRef(null);
   const [visibleCount, setVisibleCount] = useState(items.length);
@@ -300,7 +310,7 @@ function OverflowNav({ items, resolveUrl }) {
               key={item.id}
               className={`header-menu-item${hasChildren ? ' header-menu-item--parent' : ''}`}
             >
-              {HEADER_TITLE_BY_URL[url] ?? item.title}
+              {headerTitle(t, url) ?? item.title}
               {hasChildren && (
                 <span className="header-menu-chevron" aria-hidden="true">
                   ▾
@@ -336,7 +346,7 @@ function OverflowNav({ items, resolveUrl }) {
                   to={url}
                   onClick={isTouch ? (e) => { e.preventDefault(); setOpenId(isOpen ? null : item.id); } : undefined}
                 >
-                  {HEADER_TITLE_BY_URL[url] ?? item.title}
+                  {headerTitle(t, url) ?? item.title}
                   <span className="header-menu-chevron" aria-hidden="true">
                     ▾
                   </span>
@@ -362,7 +372,7 @@ function OverflowNav({ items, resolveUrl }) {
               style={activeLinkStyle}
               to={url}
             >
-              {HEADER_TITLE_BY_URL[url] ?? item.title}
+              {headerTitle(t, url) ?? item.title}
             </NavLink>
           );
         })}
@@ -393,7 +403,7 @@ function OverflowNav({ items, resolveUrl }) {
                         style={activeLinkStyle}
                         onClick={isTouch ? (e) => { e.preventDefault(); setOpenId(isOverflowItemOpen ? null : `overflow-${item.id}`); } : undefined}
                       >
-                        {HEADER_TITLE_BY_URL[url] ?? item.title}
+                        {headerTitle(t, url) ?? item.title}
                         <span className="header-menu-chevron" aria-hidden="true">▾</span>
                       </NavLink>
                       <DropdownList
@@ -417,7 +427,7 @@ function OverflowNav({ items, resolveUrl }) {
                       style={activeLinkStyle}
                       onClick={() => setMoreOpen(false)}
                     >
-                      {HEADER_TITLE_BY_URL[url] ?? item.title}
+                      {headerTitle(t, url) ?? item.title}
                     </NavLink>
                   </li>
                 );
@@ -434,6 +444,7 @@ function OverflowNav({ items, resolveUrl }) {
  * Animated full-width mobile menu panel that slides down from the header.
  */
 function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
+  const t = useT();
   const [visible, setVisible] = useState(false);
   const [closing, setClosing] = useState(false);
   const [openId, setOpenId] = useState(null);
@@ -513,7 +524,7 @@ function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
                       opacity: isPending ? 0.6 : undefined,
                     })}
                   >
-                    {HEADER_TITLE_BY_URL[url] ?? item.title}
+                    {headerTitle(t, url) ?? item.title}
                   </NavLink>
                   {hasChildren && (
                     <button
@@ -548,7 +559,7 @@ function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
                                 opacity: isPending ? 0.6 : undefined,
                               })}
                             >
-                              {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+                              {headerTitle(t, childUrl) ?? child.title}
                             </NavLink>
                             {hasGrandchildren && (
                               <button
@@ -576,7 +587,7 @@ function MobileMenuPanel({ items, open, onClose, resolveUrl }) {
                                     prefetch="intent"
                                     style={activeLinkStyle}
                                   >
-                                    {HEADER_TITLE_BY_URL[grandchildUrl] ?? grandchild.title}
+                                    {headerTitle(t, grandchildUrl) ?? grandchild.title}
                                   </NavLink>
                                 );
                               })}
@@ -603,6 +614,7 @@ function HeaderCtas({ isLoggedIn, cart, mobileOpen, onMobileToggle }) {
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle mobileOpen={mobileOpen} onToggle={onMobileToggle} />
+      <LocaleSwitcher />
       <SearchToggle />
       <CartToggle cart={cart} />
     </nav>
@@ -610,6 +622,7 @@ function HeaderCtas({ isLoggedIn, cart, mobileOpen, onMobileToggle }) {
 }
 
 function HeaderMenuMobileToggle({ mobileOpen, onToggle }) {
+  const t = useT();
   return (
     <button
       className={`header-menu-mobile-toggle reset${mobileOpen ? ' is-open' : ''}`}
@@ -626,6 +639,7 @@ function HeaderMenuMobileToggle({ mobileOpen, onToggle }) {
 }
 
 function SearchToggle() {
+  const t = useT();
   const { open } = useAside();
   return (
     <button className="reset" onClick={() => open('search')} aria-label={t('aside.search.heading')}>
@@ -641,6 +655,7 @@ function SearchToggle() {
  * @param {{count: number}}
  */
 function CartBadge({ count }) {
+  const t = useT();
   const { open } = useAside();
   const { publish, shop, cart, prevCart } = useAnalytics();
 
@@ -706,6 +721,7 @@ export function HeaderMenu({
   viewport,
   publicStoreDomain,
 }) {
+  const t = useT();
   const className = `header-menu-${viewport}`;
   const { close } = useAside();
 
@@ -725,7 +741,7 @@ export function HeaderMenu({
           Accueil
         </NavLink>
       )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+      {(menu || fallbackHeaderMenu(t)).items.map((item) => {
         const url = resolveUrl(item.url);
         if (!url) return null;
         const hasChildren = item.items?.length > 0;
@@ -741,7 +757,7 @@ export function HeaderMenu({
                 style={activeLinkStyle}
                 to={url}
               >
-                {HEADER_TITLE_BY_URL[url] ?? item.title}
+                {headerTitle(t, url) ?? item.title}
                 <span className="header-menu-chevron" aria-hidden="true">▾</span>
               </NavLink>
               <ul className="header-menu-dropdown">
@@ -757,7 +773,7 @@ export function HeaderMenu({
                         style={activeLinkStyle}
                         to={childUrl}
                       >
-                        {HEADER_TITLE_BY_URL[childUrl] ?? child.title}
+                        {headerTitle(t, childUrl) ?? child.title}
                       </NavLink>
                     </li>
                   );
@@ -777,7 +793,7 @@ export function HeaderMenu({
             style={activeLinkStyle}
             to={url}
           >
-            {HEADER_TITLE_BY_URL[url] ?? item.title}
+            {headerTitle(t, url) ?? item.title}
           </NavLink>
         );
       })}
@@ -785,7 +801,10 @@ export function HeaderMenu({
   );
 }
 
-const FALLBACK_HEADER_MENU = {
+// Only used if the Shopify menu fails to load. A function so its titles follow
+// the visitor's locale instead of freezing French at import time.
+function fallbackHeaderMenu(t) {
+  return {
   id: 'gid://shopify/Menu/199655587896',
   items: [
     {
@@ -843,7 +862,8 @@ const FALLBACK_HEADER_MENU = {
       items: [],
     },
   ],
-};
+  };
+}
 
 /**
  * @param {{

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { useLoaderData, useRouteLoaderData, Link, Await } from 'react-router';
 import { Image, Money } from '@shopify/hydrogen';
 import { MockShopNotice } from '../components/MockShopNotice';
-import { t } from '../i18n/index.js';
+import { metaT, useT } from '../i18n/index.js';
 import { GIFT_CARD_URL } from '../lib/giftCard.js';
 import { fetchInstagramPosts } from '../lib/instagram.js';
 import { filterVisibleProducts } from '../lib/productAvailability.js';
@@ -21,7 +21,8 @@ import {
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = () => {
+export const meta = ({ matches }) => {
+  const t = metaT(matches);
   return [{ title: t('home.meta') }];
 };
 
@@ -93,6 +94,7 @@ const HERO_CHIPS = [
 ];
 
 function HeroBanner() {
+  const t = useT();
   return (
     <section className="hero-section">
       <div className="hero-copy">
@@ -156,6 +158,7 @@ const ACTIVE_STEPS = [1, 3, 4];
  * is empty — so it disappears by itself after the season.
  */
 function HalloweenBand({ products }) {
+  const t = useT();
   if (!products?.length) return null;
 
   return (
@@ -198,6 +201,7 @@ function HalloweenBand({ products }) {
 }
 
 function HowItWorks() {
+  const t = useT();
   return (
     <section className="bold-section">
       <div className="bold-section-head">
@@ -218,6 +222,7 @@ function HowItWorks() {
 }
 
 function FeaturedCategories({ navItems }) {
+  const t = useT();
   if (!navItems?.length) return null;
   return (
     <section className="bold-section">
@@ -243,6 +248,7 @@ function FeaturedCategories({ navItems }) {
 }
 
 function GiftCardPromo() {
+  const t = useT();
   return (
     <section className="giftcard-promo">
       <div className="giftcard-promo-copy">
@@ -275,6 +281,7 @@ function GiftCardPromo() {
 }
 
 function InstagramFeed({ posts }) {
+  const t = useT();
   return (
     <Suspense fallback={null}>
       <Await resolve={posts} errorElement={null}>

@@ -1,5 +1,5 @@
 import {Money} from '@shopify/hydrogen';
-import {t} from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
 /**
  * @param {{
@@ -8,6 +8,7 @@ import {t} from '../i18n/index.js';
  * }}
  */
 export function ProductPrice({price, compareAtPrice}) {
+  const t = useT();
   const isOnSale =
     compareAtPrice &&
     price &&

@@ -3,7 +3,7 @@ import { useVariantUrl } from '../lib/variants';
 import { Link } from 'react-router';
 import { ProductPrice } from './ProductPrice';
 import { useAside } from './Aside';
-import { t } from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
 /**
  * A single line item in the cart. It displays the product image, title, price.
@@ -17,6 +17,7 @@ import { t } from '../i18n/index.js';
  * }}
  */
 export function CartLineItem({ layout, line, childrenMap }) {
+  const t = useT();
   const { id, merchandise } = line;
   const { product, title, image, selectedOptions, price } = merchandise;
   // An optimistic line's merchandise is whatever variant the Add to cart form sent.
@@ -108,6 +109,7 @@ export function CartLineItem({ layout, line, childrenMap }) {
  * @param {{line: CartLine}}
  */
 function CartLineQuantity({ line }) {
+  const t = useT();
   if (!line || typeof line?.quantity === 'undefined') return null;
   const { id: lineId, quantity, isOptimistic } = line;
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
@@ -153,6 +155,7 @@ function CartLineQuantity({ line }) {
  * }}
  */
 function CartLineRemoveButton({ lineIds, disabled }) {
+  const t = useT();
   return (
     <CartForm
       fetcherKey={getUpdateKey(lineIds)}

@@ -6,12 +6,13 @@ import {
   useNavigation,
   useOutletContext,
 } from 'react-router';
-import { t } from '../i18n/index.js';
+import { metaT, useT } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = () => {
+export const meta = ({ matches }) => {
+  const t = metaT(matches);
   return [{ title: t('meta.profile') }];
 };
 
@@ -82,6 +83,7 @@ export async function action({ request, context }) {
 }
 
 export default function AccountProfile() {
+  const t = useT();
   const account = useOutletContext();
   const { state } = useNavigation();
   /** @type {ActionReturnData} */

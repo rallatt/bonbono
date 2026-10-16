@@ -15,6 +15,8 @@ import resetStyles from './styles/reset.css?url';
 import appStyles from './styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import { PageLayout } from './components/PageLayout';
+import { DEFAULT_LOCALE, LocaleProvider } from './i18n/index.js';
+import { localeFromLanguage } from './lib/i18n';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -75,6 +77,9 @@ export async function loader(args) {
     ...deferredData,
     ...criticalData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
+    // 'fr' | 'en', from the URL prefix. Everything below reads it from
+    // context rather than a module global — see app/i18n/index.js.
+    locale: localeFromLanguage(storefront.i18n.language),
     shop: getShopAnalytics({
       storefront,
       publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
@@ -145,9 +150,11 @@ function loadDeferredData({ context }) {
  */
 export function Layout({ children }) {
   const nonce = useNonce();
+  const rootData = useRouteLoaderData('root');
+  const locale = rootData?.locale ?? DEFAULT_LOCALE;
 
   return (
-    <html lang="fr">
+    <html lang={locale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -158,7 +165,7 @@ export function Layout({ children }) {
         <Links />
       </head>
       <body>
-        {children}
+        <LocaleProvider locale={locale}>{children}</LocaleProvider>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>

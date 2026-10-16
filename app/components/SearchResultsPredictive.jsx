@@ -6,7 +6,7 @@ import {
   urlWithTrackingParams,
 } from '../lib/search';
 import { useAside } from './Aside';
-import { t } from '../i18n/index.js';
+import { useT } from '../i18n/index.js';
 
 /**
  * Component that renders predictive search results
@@ -56,6 +56,7 @@ SearchResultsPredictive.Empty = SearchResultsPredictiveEmpty;
  * @param {PartialPredictiveSearchResult<'articles'>}
  */
 function SearchResultsPredictiveArticles({ term, articles, closeSearch }) {
+  const t = useT();
   if (!articles.length) return null;
 
   return (
@@ -96,6 +97,7 @@ function SearchResultsPredictiveArticles({ term, articles, closeSearch }) {
  * @param {PartialPredictiveSearchResult<'collections'>}
  */
 function SearchResultsPredictiveCollections({ term, collections, closeSearch }) {
+  const t = useT();
   if (!collections.length) return null;
 
   return (
@@ -136,6 +138,7 @@ function SearchResultsPredictiveCollections({ term, collections, closeSearch }) 
  * @param {PartialPredictiveSearchResult<'pages'>}
  */
 function SearchResultsPredictivePages({ term, pages, closeSearch }) {
+  const t = useT();
   if (!pages.length) return null;
 
   return (
@@ -168,6 +171,7 @@ function SearchResultsPredictivePages({ term, pages, closeSearch }) {
  * @param {PartialPredictiveSearchResult<'products'>}
  */
 function SearchResultsPredictiveProducts({ term, products, closeSearch }) {
+  const t = useT();
   if (!products.length) return null;
 
   return (
@@ -232,6 +236,7 @@ function SearchResultsPredictiveQueries({ queries, queriesDatalistId }) {
  * }}
  */
 function SearchResultsPredictiveEmpty({ term }) {
+  const t = useT();
   if (!term.current) {
     return null;
   }

@@ -1,10 +1,11 @@
 import {Link, useLoaderData} from 'react-router';
-import {t} from '../i18n/index.js';
+import { metaT, useT } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({data}) => {
+export const meta = ({data, matches }) => {
+  const t = metaT(matches);
   return [{title: t('meta.policy', { name: data?.policy.title ?? '' })}];
 };
 
@@ -41,6 +42,7 @@ export async function loader({params, context}) {
 }
 
 export default function Policy() {
+  const t = useT();
   /** @type {LoaderReturnData} */
   const {policy} = useLoaderData();
 

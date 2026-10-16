@@ -10,12 +10,13 @@ import {
   DELETE_ADDRESS_MUTATION,
   CREATE_ADDRESS_MUTATION,
 } from '../graphql/customer-account/CustomerAddressMutations';
-import { t } from '../i18n/index.js';
+import { metaT, useT } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = () => {
+export const meta = ({ matches }) => {
+  const t = metaT(matches);
   return [{ title: t('meta.addresses') }];
 };
 
@@ -251,6 +252,7 @@ export async function action({ request, context }) {
 }
 
 export default function Addresses() {
+  const t = useT();
   const { customer } = useOutletContext();
   const { defaultAddress, addresses } = customer;
 
@@ -280,6 +282,7 @@ export default function Addresses() {
 }
 
 function NewAddressForm() {
+  const t = useT();
   const newAddress = {
     address1: '',
     address2: '',
@@ -319,6 +322,7 @@ function NewAddressForm() {
  * @param {Pick<CustomerFragment, 'addresses' | 'defaultAddress'>}
  */
 function ExistingAddresses({ addresses, defaultAddress }) {
+  const t = useT();
   return (
     <div>
       <legend>{t('addresses.existing.legend')}</legend>
@@ -364,6 +368,7 @@ function ExistingAddresses({ addresses, defaultAddress }) {
  * }}
  */
 export function AddressForm({ addressId, address, defaultAddress, children }) {
+  const t = useT();
   const { state, formMethod } = useNavigation();
   /** @type {ActionReturnData} */
   const action = useActionData();
