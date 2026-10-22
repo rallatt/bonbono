@@ -81,7 +81,8 @@ export function Header({ header, isLoggedIn, cart, publicStoreDomain }) {
 
 function MarqueeTicker() {
   const t = useT();
-  const items = [t('marquee.item1'), t('marquee.item2'), t('marquee.item3')];
+  // Free-shipping first: it is the line most likely to move a sale.
+  const items = [t('marquee.item2'), t('marquee.item1'), t('marquee.item3')];
   const track = [...items, ...items];
   return (
     <div className="marquee-wrap" aria-hidden="true">
