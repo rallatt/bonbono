@@ -6,13 +6,12 @@ import { filterVisibleProducts } from '../lib/productAvailability';
 import { ProductItem } from '../components/ProductItem';
 import { CATEGORY_ICONS } from '../components/CandyIcons';
 import { findMenuItemByPath, resolveMenuUrl } from '../lib/menu.js';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ data, matches }) => {
-  const t = metaT(matches);
+export const meta = ({ data }) => {
   return [{ title: t('meta.collection', { name: data?.collection.title ?? '' }) }];
 };
 
@@ -80,7 +79,6 @@ function loadDeferredData({ context }) {
 }
 
 export default function Collection() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { collection } = useLoaderData();
   const rootData = useRouteLoaderData('root');

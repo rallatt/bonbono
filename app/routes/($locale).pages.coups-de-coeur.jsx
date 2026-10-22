@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useLoaderData } from 'react-router';
 import { ProductItem } from '../components/ProductItem';
 import { isProductVisible } from '../lib/productAvailability';
-import { metaT, useT, translate } from '../i18n/index.js';
-import { localeFromLanguage } from '../lib/i18n';
+import { t } from '../i18n/index.js';
 import { IconHeart } from '../components/CandyIcons';
 
 /**
@@ -47,8 +46,7 @@ function normalizeTag(tag) {
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ matches }) => {
-  const t = metaT(matches);
+export const meta = () => {
   return [{ title: t('favourites.meta') }];
 };
 
@@ -56,7 +54,6 @@ export const meta = ({ matches }) => {
  * @param {Route.LoaderArgs} args
  */
 export async function loader({ context }) {
-  const locale = localeFromLanguage(context.storefront.i18n?.language);
   const { products } = await context.storefront.query(FAVOURITES_QUERY, {
     variables: { query: FAVOURITES_SEARCH, first: 250 },
   });
@@ -78,8 +75,8 @@ export async function loader({ context }) {
 
   const people = TEAM.map((person) => ({
     key: person.key,
-    name: translate(`favourites.person.${person.key}`, undefined, locale),
-    initial: translate(`favourites.person.${person.key}`, undefined, locale).slice(0, 1),
+    name: t(`favourites.person.${person.key}`),
+    initial: t(`favourites.person.${person.key}`).slice(0, 1),
     count: items.filter((item) => item.owners.includes(person.key)).length,
   })).filter((person) => person.count > 0);
 
@@ -87,7 +84,6 @@ export async function loader({ context }) {
 }
 
 export default function Favourites() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { items, people } = useLoaderData();
   const [selected, setSelected] = useState('all');
@@ -151,7 +147,7 @@ export default function Favourites() {
                   {selected === 'all' && (
                     <p className="fav-owners">
                       {t('favourites.loved_by', {
-                        names: formatNames(product.owners.map(nameFor), t),
+                        names: formatNames(product.owners.map(nameFor)),
                       })}
                     </p>
                   )}
@@ -195,7 +191,7 @@ function FilterButton({ active, count, initial, label, onSelect }) {
  * "Jessie", "Jessie et Roxanne", "Jessie, Maria et Roxanne".
  * @param {string[]} names
  */
-function formatNames(names, t) {
+function formatNames(names) {
   if (names.length <= 1) return names[0] ?? '';
   return `${names.slice(0, -1).join(', ')} ${t('favourites.and')} ${names[names.length - 1]}`;
 }

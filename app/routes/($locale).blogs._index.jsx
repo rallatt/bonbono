@@ -1,13 +1,12 @@
 import { Link, useLoaderData } from 'react-router';
 import { getPaginationVariables } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ matches }) => {
-  const t = metaT(matches);
+export const meta = () => {
   return [{ title: t('meta.blogs') }];
 };
 
@@ -57,7 +56,6 @@ function loadDeferredData({ context }) {
 }
 
 export default function Blogs() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { blogs } = useLoaderData();
 

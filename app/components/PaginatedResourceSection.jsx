@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Pagination} from '@shopify/hydrogen';
-import { useT } from '../i18n/index.js';
+import {t} from '../i18n/index.js';
 
 /**
  * <PaginatedResourceSection> encapsulates the previous and next pagination behaviors throughout your application.
@@ -12,7 +12,6 @@ export function PaginatedResourceSection({
   ariaLabel,
   resourcesClassName,
 }) {
-  const t = useT();
   return (
     <Pagination connection={connection}>
       {({nodes, isLoading, PreviousLink, NextLink}) => {

@@ -1,7 +1,7 @@
 import { useLoaderData, Link } from 'react-router';
 import { getPaginationVariables, Image } from '@shopify/hydrogen';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
-import { useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {Route.LoaderArgs} args
@@ -47,7 +47,6 @@ function loadDeferredData({ context }) {
 }
 
 export default function Collections() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { collections } = useLoaderData();
 

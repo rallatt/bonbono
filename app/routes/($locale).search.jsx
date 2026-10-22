@@ -3,13 +3,12 @@ import { getPaginationVariables, Analytics } from '@shopify/hydrogen';
 import { SearchForm } from '../components/SearchForm';
 import { SearchResults } from '../components/SearchResults';
 import { getEmptyPredictiveSearchResult } from '../lib/search';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ matches }) => {
-  const t = metaT(matches);
+export const meta = () => {
   return [{ title: t('meta.search') }];
 };
 
@@ -35,7 +34,6 @@ export async function loader({ request, context }) {
  * Renders the /search route
  */
 export default function SearchPage() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { type, term, result, error } = useLoaderData();
   if (type === 'predictive') return null;

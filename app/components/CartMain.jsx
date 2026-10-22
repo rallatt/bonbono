@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { useAside } from './Aside';
 import { CartLineItem } from './CartLineItem';
 import { CartSummary } from './CartSummary';
-import { useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 /**
  * Returns a map of all line items and their children.
  * @param {CartLine[]} lines
@@ -33,7 +33,6 @@ function getLineItemChildrenMap(lines) {
  * @param {CartMainProps}
  */
 export function CartMain({ layout, cart: originalCart }) {
-  const t = useT();
   // The useOptimisticCart hook applies pending actions to the cart
   // so the user immediately sees feedback when they modify the cart.
   const cart = useOptimisticCart(originalCart);
@@ -90,7 +89,6 @@ export function CartMain({ layout, cart: originalCart }) {
  * }}
  */
 function CartEmpty({ hidden = false }) {
-  const t = useT();
   const { close } = useAside();
   return (
     <div hidden={hidden}>

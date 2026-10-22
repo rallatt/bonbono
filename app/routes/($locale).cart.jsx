@@ -1,13 +1,12 @@
 import { useLoaderData, data } from 'react-router';
 import { CartForm } from '@shopify/hydrogen';
 import { CartMain } from '../components/CartMain';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ matches }) => {
-  const t = metaT(matches);
+export const meta = () => {
   return [{ title: t('meta.cart') }];
 };
 
@@ -129,7 +128,6 @@ export async function loader({ context }) {
 }
 
 export default function Cart() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const cart = useLoaderData();
 

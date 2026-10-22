@@ -6,7 +6,7 @@ import {
   useLoaderData,
 } from 'react-router';
 import { CUSTOMER_DETAILS_QUERY } from '../graphql/customer-account/CustomerDetailsQuery';
-import { useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 export function shouldRevalidate() {
   return true;
@@ -38,7 +38,6 @@ export async function loader({ context }) {
 }
 
 export default function AccountLayout() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { customer } = useLoaderData();
 
@@ -61,7 +60,6 @@ export default function AccountLayout() {
 }
 
 function AccountMenu() {
-  const t = useT();
   function isActiveStyle({ isActive, isPending }) {
     return {
       fontWeight: isActive ? 'bold' : undefined,
@@ -89,7 +87,6 @@ function AccountMenu() {
 }
 
 function Logout() {
-  const t = useT();
   return (
     <Form className="account-logout" method="POST" action="/account/logout">
       &nbsp;<button type="submit">{t('account.sign_out')}</button>

@@ -1,13 +1,12 @@
 import {Suspense} from 'react';
 import { INSTAGRAM_URL, TIKTOK_URL } from '../lib/social.js';
 import {Await, NavLink} from 'react-router';
-import { useT } from '../i18n/index.js';
+import {t} from '../i18n/index.js';
 
 /**
  * @param {FooterProps}
  */
 export function Footer({footer: footerPromise, header, publicStoreDomain}) {
-  const t = useT();
   return (
     <Suspense>
       <Await resolve={footerPromise}>
@@ -74,11 +73,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
  *   publicStoreDomain: string;
  * }}
  */
-// Overrides for menu entries whose Shopify title is not what we want to show.
-// A function, not a constant: the strings depend on the visitor's locale, and a
-// module-level object would freeze French at import time.
-function footerTitle(t, url) {
-  return {
+const FOOTER_TITLE_BY_URL = {
   '/search': t('search.title'),
   '/collections': t('nav.collections'),
   '/blogs/journal': t('nav.blog'),
@@ -88,14 +83,12 @@ function footerTitle(t, url) {
   '/policies/refund-policy': t('footer.refund'),
   '/policies/shipping-policy': t('footer.shipping'),
   '/policies/terms-of-service': t('footer.terms'),
-  }[url];
-}
+};
 
 function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
-  const t = useT();
   return (
     <nav className="footer-menu" role="navigation">
-      {(menu || fallbackFooterMenu(t)).items.map((item) => {
+      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
         // if the url is internal, we strip the domain
         const url =
@@ -104,7 +97,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
           item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
             : item.url;
-        const title = footerTitle(t, url) ?? item.title;
+        const title = FOOTER_TITLE_BY_URL[url] ?? item.title;
         const isExternal = !url.startsWith('/');
         const isSearch = url === '/search';
         const label = isSearch ? (
@@ -136,10 +129,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   );
 }
 
-// Only used if the Shopify menu fails to load. A function so its titles follow
-// the visitor's locale instead of freezing French at import time.
-function fallbackFooterMenu(t) {
-  return {
+const FALLBACK_FOOTER_MENU = {
   id: 'gid://shopify/Menu/199655620664',
   items: [
     {
@@ -179,8 +169,7 @@ function fallbackFooterMenu(t) {
       items: [],
     },
   ],
-  };
-}
+};
 
 /**
  * @param {{

@@ -11,14 +11,13 @@ import { ProductPrice } from '../components/ProductPrice';
 import { ProductImage } from '../components/ProductImage';
 import { ProductForm } from '../components/ProductForm';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 import { normalizeDescriptionHtml } from '../lib/description.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ data, matches }) => {
-  const t = metaT(matches);
+export const meta = ({ data }) => {
   return [
     { title: t('meta.product', { name: data?.product.title ?? '' }) },
     {
@@ -87,7 +86,6 @@ function loadDeferredData({ context, params }) {
 }
 
 export default function Product() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { product } = useLoaderData();
 

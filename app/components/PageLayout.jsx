@@ -9,7 +9,7 @@ import {
   SearchFormPredictive,
 } from './SearchFormPredictive';
 import { SearchResultsPredictive } from './SearchResultsPredictive';
-import { useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {PageLayoutProps}
@@ -48,7 +48,6 @@ export function PageLayout({
  * @param {{cart: PageLayoutProps['cart']}}
  */
 function CartAside({ cart }) {
-  const t = useT();
   return (
     <Aside type="cart" heading={t('aside.cart.heading')}>
       <Suspense fallback={<p>{t('cart.loading')}</p>}>
@@ -63,7 +62,6 @@ function CartAside({ cart }) {
 }
 
 function SearchAside() {
-  const t = useT();
   const queriesDatalistId = useId();
   return (
     <Aside type="search" heading={t('aside.search.heading')}>

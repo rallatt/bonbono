@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { Image, Money, CartForm } from '@shopify/hydrogen';
 import { useVariantUrl } from '../lib/variants';
 import { useAside } from './Aside';
-import { useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 import { CandyImageWrapper, CandyPlaceholder } from './CandyLoader.jsx';
 
 /**
@@ -15,7 +15,6 @@ import { CandyImageWrapper, CandyPlaceholder } from './CandyLoader.jsx';
  * }}
  */
 export function ProductItem({ product, loading }) {
-  const t = useT();
   const { open } = useAside();
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;

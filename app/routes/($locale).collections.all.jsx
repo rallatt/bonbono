@@ -5,7 +5,7 @@ import { filterVisibleProducts } from '../lib/productAvailability';
 import { ProductItem } from '../components/ProductItem';
 import { CATEGORY_ICONS } from '../components/CandyIcons';
 import { resolveMenuUrl } from '../lib/menu.js';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 // The shop front door used to be an unsorted wall of every product. These are
 // the orderings offered instead; best sellers lead, since an arbitrary order
@@ -22,8 +22,7 @@ const DEFAULT_SORT = SORT_OPTIONS[0];
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ matches }) => {
-  const t = metaT(matches);
+export const meta = () => {
   return [{ title: t('meta.products') }];
 };
 
@@ -77,7 +76,6 @@ function loadDeferredData({ context }) {
 }
 
 export default function Collection() {
-  const t = useT();
   /** @type {LoaderReturnData} */
   const { products, sort } = useLoaderData();
   const rootData = useRouteLoaderData('root');

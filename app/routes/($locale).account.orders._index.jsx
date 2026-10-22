@@ -17,13 +17,12 @@ import {
 } from '../lib/orderFilters';
 import { CUSTOMER_ORDERS_QUERY } from '../graphql/customer-account/CustomerOrdersQuery';
 import { PaginatedResourceSection } from '../components/PaginatedResourceSection';
-import { metaT, useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @type {Route.MetaFunction}
  */
-export const meta = ({ matches }) => {
-  const t = metaT(matches);
+export const meta = () => {
   return [{ title: t('orders.title') }];
 };
 
@@ -94,7 +93,6 @@ function OrdersTable({ orders, filters }) {
  * @param {{hasFilters?: boolean}}
  */
 function EmptyOrders({ hasFilters = false }) {
-  const t = useT();
   return (
     <div>
       {hasFilters ? (
@@ -124,7 +122,6 @@ function EmptyOrders({ hasFilters = false }) {
  * }}
  */
 function OrderSearchForm({ currentFilters }) {
-  const t = useT();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigation = useNavigation();
   const isSearching =
@@ -207,7 +204,6 @@ function OrderSearchForm({ currentFilters }) {
  * @param {{order: OrderItemFragment}}
  */
 function OrderItem({ order }) {
-  const t = useT();
   const fulfillmentStatus = flattenConnection(order.fulfillments)[0]?.status;
   return (
     <>

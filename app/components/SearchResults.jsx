@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { Image, Money, Pagination } from '@shopify/hydrogen';
 import { urlWithTrackingParams } from '../lib/search';
-import { useT } from '../i18n/index.js';
+import { t } from '../i18n/index.js';
 
 /**
  * @param {Omit<SearchResultsProps, 'error' | 'type'>}
@@ -23,7 +23,6 @@ SearchResults.Empty = SearchResultsEmpty;
  * @param {PartialSearchResult<'articles'>}
  */
 function SearchResultsArticles({ term, articles }) {
-  const t = useT();
   if (!articles?.nodes.length) {
     return null;
   }
@@ -57,7 +56,6 @@ function SearchResultsArticles({ term, articles }) {
  * @param {PartialSearchResult<'pages'>}
  */
 function SearchResultsPages({ term, pages }) {
-  const t = useT();
   if (!pages?.nodes.length) {
     return null;
   }
@@ -91,7 +89,6 @@ function SearchResultsPages({ term, pages }) {
  * @param {PartialSearchResult<'products'>}
  */
 function SearchResultsProducts({ term, products }) {
-  const t = useT();
   if (!products?.nodes.length) {
     return null;
   }
@@ -152,7 +149,6 @@ function SearchResultsProducts({ term, products }) {
 }
 
 function SearchResultsEmpty() {
-  const t = useT();
   return (
     <div className="search-empty">
       <span className="search-empty-emoji">🍬</span>
