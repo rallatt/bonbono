@@ -32,15 +32,36 @@ const SEASON_COLLECTION = 'temps-des-fetes-bonbono';
 // collection, not a second catalogue.
 const SEASON_PICKS = 4;
 
+// Hand-picked to lead the seasonal band; the rest follow in best-selling order.
+const SEASON_PINNED = [
+  'calendrier-de-lavent-gourmand-335-g-le-comptoir-de-mathilde',
+  'calendrier-de-lavent-chocolat-biologique-equitable-180-g-galerie-au-chocolat',
+];
+
+/**
+ * Pinned products first, then the rest. Anything without a photo is dropped —
+ * the band is a shop window and a blank tile reads as broken.
+ * @param {Array<{handle: string, featuredImage?: unknown}>} products
+ */
+function orderSeasonPicks(products) {
+  const shown = products.filter((product) => product.featuredImage);
+  const rank = (product) => {
+    const pinned = SEASON_PINNED.indexOf(product.handle);
+    return pinned === -1 ? SEASON_PINNED.length : pinned;
+  };
+  return shown.sort((a, b) => rank(a) - rank(b));
+}
+
 export async function loader({ context }) {
   // A seasonal band is nice-to-have, so a failure here must not take the
   // homepage down with it.
   const season = await context.storefront
     .query(SEASON_QUERY, {
       cache: context.storefront.CacheShort(),
-      variables: { first: 16, handle: SEASON_COLLECTION },
+      variables: { first: 50, handle: SEASON_COLLECTION },
     })
     .then((data) => filterVisibleProducts(data?.collection?.products)?.nodes ?? [])
+    .then(orderSeasonPicks)
     .catch(() => []);
 
   return {
