@@ -34,8 +34,8 @@ const SEASON_PICKS = 4;
 
 // Hand-picked to lead the seasonal band; the rest follow in best-selling order.
 const SEASON_PINNED = [
-  'calendrier-de-lavent-gourmand-335-g-le-comptoir-de-mathilde',
-  'calendrier-de-lavent-chocolat-biologique-equitable-180-g-galerie-au-chocolat',
+  'calendrier-de-lavent-bonbono',
+  'calendrier-de-lavent-swedish-candies-bonbono',
 ];
 
 /**
