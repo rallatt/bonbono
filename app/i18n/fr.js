@@ -171,16 +171,17 @@ export const fr = {
   'collections.all.title': 'Tous nos produits',
   'collections.newest.title': 'Nouveautés',
 
-  // Seasonal: Halloween band on the homepage
-  'home.halloween.eyebrow': "C'est l'Halloween",
-  'home.halloween.title': "Bonbons, chocolats et trouvailles d'épouvante",
-  'home.halloween.paragraph': "Jujubes surettes, chocolats d'ici et accessoires à tête de mort — notre sélection d'Halloween, tant qu'il en reste.",
-  'home.halloween.cta': 'Tout voir',
+  // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
+  // in the homepage route.
+  'home.season.eyebrow': 'Le temps des fêtes',
+  'home.season.title': 'Chocolats, friandises et petites douceurs des fêtes',
+  'home.season.paragraph': "Chocolats d'ici, bonbons festifs et idées de bas de Noël — notre sélection du temps des fêtes, tant qu'il en reste.",
+  'home.season.cta': 'Tout voir',
 
   'home.hero_chip.search': 'Recherche',
   'home.hero_chip.new': 'Nouveautés',
   'home.hero_chip.favourites': 'Coup de cœur',
-  'home.hero_chip.halloween': 'Halloween',
+  'home.hero_chip.season': 'Temps des fêtes',
   'home.hero_chip.swedish': 'Swedish',
   'home.hero_chip.no_sugar': 'Bonbons sans sucre',
 

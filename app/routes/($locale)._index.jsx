@@ -12,7 +12,7 @@ import {
   IconSearch,
   IconStar,
   IconHeart,
-  IconPumpkin,
+  IconFirTree,
   IconLollipop,
   IconBear,
   CATEGORY_ICONS,
@@ -25,25 +25,27 @@ export const meta = () => {
   return [{ title: t('home.meta') }];
 };
 
-// How many Halloween products the seasonal band shows. Deliberately a
-// handful, not the whole collection — the band is a doorway to
-// /collections/halloween-bonbono, not a second catalogue.
-const HALLOWEEN_PICKS = 4;
+// The seasonal band. Everything season-specific is gathered here, so the
+// next swap is this block plus the home.season.* strings — nothing else.
+const SEASON_COLLECTION = 'temps-des-fetes-bonbono';
+// A handful, not the whole collection: the band is a doorway to the
+// collection, not a second catalogue.
+const SEASON_PICKS = 4;
 
 export async function loader({ context }) {
   // A seasonal band is nice-to-have, so a failure here must not take the
   // homepage down with it.
-  const halloween = await context.storefront
-    .query(HALLOWEEN_QUERY, {
+  const season = await context.storefront
+    .query(SEASON_QUERY, {
       cache: context.storefront.CacheShort(),
-      variables: { first: 16 },
+      variables: { first: 16, handle: SEASON_COLLECTION },
     })
     .then((data) => filterVisibleProducts(data?.collection?.products)?.nodes ?? [])
     .catch(() => []);
 
   return {
     isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
-    halloweenPicks: halloween.slice(0, HALLOWEEN_PICKS),
+    seasonPicks: season.slice(0, SEASON_PICKS),
     // Deliberately not awaited. Instagram is a third party we don't control,
     // so it streams in after the page rather than holding up the first byte.
     instagramPosts: fetchInstagramPosts({
@@ -64,7 +66,7 @@ export default function Homepage() {
 
   return (
     <div className="home">
-      <HalloweenBand products={data.halloweenPicks} />
+      <SeasonBand products={data.seasonPicks} />
       {data.isShopLinked ? null : <MockShopNotice />}
       <HeroBanner />
       <HowItWorks />
@@ -75,16 +77,14 @@ export default function Homepage() {
   );
 }
 
-// The four labelled chips are the P0-5 copy; the labels came off once and
-// the client asked for them back. Halloween and La rentrée use icons that
-// actually match the category (pumpkin, lunchbox) rather than reusing an
-// unrelated candy icon. Each labelled chip links to its destination (P1-3);
-// the remaining two stay decorative and unlabelled (P3-3).
-// Seasonal: Halloween leads the grid and is the only chip in costume —
-// orange on black, `spooky: true`. The rest keep the house pastels. To undo
-// the season, move the Halloween entry back to 4th and drop its spooky flag.
+// The labelled chips are the P0-5 copy; the labels came off once and the
+// client asked for them back. Each labelled chip links to its destination
+// (P1-3); the last one stays decorative and unlabelled (P3-3).
+// The season chip leads the grid and is the only one in costume — the rest
+// keep the house pastels. To retire the season, drop its `season` flag and
+// move it out of first place.
 const HERO_CHIPS = [
-  { Icon: IconPumpkin, fill: '#FFFBF3', bg: 'spooky', spooky: true, to: '/collections/halloween-bonbono', labelKey: 'home.hero_chip.halloween' },
+  { Icon: IconFirTree, fill: '#FFFBF3', bg: 'season', season: true, to: `/collections/${SEASON_COLLECTION}`, labelKey: 'home.hero_chip.season' },
   { Icon: IconSearch, fill: '#fff', bg: 'guimauve', to: '/search', labelKey: 'home.hero_chip.search' },
   { Icon: IconStar, fill: '#E55A7E', bg: 'melon', to: '/collections/all?sort=newest', labelKey: 'home.hero_chip.new' },
   { Icon: IconHeart, fill: '#C8F4AE', bg: 'pink', to: '/pages/coups-de-coeur', labelKey: 'home.hero_chip.favourites' },
@@ -117,13 +117,13 @@ function HeroBanner() {
       </div>
       <div className="hero-visual">
         <div className="chip-grid">
-          {HERO_CHIPS.map(({ Icon, fill, bg, to, labelKey, spooky }, i) => {
+          {HERO_CHIPS.map(({ Icon, fill, bg, to, labelKey, season }, i) => {
             const circle = (
               <span className={`chip chip--${bg}`}>
                 <Icon fill={fill} size={54} />
               </span>
             );
-            const cellClass = `chip-cell${spooky ? ' chip-cell--spooky' : ''}`;
+            const cellClass = `chip-cell${season ? ' chip-cell--season' : ''}`;
             // The label sits inside the link, so the caption is clickable too
             // and screen readers announce the same words people can see.
             return to ? (
@@ -151,33 +151,33 @@ function HeroBanner() {
 const ACTIVE_STEPS = [1, 3, 4];
 
 /**
- * Seasonal doorway to the Halloween collection. Shows a few real products
- * rather than the full grid, and renders nothing at all once the collection
- * is empty — so it disappears by itself after the season.
+ * Seasonal doorway to the current season's collection. Shows a few real
+ * products rather than the full grid, and renders nothing at all once the
+ * collection is empty — so it disappears by itself after the season.
  */
-function HalloweenBand({ products }) {
+function SeasonBand({ products }) {
   if (!products?.length) return null;
 
   return (
-    <section className="halloween-band-wrap" aria-labelledby="halloween-band-title">
-      <div className="halloween-band">
-        <div className="halloween-band-copy">
-          <span className="halloween-band-eyebrow">{t('home.halloween.eyebrow')}</span>
-          <h2 id="halloween-band-title">{t('home.halloween.title')}</h2>
-          <p>{t('home.halloween.paragraph')}</p>
-          <Link to="/collections/halloween-bonbono" className="btn-bold btn-bold--halloween">
-            {t('home.halloween.cta')}
+    <section className="season-band-wrap" aria-labelledby="season-band-title">
+      <div className="season-band">
+        <div className="season-band-copy">
+          <span className="season-band-eyebrow">{t('home.season.eyebrow')}</span>
+          <h2 id="season-band-title">{t('home.season.title')}</h2>
+          <p>{t('home.season.paragraph')}</p>
+          <Link to={`/collections/${SEASON_COLLECTION}`} className="btn-bold btn-bold--season">
+            {t('home.season.cta')}
           </Link>
         </div>
-        <div className="halloween-band-grid">
+        <div className="season-band-grid">
           {products.map((product) => (
             <Link
-              className="halloween-pick"
+              className="season-pick"
               key={product.id}
               prefetch="intent"
               to={`/products/${product.handle}`}
             >
-              <div className="halloween-pick-photo">
+              <div className="season-pick-photo">
                 {product.featuredImage ? (
                   <Image
                     alt={product.featuredImage.altText || product.title}
@@ -321,13 +321,14 @@ function InstagramFeed({ posts }) {
 /** @typedef {import('./+types/_index').Route} Route */
 /** @typedef {ReturnType<typeof useLoaderData<typeof loader>>} LoaderReturnData */
 
-const HALLOWEEN_QUERY = `#graphql
-  query HomepageHalloween(
+const SEASON_QUERY = `#graphql
+  query HomepageSeason(
     $language: LanguageCode,
     $country: CountryCode,
-    $first: Int!
+    $first: Int!,
+    $handle: String!
   ) @inContext(language: $language, country: $country) {
-    collection(handle: "halloween-bonbono") {
+    collection(handle: $handle) {
       products(first: $first, sortKey: BEST_SELLING) {
         nodes {
           id

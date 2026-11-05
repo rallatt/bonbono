@@ -236,6 +236,19 @@ export const IconPumpkin = base('0 0 48 48', (fill) => (
   </>
 ));
 
+export const IconFirTree = base('0 0 48 48', (fill) => (
+  <>
+    <path
+      d="M24 4 L33 17 H28 L37 29 H30 L40 41 H8 L18 29 H11 L20 17 H15 Z"
+      fill={fill}
+      stroke={INK}
+      strokeWidth="2.5"
+      strokeLinejoin="round"
+    />
+    <rect x="21" y="41" width="6" height="4" rx="1" fill={fill} stroke={INK} strokeWidth="2" />
+  </>
+));
+
 export const IconLunchbox = base('0 0 48 48', (fill) => (
   <>
     <rect x="8" y="18" width="32" height="22" rx="4" fill={fill} stroke={INK} strokeWidth="2.5" />

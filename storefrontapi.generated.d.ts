@@ -417,13 +417,14 @@ export type FooterQuery = {
   >;
 };
 
-export type HomepageHalloweenQueryVariables = StorefrontAPI.Exact<{
+export type HomepageSeasonQueryVariables = StorefrontAPI.Exact<{
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
   first: StorefrontAPI.Scalars['Int']['input'];
+  handle: StorefrontAPI.Scalars['String']['input'];
 }>;
 
-export type HomepageHalloweenQuery = {
+export type HomepageSeasonQuery = {
   collection?: StorefrontAPI.Maybe<{
     products: {
       nodes: Array<
@@ -1563,9 +1564,9 @@ interface GeneratedQueryTypes {
     return: FooterQuery;
     variables: FooterQueryVariables;
   };
-  '#graphql\n  query HomepageHalloween(\n    $language: LanguageCode,\n    $country: CountryCode,\n    $first: Int!\n  ) @inContext(language: $language, country: $country) {\n    collection(handle: "halloween-bonbono") {\n      products(first: $first, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          handle\n          title\n          productType\n          featuredImage {\n            id\n            url\n            altText\n            width\n            height\n          }\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n          variants(first: 1) {\n            nodes {\n              id\n              availableForSale\n            }\n          }\n        }\n      }\n    }\n  }\n': {
-    return: HomepageHalloweenQuery;
-    variables: HomepageHalloweenQueryVariables;
+  '#graphql\n  query HomepageSeason(\n    $language: LanguageCode,\n    $country: CountryCode,\n    $first: Int!,\n    $handle: String!\n  ) @inContext(language: $language, country: $country) {\n    collection(handle: $handle) {\n      products(first: $first, sortKey: BEST_SELLING) {\n        nodes {\n          id\n          handle\n          title\n          productType\n          featuredImage {\n            id\n            url\n            altText\n            width\n            height\n          }\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n          variants(first: 1) {\n            nodes {\n              id\n              availableForSale\n            }\n          }\n        }\n      }\n    }\n  }\n': {
+    return: HomepageSeasonQuery;
+    variables: HomepageSeasonQueryVariables;
   };
   '#graphql\n  query Article(\n    $articleHandle: String!\n    $blogHandle: String!\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(language: $language, country: $country) {\n    blog(handle: $blogHandle) {\n      handle\n      articleByHandle(handle: $articleHandle) {\n        handle\n        title\n        contentHtml\n        publishedAt\n        author: authorV2 {\n          name\n        }\n        image {\n          id\n          altText\n          url\n          width\n          height\n        }\n        seo {\n          description\n          title\n        }\n      }\n    }\n  }\n': {
     return: ArticleQuery;

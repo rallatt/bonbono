@@ -1968,46 +1968,46 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   background: #fff;
 }
 
-/* --- Seasonal: the Halloween hero chip ---------------------------------
-   Only this one chip wears a costume; the rest keep the house pastels.
-   Remove `spooky` from HERO_CHIPS to retire it. */
-.chip--spooky {
-  background: #FF7518;
-  border-color: #141414;
-  box-shadow: 5px 5px 0 #141414;
+/* --- Seasonal: the hero chip in costume --------------------------------
+   Only this one chip dresses up; the rest keep the house pastels. Drop the
+   `season` flag in HERO_CHIPS to retire it. */
+.chip--season {
+  background: #0E4A24;
+  border-color: #FFFBF3;
+  box-shadow: 5px 5px 0 #B3345A;
 }
 
-.chip-cell:hover .chip--spooky {
-  box-shadow: 9px 9px 0 #141414;
+.chip-cell:hover .chip--season {
+  box-shadow: 9px 9px 0 #B3345A;
 }
 
 /* The glyph outlines are baked into the SVG as presentation attributes,
-   which any CSS rule outranks — so the details go black without the icon
-   components needing a second ink colour. */
-.chip--spooky svg * {
-  stroke: #141414;
+   which any CSS rule outranks — so the tree goes cream without the icon
+   component needing a second ink colour. */
+.chip--season svg * {
+  stroke: #FFFBF3;
 }
 
-.chip-cell--spooky .chip-label {
-  background: #141414;
-  color: #FF9F45;
+.chip-cell--season .chip-label {
+  background: #B3345A;
+  color: #FFFBF3;
 }
 
-.chip-cell--spooky:hover .chip-label {
-  background: #FF7518;
-  color: #141414;
+.chip-cell--season:hover .chip-label {
+  background: #FFFBF3;
+  color: #0E4A24;
 }
 
-/* --- Seasonal: Halloween band on the homepage --------------------------- */
-/* Full-bleed banner across the top of the homepage. The black runs edge to
-   edge; the content inside still lines up with the rest of the page. */
-.halloween-band-wrap {
-  background: #141414;
-  border-bottom: 4px solid #FF7518;
+/* --- Seasonal band across the top of the homepage ----------------------
+   Full-bleed: the deep green runs edge to edge while the content inside
+   still lines up with the rest of the page. */
+.season-band-wrap {
+  background: #0E4A24;
+  border-bottom: 4px solid #B3345A;
   padding: clamp(1.5rem, 1rem + 2vw, 2.5rem) 1.25rem;
 }
 
-.halloween-band {
+.season-band {
   align-items: center;
   display: grid;
   gap: clamp(1.25rem, 1rem + 2vw, 2.75rem);
@@ -2020,8 +2020,8 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   }
 }
 
-.halloween-band-eyebrow {
-  color: #FF9F45;
+.season-band-eyebrow {
+  color: #F8DAE7;
   display: block;
   font-family: 'Paytone One', cursive;
   font-size: clamp(0.85rem, 0.78rem + 0.22vw, 1.02rem);
@@ -2029,34 +2029,34 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   text-transform: uppercase;
 }
 
-.halloween-band-copy h2 {
+.season-band-copy h2 {
   color: #FFFBF3;
   font-size: clamp(1.5rem, 2.8vw, 2.4rem);
   margin: 0.5rem 0 0.75rem;
 }
 
-.halloween-band-copy p {
-  color: #E9DED0;
+.season-band-copy p {
+  color: #CFE3D2;
   font-family: 'Fredoka', system-ui, sans-serif;
   letter-spacing: normal;
   margin-bottom: 1.5rem;
   max-width: 42ch;
 }
 
-.btn-bold--halloween {
-  background: #FF7518;
+.btn-bold--season {
+  background: #B3345A;
   border-color: #FFFBF3;
   box-shadow: 5px 5px 0 #FFFBF3;
-  color: #141414;
+  color: #FFFBF3;
 }
 
-.btn-bold--halloween:hover {
+.btn-bold--season:hover {
   box-shadow: 7px 7px 0 #FFFBF3;
-  color: #141414;
+  color: #FFFBF3;
   transform: translate(-2px, -2px);
 }
 
-.halloween-band-grid {
+.season-band-grid {
   display: grid;
   gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2066,11 +2066,11 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   }
 }
 
-.halloween-pick {
+.season-pick {
   background: #FFFBF3;
-  border: 3px solid #FF7518;
+  border: 3px solid #B3345A;
   border-radius: 1.1rem;
-  color: #141414;
+  color: #14301C;
   display: block;
   padding: 0.75rem 0.75rem 0.9rem;
   text-align: center;
@@ -2078,28 +2078,28 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
-.halloween-pick:hover {
-  box-shadow: 0 0 0 3px #FF9F45;
+.season-pick:hover {
+  box-shadow: 0 0 0 3px #F8DAE7;
   text-decoration: none;
   transform: translateY(-4px);
 }
 
-.halloween-pick-photo {
+.season-pick-photo {
   border-radius: 0.75rem;
   margin-bottom: 0.6rem;
   overflow: hidden;
 }
 
-.halloween-pick-photo img {
+.season-pick-photo img {
   display: block;
   height: 100%;
   object-fit: cover;
   width: 100%;
 }
 
-.halloween-pick h4 {
-  /* Headings get a green site-wide; on the Halloween card that reads wrong. */
-  color: #141414;
+.season-pick h4 {
+  /* Headings get a green site-wide; on the seasonal card that reads wrong. */
+  color: #14301C;
   display: -webkit-box;
   font-family: 'Fredoka', cursive;
   font-size: 0.82rem;
@@ -2111,8 +2111,8 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   overflow: hidden;
 }
 
-.halloween-pick span {
-  color: #D1480A;
+.season-pick span {
+  color: #B3345A;
   font-family: 'Fredoka', system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
