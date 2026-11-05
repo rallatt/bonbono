@@ -173,15 +173,15 @@ export const fr = {
 
   // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
   // in the homepage route.
-  'home.season.eyebrow': 'Le temps des fêtes',
-  'home.season.title': 'Chocolats, friandises et petites douceurs des fêtes',
-  'home.season.paragraph': "Chocolats d'ici, bonbons festifs et idées de bas de Noël — notre sélection du temps des fêtes, tant qu'il en reste.",
+  'home.season.eyebrow': 'Le temps des Fêtes',
+  'home.season.title': 'Chocolats, friandises et petites douceurs des Fêtes',
+  'home.season.paragraph': "Chocolats d'ici, bonbons festifs et idées de bas de Noël — notre sélection du temps des Fêtes, tant qu'il en reste.",
   'home.season.cta': 'Tout voir',
 
   'home.hero_chip.search': 'Recherche',
   'home.hero_chip.new': 'Nouveautés',
   'home.hero_chip.favourites': 'Coup de cœur',
-  'home.hero_chip.season': 'Temps des fêtes',
+  'home.hero_chip.season': 'Temps des Fêtes',
   'home.hero_chip.swedish': 'Swedish',
   'home.hero_chip.no_sugar': 'Bonbons sans sucre',
 
