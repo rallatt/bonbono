@@ -1799,10 +1799,11 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   display: grid;
   gap: 2.5rem;
   grid-template-columns: minmax(0, 1fr);
-  left: calc(-50vw + 50%);
+  /* Full-bleed out of <main>'s 1rem gutter. 100vw would include the
+     scrollbar and push the page sideways on a phone. */
+  margin-inline: -1rem;
   padding: 3rem 1.25rem 4rem;
   position: relative;
-  width: 100vw;
 
   @media (min-width: 60em) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2609,12 +2610,12 @@ aside .cart-main > .cart-details > div:not(.cart-summary-aside) {
   background:
     radial-gradient(circle at 88% 20%, #C8F4AE 0, #C8F4AE 90px, transparent 91px),
     #FFFBF3;
-  left: calc(-50vw + 50%);
+  /* Same full-bleed as the hero, and scrollbar-safe for the same reason. */
   margin-bottom: 2rem;
+  margin-inline: -1rem;
   padding: 3rem 1.25rem 2.5rem;
   position: relative;
   text-align: center;
-  width: 100vw;
 }
 
 .page-title-band h1 {
