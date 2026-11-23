@@ -173,9 +173,9 @@ export const fr = {
 
   // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
   // in the homepage route.
-  'home.season.eyebrow': 'Le temps des Fêtes',
-  'home.season.title': 'Chocolats, friandises et petites douceurs des Fêtes',
-  'home.season.paragraph': "Chocolats d'ici, bonbons festifs et idées de bas de Noël — notre sélection du temps des Fêtes, tant qu'il en reste.",
+  'home.season.eyebrow': 'Temps des Fêtes',
+  'home.season.title': "Remplir les bas de Noël : c'est ici que ça se passe!",
+  'home.season.paragraph': "Des surprises pour les bas de Noël, des ornements pour le sapin, des calendriers de l'avent (ouvrir toutes les cases le 1er décembre, on ne juge pas) et des produits québécois : panettones, confitures, chocolats d'ici et accessoires. Tant qu'il en reste…",
   'home.season.cta': 'Tout voir',
 
   'home.hero_chip.search': 'Recherche',
