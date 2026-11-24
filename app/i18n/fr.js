@@ -173,6 +173,18 @@ export const fr = {
 
   // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
   // in the homepage route.
+  'promo.bf.eyebrow': 'Black Friday',
+  'promo.bf.title': "25 % sur tous les calendriers de l'avent",
+  'promo.bf.dates': 'Du vendredi 27 au lundi 30 novembre',
+  'promo.bf.where': 'En ligne et en boutique',
+  'promo.bf.cta': 'Voir les calendriers',
+  'promo.bf.close': 'Fermer',
+
+  'home.calendars.eyebrow': 'Tout juste arrivés',
+  'home.calendars.title': 'Les calendriers 2027 sont là',
+  'home.calendars.paragraph': "Muraux, de bureau, illustrés ici au Québec ou ailleurs — de quoi planifier l'année sans perdre le nord.",
+  'home.calendars.cta': 'Voir les calendriers',
+
   'home.season.eyebrow': 'Temps des Fêtes',
   'home.season.title': "Remplir les bas de Noël : c'est ici que ça se passe!",
   'home.season.paragraph': "Des surprises pour les bas de Noël, des ornements pour le sapin, des calendriers de l'avent (ouvrir toutes les cases le 1er décembre, on ne juge pas) et des produits québécois : panettones, confitures, chocolats d'ici et accessoires. Tant qu'il en reste…",

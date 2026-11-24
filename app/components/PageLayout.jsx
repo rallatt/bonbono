@@ -9,6 +9,7 @@ import {
   SearchFormPredictive,
 } from './SearchFormPredictive';
 import { SearchResultsPredictive } from './SearchResultsPredictive';
+import { PromoPopup } from './PromoPopup';
 import { t } from '../i18n/index.js';
 
 /**
@@ -35,6 +36,7 @@ export function PageLayout({
         />
       )}
       <main>{children}</main>
+      <PromoPopup />
       <Footer
         footer={footer}
         header={header}

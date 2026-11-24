@@ -33,6 +33,9 @@ const SEASON_COLLECTION = 'temps-des-fetes-bonbono';
 const SEASON_PICKS = 4;
 
 // Hand-picked to lead the seasonal band; the rest follow in best-selling order.
+const CALENDARS_COLLECTION = 'calendriers-2027';
+const CALENDAR_PICKS = 4;
+
 const SEASON_PINNED = [
   'calendrier-de-lavent-bonbono',
   'calendrier-de-lavent-swedish-candies-bonbono',
@@ -55,18 +58,25 @@ function orderSeasonPicks(products) {
 export async function loader({ context }) {
   // A seasonal band is nice-to-have, so a failure here must not take the
   // homepage down with it.
-  const season = await context.storefront
-    .query(SEASON_QUERY, {
-      cache: context.storefront.CacheShort(),
-      variables: { first: 50, handle: SEASON_COLLECTION },
-    })
-    .then((data) => filterVisibleProducts(data?.collection?.products)?.nodes ?? [])
-    .then(orderSeasonPicks)
-    .catch(() => []);
+  const pickProducts = (handle) =>
+    context.storefront
+      .query(SEASON_QUERY, {
+        cache: context.storefront.CacheShort(),
+        variables: { first: 50, handle },
+      })
+      .then((data) => filterVisibleProducts(data?.collection?.products)?.nodes ?? [])
+      .then(orderSeasonPicks)
+      .catch(() => []);
+
+  const [season, calendars] = await Promise.all([
+    pickProducts(SEASON_COLLECTION),
+    pickProducts(CALENDARS_COLLECTION),
+  ]);
 
   return {
     isShopLinked: Boolean(context.env.PUBLIC_STORE_DOMAIN),
     seasonPicks: season.slice(0, SEASON_PICKS),
+    calendarPicks: calendars.slice(0, CALENDAR_PICKS),
     // Deliberately not awaited. Instagram is a third party we don't control,
     // so it streams in after the page rather than holding up the first byte.
     instagramPosts: fetchInstagramPosts({
@@ -92,6 +102,7 @@ export default function Homepage() {
       <HeroBanner />
       <HowItWorks />
       <FeaturedCategories navItems={navItems} />
+      <CalendarsBand products={data.calendarPicks} />
       <GiftCardPromo />
       <InstagramFeed posts={data.instagramPosts} />
     </div>
@@ -213,6 +224,49 @@ function SeasonBand({ products }) {
             </Link>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function CalendarsBand({ products }) {
+  if (!products?.length) return null;
+
+  return (
+    <section className="calendar-band" aria-labelledby="calendar-band-title">
+      <div className="calendar-band-copy">
+        <span className="season-band-eyebrow">{t('home.calendars.eyebrow')}</span>
+        <h2 id="calendar-band-title">{t('home.calendars.title')}</h2>
+        <p>{t('home.calendars.paragraph')}</p>
+        <Link
+          to={`/collections/${CALENDARS_COLLECTION}`}
+          className="btn-bold btn-bold--primary"
+        >
+          {t('home.calendars.cta')}
+        </Link>
+      </div>
+      <div className="season-band-grid">
+        {products.map((product) => (
+          <Link
+            className="season-pick season-pick--calendar"
+            key={product.id}
+            prefetch="intent"
+            to={`/products/${product.handle}`}
+          >
+            <div className="season-pick-photo">
+              {product.featuredImage ? (
+                <Image
+                  alt={product.featuredImage.altText || product.title}
+                  aspectRatio="1/1"
+                  data={product.featuredImage}
+                  sizes="(min-width: 60em) 180px, 40vw"
+                />
+              ) : null}
+            </div>
+            <h4>{product.title}</h4>
+            <span><Money data={product.priceRange.minVariantPrice} /></span>
+          </Link>
+        ))}
       </div>
     </section>
   );
