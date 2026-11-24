@@ -302,5 +302,45 @@ export const IconLightbulb = base('0 0 24 24', () => (
   />
 ));
 
+// Origin flags. These two are the only glyphs here drawn in someone else's
+// colours rather than the Bonbono palette — a fleur-de-lys that isn't Québec
+// blue, or a leaf that isn't flag red, stops being a flag.
+const QUEBEC_BLUE = '#0F4C92';
+const CANADA_RED = '#D52B1E';
+
+export const IconFleurDeLys = base('0 0 100 100', (fill) => {
+  const c = fill === 'none' ? QUEBEC_BLUE : fill;
+  return (
+    <>
+      {/* Lance, two volutes, band, base — the four parts that make the shape
+          readable once it is shrunk to a 20px badge. */}
+      <path d="M50 4 C44 16 41 28 41 38 C41 45 45 50 50 55 C55 50 59 45 59 38 C59 28 56 16 50 4 Z" fill={c} />
+      <path d="M44 50 C36 42 24 38 16 44 C6 51 6 70 18 76 C25 79.5 34 77 38 71
+               C30 70 24 65 24 58 C24 52 31 49 38 52 C40 52.8 42.5 51.8 44 50 Z" fill={c} />
+      <path d="M56 50 C64 42 76 38 84 44 C94 51 94 70 82 76 C75 79.5 66 77 62 71
+               C70 70 76 65 76 58 C76 52 69 49 62 52 C60 52.8 57.5 51.8 56 50 Z" fill={c} />
+      <rect x="30" y="69" width="40" height="9" rx="3" fill={c} />
+      <path d="M38 78 C40 86 44 92 50 99 C56 92 60 86 62 78 Z" fill={c} />
+    </>
+  );
+});
+
+export const IconMapleLeaf = base('0 0 100 100', (fill) => {
+  const c = fill === 'none' ? CANADA_RED : fill;
+  return (
+    <path
+      d="M50 6 L57 20 C58 22 60 22 62 21 L69 17 L66 34 C65.5 36.5 67 37.5 69 35.5
+         L78 26 L80 31 C80.7 32.7 82 32.5 83.5 32.2 L93 30 L89.5 42
+         C89 44 89.5 44.6 91 45.3 L94 46.7 L72 64 C70 65.6 70.6 67 71.2 69 L73 76
+         L53 73 C51.5 72.8 50.6 73.6 50.6 75 L51.6 94 L48.4 94 L49.4 75
+         C49.4 73.6 48.5 72.8 47 73 L27 76 L28.8 69 C29.4 67 30 65.6 28 64
+         L6 46.7 L9 45.3 C10.5 44.6 11 44 10.5 42 L7 30 L16.5 32.2
+         C18 32.5 19.3 32.7 20 31 L22 26 L31 35.5 C33 37.5 34.5 36.5 34 34
+         L31 17 L38 21 C40 22 42 22 43 20 Z"
+      fill={c}
+    />
+  );
+});
+
 /** Icons cycled through for dynamic, data-driven cards (e.g. Shopify menu categories). */
 export const CATEGORY_ICONS = [IconLollipop, IconStar, IconBear, IconPatchSquare, IconHeart];

@@ -8,6 +8,7 @@ import {
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
 import { ProductPrice } from '../components/ProductPrice';
+import { OriginBadge } from '../components/OriginBadge';
 import { ProductImage } from '../components/ProductImage';
 import { ProductForm } from '../components/ProductForm';
 import { redirectIfHandleIsLocalized } from '../lib/redirect';
@@ -112,7 +113,10 @@ export default function Product() {
     <div className="product">
       <ProductImage image={selectedVariant?.image} />
       <div className="product-main">
-        <h1>{title}</h1>
+        <div className="product-title-row">
+          <h1>{title}</h1>
+          <OriginBadge tags={product.tags} size={26} />
+        </div>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
@@ -198,6 +202,7 @@ const PRODUCT_FRAGMENT = `#graphql
     title
     vendor
     handle
+    tags
     descriptionHtml
     description
     encodedVariantExistence

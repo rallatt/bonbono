@@ -3809,3 +3809,43 @@ a.tab-pill:hover {
 .season-pick--calendar:hover {
   box-shadow: 0 0 0 3px #C8F4AE;
 }
+
+/*
+* --------------------------------------------------
+* Origin flags — Québec and Canada
+* --------------------------------------------------
+*/
+
+.origin-badge {
+  align-items: center;
+  background: #FFFBF3;
+  border: 2px solid #176131;
+  border-radius: 100px;
+  box-shadow: 2px 2px 0 rgba(23, 97, 49, 0.3);
+  display: inline-flex;
+  justify-content: center;
+  line-height: 0;
+  padding: 0.3rem;
+}
+
+/* On a card the flag sits over the photo, so it needs a positioned parent. */
+.product-item-link {
+  position: relative;
+}
+
+.product-item-link .origin-badge {
+  left: 0.4rem;
+  position: absolute;
+  top: 0.4rem;
+  z-index: 2;
+}
+
+.product-title-row {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.product-title-row h1 {
+  margin: 0;
+}

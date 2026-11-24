@@ -4,6 +4,7 @@ import { useVariantUrl } from '../lib/variants';
 import { useAside } from './Aside';
 import { t } from '../i18n/index.js';
 import { CandyImageWrapper, CandyPlaceholder } from './CandyLoader.jsx';
+import { OriginBadge } from './OriginBadge';
 
 /**
  * @param {{
@@ -23,6 +24,7 @@ export function ProductItem({ product, loading }) {
   return (
     <div className="product-item">
       <Link className="product-item-link" prefetch="intent" to={variantUrl}>
+        <OriginBadge tags={product.tags} />
         {image ? (
           <CandyImageWrapper>
             <Image

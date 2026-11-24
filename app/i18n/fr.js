@@ -173,6 +173,9 @@ export const fr = {
 
   // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
   // in the homepage route.
+  'product.origin.quebec': 'Produit du Québec',
+  'product.origin.canada': 'Produit canadien',
+
   'promo.bf.eyebrow': 'Black Friday',
   'promo.bf.title': 'Carnets et calendriers à -25 %',
   'promo.bf.dates': 'Du vendredi 27 au lundi 30 novembre',
