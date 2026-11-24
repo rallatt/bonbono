@@ -174,14 +174,14 @@ export const fr = {
   // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
   // in the homepage route.
   'promo.bf.eyebrow': 'Black Friday',
-  'promo.bf.title': 'Tous les calendriers 2027 à -25 %',
+  'promo.bf.title': 'Carnets et calendriers à -25 %',
   'promo.bf.dates': 'Du vendredi 27 au lundi 30 novembre',
   'promo.bf.where': 'En ligne et en boutique',
   'promo.bf.cta': 'Voir les calendriers',
   'promo.bf.close': 'Fermer',
 
   'home.calendars.eyebrow': 'Tout juste arrivés',
-  'home.calendars.title': 'Les calendriers 2027 sont là',
+  'home.calendars.title': 'Les calendriers 2027 sont arrivés',
   'home.calendars.paragraph': "Muraux, de bureau, illustrés ici au Québec ou ailleurs — de quoi planifier l'année sans perdre le nord.",
   'home.calendars.cta': 'Voir les calendriers',
 

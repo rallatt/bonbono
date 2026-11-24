@@ -33,7 +33,7 @@ const SEASON_COLLECTION = 'temps-des-fetes-bonbono';
 const SEASON_PICKS = 4;
 
 // Hand-picked to lead the seasonal band; the rest follow in best-selling order.
-const CALENDARS_COLLECTION = 'calendriers-2027';
+const CALENDARS_COLLECTION = 'carnets-calendriers';
 const CALENDAR_PICKS = 4;
 
 const SEASON_PINNED = [
