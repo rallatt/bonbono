@@ -174,7 +174,7 @@ export const fr = {
   // Seasonal band on the homepage. Swapped each season — see SEASON_COLLECTION
   // in the homepage route.
   'promo.bf.eyebrow': 'Black Friday',
-  'promo.bf.title': "25 % sur tous les calendriers de l'avent",
+  'promo.bf.title': 'Tous les calendriers 2027 à -25 %',
   'promo.bf.dates': 'Du vendredi 27 au lundi 30 novembre',
   'promo.bf.where': 'En ligne et en boutique',
   'promo.bf.cta': 'Voir les calendriers',
