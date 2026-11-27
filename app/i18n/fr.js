@@ -177,7 +177,7 @@ export const fr = {
   'product.origin.canada': 'Produit canadien',
 
   'promo.bf.eyebrow': 'Black Friday',
-  'promo.bf.title': 'Carnets et calendriers à -25 %',
+  'promo.bf.title': "25 % sur tous les calendriers de l'avent",
   'promo.bf.dates': 'Du vendredi 27 au lundi 30 novembre',
   'promo.bf.where': 'En ligne et en boutique',
   'promo.bf.cta': 'Voir les calendriers',

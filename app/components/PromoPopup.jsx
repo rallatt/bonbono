@@ -84,7 +84,7 @@ export function PromoPopup() {
         <p className="promo-where">{t('promo.bf.where')}</p>
         <Link
           className="btn-bold btn-bold--promo"
-          to="/collections/carnets-calendriers"
+          to="/collections/calendriers-avent-bonbono"
           onClick={dismiss}
         >
           {t('promo.bf.cta')}
