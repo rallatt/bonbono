@@ -4,6 +4,68 @@ import { useFetcher } from 'react-router';
 import { t } from '../i18n/index.js';
 
 /**
+ * Shopify already nets automatic discounts out of the cart subtotal, so a
+ * sale is invisible unless it's spelled out. Line-level allocations are
+ * where a product discount lands; cart-level ones are order-wide.
+ * @param {CartSummaryProps['cart']} cart
+ */
+function appliedDiscounts(cart) {
+  const totals = new Map();
+
+  const add = (allocation) => {
+    const amount = Number(allocation?.discountedAmount?.amount ?? 0);
+    if (!amount) return;
+    const label =
+      allocation.title ?? allocation.code ?? t('cart.savings.generic');
+    const running = totals.get(label);
+    totals.set(label, {
+      label,
+      amount: (running?.amount ?? 0) + amount,
+      currencyCode: allocation.discountedAmount.currencyCode,
+    });
+  };
+
+  for (const line of cart?.lines?.nodes ?? []) {
+    // Optimistic lines have no allocations yet — the note appears a beat later.
+    for (const allocation of line?.discountAllocations ?? []) add(allocation);
+  }
+  for (const allocation of cart?.discountAllocations ?? []) add(allocation);
+
+  return [...totals.values()];
+}
+
+/**
+ * @param {{cart: CartSummaryProps['cart']}}
+ */
+function CartSavings({ cart }) {
+  const discounts = appliedDiscounts(cart);
+  if (!discounts.length) return null;
+
+  return (
+    <div className="cart-savings">
+      <span className="cart-savings-heading">{t('cart.savings.heading')}</span>
+      <dl>
+        {discounts.map((discount) => (
+          <div className="cart-savings-row" key={discount.label}>
+            <dt>{discount.label}</dt>
+            <dd>
+              {'\u2212'}
+              <Money
+                data={{
+                  amount: String(discount.amount),
+                  currencyCode: discount.currencyCode,
+                }}
+              />
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <span className="cart-savings-note">{t('cart.savings.included')}</span>
+    </div>
+  );
+}
+
+/**
  * @param {CartSummaryProps}
  */
 export function CartSummary({ cart, layout }) {
@@ -18,6 +80,7 @@ export function CartSummary({ cart, layout }) {
   return (
     <div aria-labelledby={summaryId} className={className}>
       <h4 id={summaryId}>{t('cart.totals')}</h4>
+      <CartSavings cart={cart} />
       <dl role="group" className="cart-subtotal">
         <dt>{t('cart.subtotal')}</dt>
         <dd>

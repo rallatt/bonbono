@@ -176,6 +176,10 @@ export const fr = {
   'product.origin.quebec': 'Produit du Québec',
   'product.origin.canada': 'Produit canadien',
 
+  'cart.savings.heading': 'Rabais appliqué',
+  'cart.savings.included': 'Déjà déduit du sous-total.',
+  'cart.savings.generic': 'Rabais',
+
   'promo.bf.eyebrow': 'Black Friday',
   'promo.bf.title': "25 % sur tous les calendriers de l'avent",
   'promo.bf.dates': 'Du vendredi 27 au lundi 30 novembre',

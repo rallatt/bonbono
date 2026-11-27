@@ -11,6 +11,17 @@ export const CART_QUERY_FRAGMENT = `#graphql
       key
       value
     }
+    discountAllocations {
+      discountedAmount {
+        ...Money
+      }
+      ... on CartAutomaticDiscountAllocation {
+        title
+      }
+      ... on CartCodeDiscountAllocation {
+        code
+      }
+    }
     cost {
       totalAmount {
         ...Money
@@ -167,6 +178,17 @@ export const CART_QUERY_FRAGMENT = `#graphql
     discountCodes {
       code
       applicable
+    }
+    discountAllocations {
+      discountedAmount {
+        ...Money
+      }
+      ... on CartAutomaticDiscountAllocation {
+        title
+      }
+      ... on CartCodeDiscountAllocation {
+        code
+      }
     }
   }
 `;

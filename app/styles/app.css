@@ -3881,3 +3881,58 @@ a.tab-pill:hover {
   box-shadow: 3px 3px 0 #D8E3DA;
   cursor: not-allowed;
 }
+
+/* "Rabais appliqué" in the cart. Shopify nets automatic discounts out of the
+   subtotal, so without this the sale leaves no trace in the drawer. */
+.cart-savings {
+  background: #F8DAE7;
+  border: 2.5px solid #B3345A;
+  border-radius: 0.9rem;
+  display: block;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.85rem 0.6rem;
+}
+
+.cart-savings-heading {
+  color: #B3345A;
+  display: block;
+  font-family: 'Paytone One', cursive;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cart-savings dl {
+  margin: 0.35rem 0 0;
+}
+
+.cart-savings-row {
+  align-items: baseline;
+  color: #14301C;
+  display: flex;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  gap: 0.75rem;
+  justify-content: space-between;
+  letter-spacing: normal;
+}
+
+.cart-savings-row dt {
+  font-size: 0.85rem;
+  min-width: 0;
+}
+
+.cart-savings-row dd {
+  color: #B3345A;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.cart-savings-note {
+  color: #6B4250;
+  display: block;
+  font-family: 'Fredoka', system-ui, sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: normal;
+  margin-top: 0.35rem;
+}
