@@ -3849,3 +3849,35 @@ a.tab-pill:hover {
 .product-title-row h1 {
   margin: 0;
 }
+
+/* The product page's add-to-cart. It came from the Hydrogen skeleton with no
+   class at all, so it rendered as a bare browser button. */
+.product-add-btn {
+  background: #176131;
+  border: 3px solid #176131;
+  border-radius: 100px;
+  box-shadow: 5px 5px 0 #C8F4AE;
+  color: #FFFBF3;
+  cursor: pointer;
+  display: block;
+  font-family: 'Paytone One', cursive;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  letter-spacing: 0.03em;
+  padding: 0.95rem 2rem;
+  text-align: center;
+  transition: background 150ms, transform 150ms, box-shadow 150ms;
+  width: 100%;
+}
+
+.product-add-btn:hover:not(:disabled) {
+  background: #E55A7E;
+  box-shadow: 7px 7px 0 #C8F4AE;
+  transform: translate(-2px, -2px);
+}
+
+.product-add-btn:disabled {
+  background: #8FA996;
+  border-color: #8FA996;
+  box-shadow: 3px 3px 0 #D8E3DA;
+  cursor: not-allowed;
+}
